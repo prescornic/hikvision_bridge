@@ -161,10 +161,17 @@ def _non_empty(value: str | None) -> str | None:
     return value if value not in (None, "") else None
 
 
+def _is_duration(raw_type: str) -> bool:
+    """Duration alerts name the actual event in DurationList/Duration/relationEvent."""
+    return raw_type.strip().lower() == "duration"
+
+
 def frame_from_xml(node: XmlNode) -> FeedFrame | None:
     raw_type = node.text("eventType")
     if not raw_type:
         return None
+    if _is_duration(raw_type):
+        raw_type = next((n.value for n in node.walk("relationEvent") if n.value), raw_type)
     targets: list[str] = []
     for name in ("detectionTarget", "targetType", "TargetType"):
         for found in node.walk(name):
@@ -217,6 +224,8 @@ def frame_from_json(data: Any) -> FeedFrame | None:
     raw_type = _json_find(data, "eventType")
     if not raw_type:
         return None
+    if _is_duration(str(raw_type)):
+        raw_type = _json_find(data, "relationEvent") or raw_type
     channel = _json_find(data, "channelID") or _json_find(data, "dynChannelID")
     target = _json_find(data, "targetType") or _json_find(data, "detectionTarget")
     targets = tuple(t.strip().lower() for t in str(target).split(",")) if target else ()
