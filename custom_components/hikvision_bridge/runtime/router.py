@@ -176,6 +176,7 @@ class EventRouter:
             {
                 "kind": kind.value,
                 "raw_type": frame.raw_type,
+                "via": frame.extra.get("via"),
                 "state": frame.state,
                 "targets": list(frame.targets),
                 "region": frame.region_id,

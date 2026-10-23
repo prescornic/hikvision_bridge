@@ -93,13 +93,17 @@ def test_duration_alert_takes_the_related_event() -> None:
     assert canonical(frames[0].raw_type) == Kind.INTRUSION
     assert frames[0].is_active
     assert frames[0].channel_id == "1"
+    assert frames[0].extra["via"] == "duration"
     assert frames[1].raw_type == "duration"
+    assert "via" not in frames[1].extra
 
 
 def test_json_duration_alert_takes_the_related_event() -> None:
     body = '{"eventType":"duration","eventState":"active","channelID":1,"DurationList":{"Duration":[{"relationEvent":"linedetection"}]}}'
     (part,) = list(MultipartSplitter("boundary").push(xml_part(body, "application/json")))
-    assert frame_from_part(part).raw_type == "linedetection"
+    frame = frame_from_part(part)
+    assert frame.raw_type == "linedetection"
+    assert frame.extra["via"] == "duration"
 
 
 def test_json_frame() -> None:

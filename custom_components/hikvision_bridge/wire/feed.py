@@ -170,8 +170,11 @@ def frame_from_xml(node: XmlNode) -> FeedFrame | None:
     raw_type = node.text("eventType")
     if not raw_type:
         return None
+    extra: dict[str, Any] = {"active_count": node.numeric("activePostCount")}
     if _is_duration(raw_type):
-        raw_type = next((n.value for n in node.walk("relationEvent") if n.value), raw_type)
+        related = next((n.value for n in node.walk("relationEvent") if n.value), None)
+        if related:
+            raw_type, extra["via"] = related, raw_type
     targets: list[str] = []
     for name in ("detectionTarget", "targetType", "TargetType"):
         for found in node.walk(name):
@@ -196,7 +199,7 @@ def frame_from_xml(node: XmlNode) -> FeedFrame | None:
         description=node.text("eventDescription"),
         channel_name=node.text("channelName"),
         mac=node.text("macAddress"),
-        extra={"active_count": node.numeric("activePostCount")},
+        extra=extra,
     )
 
 
@@ -224,8 +227,9 @@ def frame_from_json(data: Any) -> FeedFrame | None:
     raw_type = _json_find(data, "eventType")
     if not raw_type:
         return None
-    if _is_duration(str(raw_type)):
-        raw_type = _json_find(data, "relationEvent") or raw_type
+    extra: dict[str, Any] = {}
+    if _is_duration(str(raw_type)) and (related := _json_find(data, "relationEvent")):
+        raw_type, extra["via"] = related, str(raw_type)
     channel = _json_find(data, "channelID") or _json_find(data, "dynChannelID")
     target = _json_find(data, "targetType") or _json_find(data, "detectionTarget")
     targets = tuple(t.strip().lower() for t in str(target).split(",")) if target else ()
@@ -242,6 +246,7 @@ def frame_from_json(data: Any) -> FeedFrame | None:
         description=_json_find(data, "eventDescription"),
         channel_name=_json_find(data, "channelName"),
         mac=_json_find(data, "macAddress"),
+        extra=extra,
     )
 
 
