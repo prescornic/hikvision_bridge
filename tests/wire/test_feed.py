@@ -7,6 +7,7 @@ import aiohttp
 from aiohttp.test_utils import TestServer
 import pytest
 
+from custom_components.hikvision_bridge.model.vocabulary import Kind, canonical
 from custom_components.hikvision_bridge.wire.feed import (
     AlarmFeed,
     MultipartSplitter,
@@ -75,6 +76,30 @@ def test_frame_parsing_targets_regions_and_heartbeat() -> None:
     assert frames[0].channel_id == "1"
     assert frames[1].heartbeat
     assert frames[1].channel_id is None
+
+
+def test_duration_alert_takes_the_related_event() -> None:
+    duration = event_xml(
+        "duration",
+        extra="<DurationList><Duration><relationEvent>fielddetection</relationEvent>"
+        "</Duration></DurationList>",
+    )
+    bare = event_xml("duration")
+    frames = [
+        frame_from_part(p)
+        for p in MultipartSplitter("boundary").push(xml_part(duration) + xml_part(bare))
+    ]
+    assert frames[0].raw_type == "fielddetection"
+    assert canonical(frames[0].raw_type) == Kind.INTRUSION
+    assert frames[0].is_active
+    assert frames[0].channel_id == "1"
+    assert frames[1].raw_type == "duration"
+
+
+def test_json_duration_alert_takes_the_related_event() -> None:
+    body = '{"eventType":"duration","eventState":"active","channelID":1,"DurationList":{"Duration":[{"relationEvent":"linedetection"}]}}'
+    (part,) = list(MultipartSplitter("boundary").push(xml_part(body, "application/json")))
+    assert frame_from_part(part).raw_type == "linedetection"
 
 
 def test_json_frame() -> None:
