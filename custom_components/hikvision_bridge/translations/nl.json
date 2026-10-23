@@ -120,22 +120,23 @@
           "rtsp_transport": "RTSP-transport",
           "target_sensors": "Aparte sensoren voor personen en voertuigen",
           "playback": "Afspelen in de mediabrowser",
-          "stream_key": "Verificatiecode (versleutelde opnamen)"
+          "stream_key": "Verificatiecode (versleutelde opnamen)",
+          "sidebar_panel": "Hikvision-paneel in de zijbalk tonen",
+          "panel_admin_only": "Alleen beheerders zien het paneel"
         },
         "data_description": {
           "event_path": "De gebeurtenisstream vereist geen wijziging op het apparaat. De webhook vereist dat het apparaat naar Home Assistant stuurt.",
           "hold_seconds": "Apparaten melden bij veel detecties alleen het begin; de sensor blijft zo lang aan na de laatste melding.",
           "playback": "Opnames zijn H.265 of H.264. 'MP4 zoals opgenomen' start meteen, maar browsers spelen H.265 alleen af met hardwareondersteuning. 'Omzetten naar H.264' werkt overal en vraagt veel CPU. 'Streamen vanaf het apparaat' laat het apparaat de opname via RTSP afspelen.",
-          "stream_key": "Opnamen die met streamversleuteling zijn gemaakt, worden ontsleuteld met de verificatiecode van het apparaat, die van het apparaat wordt gelezen. Vul hem hier alleen in als het apparaat hem niet doorgeeft, zoals bij veel camera's."
+          "stream_key": "Opnamen die met streamversleuteling zijn gemaakt, worden ontsleuteld met de verificatiecode van het apparaat, die van het apparaat wordt gelezen. Vul hem hier alleen in als het apparaat hem niet doorgeeft, zoals bij veel camera's.",
+          "sidebar_panel": "Geldt voor alle apparaten en accounts van deze integratie. De dashboardkaart blijft beschikbaar.",
+          "panel_admin_only": "Gebruikers zonder beheerdersrechten zien het paneel niet meer. Geldt voor alle apparaten en accounts."
         }
       },
       "webhook": {
         "title": "Webhook",
         "description": "Meldingen worden geaccepteerd op {path} (alleen lokaal netwerk). Gebruik de actie 'Meldingshost instellen' of de webinterface van het apparaat om het apparaat daarheen te sturen."
       }
-    },
-    "abort": {
-      "no_options": "Een Hik-Connect-account heeft geen opties."
     }
   },
   "config_subentries": {

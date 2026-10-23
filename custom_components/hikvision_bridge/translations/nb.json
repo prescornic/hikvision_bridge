@@ -120,22 +120,23 @@
           "rtsp_transport": "RTSP-transport",
           "target_sensors": "Egne sensorer for personer og kjøretøy",
           "playback": "Avspilling i medieleseren",
-          "stream_key": "Verifiseringskode (krypterte opptak)"
+          "stream_key": "Verifiseringskode (krypterte opptak)",
+          "sidebar_panel": "Vis Hikvision-panelet i sidefeltet",
+          "panel_admin_only": "Bare administratorer ser panelet"
         },
         "data_description": {
           "event_path": "Hendelsesstrømmen krever ingen endring på enheten. Webhooken krever at enheten sender til Home Assistant.",
           "hold_seconds": "Enheter melder bare starten av mange deteksjoner; sensoren forblir på så lenge etter siste melding.",
           "playback": "Opptak er H.265 eller H.264. «MP4 som tatt opp» starter med en gang, men nettlesere spiller bare H.265 med maskinvarestøtte. «Konverter til H.264» virker overalt og krever mye CPU. «Strøm fra enheten» lar enheten spille av opptaket via RTSP.",
-          "stream_key": "Opptak gjort med strømkryptering dekrypteres med enhetens verifiseringskode, som leses fra enheten. Skriv den inn her bare hvis enheten ikke oppgir den, slik mange kameraer ikke gjør."
+          "stream_key": "Opptak gjort med strømkryptering dekrypteres med enhetens verifiseringskode, som leses fra enheten. Skriv den inn her bare hvis enheten ikke oppgir den, slik mange kameraer ikke gjør.",
+          "sidebar_panel": "Gjelder alle enheter og kontoer i denne integrasjonen. Dashbordkortet er fortsatt tilgjengelig.",
+          "panel_admin_only": "Brukere uten administratorrettigheter ser ikke lenger panelet. Gjelder alle enheter og kontoer."
         }
       },
       "webhook": {
         "title": "Webhook",
         "description": "Varsler tas imot på {path} (bare lokalt nettverk). Bruk handlingen 'Angi varslingsvert' eller enhetens nettgrensesnitt for å peke enheten dit."
       }
-    },
-    "abort": {
-      "no_options": "En Hik-Connect-konto har ingen alternativer."
     }
   },
   "config_subentries": {

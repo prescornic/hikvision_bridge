@@ -120,22 +120,23 @@
           "rtsp_transport": "RTSP-Transport",
           "target_sensors": "Eigene Sensoren für Personen und Fahrzeuge",
           "playback": "Wiedergabe im Medienbrowser",
-          "stream_key": "Verifizierungscode (verschlüsselte Aufnahmen)"
+          "stream_key": "Verifizierungscode (verschlüsselte Aufnahmen)",
+          "sidebar_panel": "Hikvision-Panel in der Seitenleiste anzeigen",
+          "panel_admin_only": "Nur Administratoren sehen das Panel"
         },
         "data_description": {
           "event_path": "Der Ereignis-Stream braucht keine Änderung am Gerät. Der Webhook setzt voraus, dass das Gerät an Home Assistant sendet.",
           "hold_seconds": "Viele Geräte melden nur den Beginn einer Erkennung; der Sensor bleibt so lange nach der letzten Meldung an.",
           "playback": "Aufnahmen sind H.265 oder H.264. „MP4 wie aufgenommen“ startet sofort, Browser spielen H.265 aber nur mit Hardwareunterstützung. „In H.264 umwandeln“ läuft überall und braucht viel CPU. „Vom Gerät streamen“ lässt das Gerät die Aufnahme per RTSP abspielen.",
-          "stream_key": "Mit Stream-Verschlüsselung aufgenommene Aufnahmen werden mit dem Verifizierungscode des Geräts entschlüsselt, der vom Gerät gelesen wird. Trage ihn hier nur ein, wenn das Gerät ihn nicht meldet, wie viele Kameras."
+          "stream_key": "Mit Stream-Verschlüsselung aufgenommene Aufnahmen werden mit dem Verifizierungscode des Geräts entschlüsselt, der vom Gerät gelesen wird. Trage ihn hier nur ein, wenn das Gerät ihn nicht meldet, wie viele Kameras.",
+          "sidebar_panel": "Gilt für alle Geräte und Konten dieser Integration. Die Dashboard-Karte bleibt verfügbar.",
+          "panel_admin_only": "Benutzer ohne Administratorrechte sehen das Panel nicht mehr. Gilt für alle Geräte und Konten."
         }
       },
       "webhook": {
         "title": "Webhook",
         "description": "Meldungen werden unter {path} angenommen (nur lokales Netz). Das Gerät per Aktion „Benachrichtigungsziel setzen“ oder über seine Weboberfläche dorthin zeigen lassen."
       }
-    },
-    "abort": {
-      "no_options": "Ein Hik-Connect-Konto hat keine Optionen."
     }
   },
   "config_subentries": {

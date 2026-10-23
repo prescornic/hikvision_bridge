@@ -141,6 +141,9 @@ jump in time, scroll to zoom from 24 hours down to 15 minutes; the buttons step 
 10 seconds back and forward. *Live* returns to the live picture. The download button saves the
 recording that is playing.
 
+The options *Show the Hikvision panel in the sidebar* and *Only administrators see the panel*
+(see [Options](#options)) remove the entry or limit it to administrators.
+
 Quality defaults to **Auto**:
 
 * **Live** starts with the sub stream, which loads fastest, and switches to the main stream once the
@@ -249,7 +252,7 @@ matching local device when there is one.
 
 ### Options
 
-**Configure** on a device entry (not available for Hik-Connect entries):
+**Configure** on a device entry (a Hik-Connect entry only shows the two panel options):
 
 | Option | Default | Meaning |
 | --- | --- | --- |
@@ -259,6 +262,8 @@ matching local device when there is one.
 | RTSP transport | TCP | *TCP* is reliable; *UDP* can have less delay but shows artefacts on packet loss |
 | Separate sensors for people and vehicles | off | Adds person and vehicle binary sensors for detections with a target filter |
 | Playback in the media browser | MP4 as recorded | *MP4 as recorded*, *Convert to H.264* or *Stream from the device*, see [Recordings](#recordings) |
+| Show the Hikvision panel in the sidebar | on | Removes the sidebar entry when off; the dashboard card keeps working. Applies to all entries of the integration |
+| Only administrators see the panel | off | Hides the sidebar entry from users without administrator rights. Applies to all entries of the integration |
 
 When *Webhook* or *Both* is chosen, the next step shows the address `/api/webhook/<id>` where
 notifications are accepted (local network only, POST or PUT). Point the device there in its web

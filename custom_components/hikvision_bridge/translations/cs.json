@@ -120,22 +120,23 @@
           "rtsp_transport": "Přenos RTSP",
           "target_sensors": "Samostatné senzory pro osoby a vozidla",
           "playback": "Přehrávání v prohlížeči médií",
-          "stream_key": "Ověřovací kód (šifrované záznamy)"
+          "stream_key": "Ověřovací kód (šifrované záznamy)",
+          "sidebar_panel": "Zobrazit panel Hikvision v postranním panelu",
+          "panel_admin_only": "Panel vidí jen správci"
         },
         "data_description": {
           "event_path": "Stream událostí nevyžaduje žádnou změnu v zařízení. Webhook vyžaduje, aby zařízení odesílalo do Home Assistant.",
           "hold_seconds": "Zařízení u mnoha detekcí hlásí jen začátek; senzor zůstane zapnutý tak dlouho po posledním hlášení.",
           "playback": "Záznamy jsou v H.265 nebo H.264. „MP4 jak bylo nahráno“ začne hned, ale prohlížeče přehrávají H.265 jen s hardwarovou podporou. „Převést na H.264“ funguje všude a hodně zatěžuje procesor. „Streamovat ze zařízení“ nechá zařízení přehrát záznam přes RTSP.",
-          "stream_key": "Záznamy pořízené se šifrováním streamu se dešifrují ověřovacím kódem zařízení, který se čte ze zařízení. Zadejte ho sem jen tehdy, když ho zařízení neuvádí, jako mnoho kamer."
+          "stream_key": "Záznamy pořízené se šifrováním streamu se dešifrují ověřovacím kódem zařízení, který se čte ze zařízení. Zadejte ho sem jen tehdy, když ho zařízení neuvádí, jako mnoho kamer.",
+          "sidebar_panel": "Platí pro všechna zařízení a účty této integrace. Karta na nástěnce zůstává dostupná.",
+          "panel_admin_only": "Uživatelé bez práv správce panel neuvidí. Platí pro všechna zařízení a účty."
         }
       },
       "webhook": {
         "title": "Webhook",
         "description": "Oznámení jsou přijímána na {path} (pouze místní síť). Pomocí akce „Nastavit hostitele oznámení“ nebo webového rozhraní zařízení jej tam nasměrujte."
       }
-    },
-    "abort": {
-      "no_options": "Účet Hik-Connect nemá žádné možnosti."
     }
   },
   "config_subentries": {

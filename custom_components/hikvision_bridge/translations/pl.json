@@ -120,22 +120,23 @@
           "rtsp_transport": "Transport RTSP",
           "target_sensors": "Osobne czujniki dla osób i pojazdów",
           "playback": "Odtwarzanie w przeglądarce multimediów",
-          "stream_key": "Kod weryfikacyjny (zaszyfrowane nagrania)"
+          "stream_key": "Kod weryfikacyjny (zaszyfrowane nagrania)",
+          "sidebar_panel": "Pokaż panel Hikvision na pasku bocznym",
+          "panel_admin_only": "Panel widzą tylko administratorzy"
         },
         "data_description": {
           "event_path": "Strumień zdarzeń nie wymaga zmian w urządzeniu. Webhook wymaga, aby urządzenie wysyłało do Home Assistant.",
           "hold_seconds": "Urządzenia zgłaszają tylko początek wielu wykryć; czujnik pozostaje włączony tak długo po ostatnim zgłoszeniu.",
           "playback": "Nagrania są w H.265 lub H.264. „MP4 jak nagrano” startuje od razu, ale przeglądarki odtwarzają H.265 tylko przy wsparciu sprzętowym. „Konwertuj do H.264” działa wszędzie i mocno obciąża procesor. „Strumień z urządzenia” pozwala urządzeniu odtworzyć nagranie przez RTSP.",
-          "stream_key": "Nagrania wykonane z szyfrowaniem strumienia są odszyfrowywane kodem weryfikacyjnym urządzenia, odczytywanym z urządzenia. Wpisz go tutaj tylko wtedy, gdy urządzenie go nie podaje, jak wiele kamer."
+          "stream_key": "Nagrania wykonane z szyfrowaniem strumienia są odszyfrowywane kodem weryfikacyjnym urządzenia, odczytywanym z urządzenia. Wpisz go tutaj tylko wtedy, gdy urządzenie go nie podaje, jak wiele kamer.",
+          "sidebar_panel": "Dotyczy wszystkich urządzeń i kont tej integracji. Karta pulpitu pozostaje dostępna.",
+          "panel_admin_only": "Użytkownicy bez uprawnień administratora nie widzą już panelu. Dotyczy wszystkich urządzeń i kont."
         }
       },
       "webhook": {
         "title": "Webhook",
         "description": "Powiadomienia są przyjmowane pod adresem {path} (tylko sieć lokalna). Użyj akcji „Ustaw host powiadomień” lub interfejsu WWW urządzenia, aby je tam skierować."
       }
-    },
-    "abort": {
-      "no_options": "Konto Hik-Connect nie ma opcji."
     }
   },
   "config_subentries": {

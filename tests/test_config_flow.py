@@ -8,7 +8,9 @@ from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_PORT, CONF_USERNAME
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
+from custom_components.hikvision_bridge import panel
 from custom_components.hikvision_bridge.cloud.account import CaptchaRequired, CloudAuthFailed
 from custom_components.hikvision_bridge.const import (
     CONF_ACCOUNT,
@@ -19,6 +21,8 @@ from custom_components.hikvision_bridge.const import (
     DOMAIN,
     KIND_CLOUD,
     KIND_DEVICE,
+    OPT_PANEL_ADMIN_ONLY,
+    OPT_SIDEBAR_PANEL,
 )
 from tests.conftest import device_entry
 from tests.fakedevice import FakeDevice
@@ -190,3 +194,36 @@ async def test_cloud_flow_bad_login_and_captcha(hass: HomeAssistant) -> None:
         )
     assert result["type"] is FlowResultType.CREATE_ENTRY
     assert mocked.call_args.kwargs == {"captcha": "1234"}
+
+
+async def test_panel_options_apply_to_the_sidebar(hass: HomeAssistant, hass_storage) -> None:
+    from homeassistant.components.frontend import DATA_PANELS  # noqa: PLC0415
+
+    state = panel._state(hass)
+    state.url = "/hikvision_bridge_static/hikvision-bridge.js"
+    await panel._async_apply(hass)
+    assert not hass.data[DATA_PANELS][panel.PANEL_PATH].require_admin
+
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_ENTRY_KIND: KIND_CLOUD}, title="Cloud")
+    entry.add_to_hass(hass)
+
+    async def configure(**values: bool) -> None:
+        form = await hass.config_entries.options.async_init(entry.entry_id)
+        assert set(form["data_schema"].schema) == {OPT_SIDEBAR_PANEL, OPT_PANEL_ADMIN_ONLY}
+        result = await hass.config_entries.options.async_configure(form["flow_id"], values)
+        assert result["type"] is FlowResultType.CREATE_ENTRY
+        assert result["data"] == {}
+
+    await configure(sidebar_panel=True, panel_admin_only=True)
+    assert hass.data[DATA_PANELS][panel.PANEL_PATH].require_admin
+    await configure(sidebar_panel=False, panel_admin_only=True)
+    assert panel.PANEL_PATH not in hass.data[DATA_PANELS]
+    assert hass_storage[panel.STORE_KEY]["data"] == {
+        OPT_SIDEBAR_PANEL: False,
+        OPT_PANEL_ADMIN_ONLY: True,
+    }
+
+    # After a restart the stored choice holds.
+    del hass.data[panel.DATA_PANEL]
+    await panel.async_register_frontend(hass)
+    assert panel.panel_settings(hass)[OPT_SIDEBAR_PANEL] is False

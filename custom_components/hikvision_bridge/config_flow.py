@@ -46,9 +46,11 @@ from .const import (
     KIND_DEVICE,
     OPT_EVENT_PATH,
     OPT_HOLD_SECONDS,
+    OPT_PANEL_ADMIN_ONLY,
     OPT_PLAYBACK,
     OPT_RTSP_PORT,
     OPT_RTSP_TRANSPORT,
+    OPT_SIDEBAR_PANEL,
     OPT_STREAM_KEY,
     OPT_TARGET_SENSORS,
     OPT_WEBHOOK_ID,
@@ -63,6 +65,7 @@ from .const import (
 )
 from .model.discover import read_identity_only
 from .model.inventory import Identity
+from .panel import PANEL_DEFAULTS, async_set_panel_settings, panel_settings
 from .wire import faults
 from .wire.link import Endpoint, IsapiLink
 
@@ -450,12 +453,24 @@ class BridgeConfigFlow(ConfigFlow, domain=DOMAIN):
         )
 
 
+def _panel_fields(hass: HomeAssistant) -> dict[Any, Any]:
+    """The sidebar panel serves all entries; every entry's options show the same settings."""
+    current = panel_settings(hass)
+    return {
+        vol.Required(OPT_SIDEBAR_PANEL, default=current[OPT_SIDEBAR_PANEL]): bool,
+        vol.Required(OPT_PANEL_ADMIN_ONLY, default=current[OPT_PANEL_ADMIN_ONLY]): bool,
+    }
+
+
 class BridgeOptionsFlow(OptionsFlow):
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        if self.config_entry.data.get(CONF_ENTRY_KIND) == KIND_CLOUD:
-            return self.async_abort(reason="no_options")
         options = dict(self.config_entry.options)
         if user_input is not None:
+            user_input = dict(user_input)
+            await async_set_panel_settings(
+                self.hass,
+                {key: user_input.pop(key) for key in PANEL_DEFAULTS if key in user_input},
+            )
             options.update(user_input)
             if not user_input.get(OPT_STREAM_KEY):
                 options.pop(OPT_STREAM_KEY, None)
@@ -464,6 +479,10 @@ class BridgeOptionsFlow(OptionsFlow):
                 self._options = options
                 return await self.async_step_webhook()
             return self.async_create_entry(data=options)
+        if self.config_entry.data.get(CONF_ENTRY_KIND) == KIND_CLOUD:
+            return self.async_show_form(
+                step_id="init", data_schema=vol.Schema(_panel_fields(self.hass))
+            )
         schema = vol.Schema(
             {
                 vol.Required(
@@ -503,6 +522,7 @@ class BridgeOptionsFlow(OptionsFlow):
                 ): selector.TextSelector(
                     selector.TextSelectorConfig(type=selector.TextSelectorType.PASSWORD)
                 ),
+                **_panel_fields(self.hass),
             }
         )
         return self.async_show_form(step_id="init", data_schema=schema)

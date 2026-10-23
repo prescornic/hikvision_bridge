@@ -120,22 +120,23 @@
           "rtsp_transport": "RTSP-átvitel",
           "target_sensors": "Külön érzékelők személyekhez és járművekhez",
           "playback": "Lejátszás a médiaböngészőben",
-          "stream_key": "Ellenőrző kód (titkosított felvételek)"
+          "stream_key": "Ellenőrző kód (titkosított felvételek)",
+          "sidebar_panel": "Hikvision panel megjelenítése az oldalsávban",
+          "panel_admin_only": "A panelt csak a rendszergazdák látják"
         },
         "data_description": {
           "event_path": "Az eseményfolyam nem igényel módosítást az eszközön. A webhookhoz az eszköznek a Home Assistantnak kell küldenie.",
           "hold_seconds": "Az eszközök sok észlelésnél csak a kezdetet jelentik; az érzékelő ennyi ideig bekapcsolva marad az utolsó jelzés után.",
           "playback": "A felvételek H.265 vagy H.264 formátumúak. Az „MP4 felvett formában” azonnal indul, de a böngészők a H.265-öt csak hardveres támogatással játsszák le. Az „Átalakítás H.264-re” mindenhol működik, és sok processzort igényel. A „Streamelés az eszközről” az eszközzel játszatja le a felvételt RTSP-n keresztül.",
-          "stream_key": "A streamtitkosítással készült felvételeket az eszköz ellenőrző kódjával fejtjük vissza, amelyet az eszközről olvasunk ki. Csak akkor add meg itt, ha az eszköz nem közli, ahogy sok kamera sem."
+          "stream_key": "A streamtitkosítással készült felvételeket az eszköz ellenőrző kódjával fejtjük vissza, amelyet az eszközről olvasunk ki. Csak akkor add meg itt, ha az eszköz nem közli, ahogy sok kamera sem.",
+          "sidebar_panel": "Az integráció összes eszközére és fiókjára vonatkozik. Az irányítópult-kártya továbbra is elérhető.",
+          "panel_admin_only": "A rendszergazdai jogok nélküli felhasználók többé nem látják a panelt. Minden eszközre és fiókra vonatkozik."
         }
       },
       "webhook": {
         "title": "Webhook",
         "description": "Az értesítések fogadása itt történik: {path} (csak helyi hálózat). Az eszközt a „Értesítési gazdagép beállítása” művelettel vagy az eszköz webes felületén irányíthatja ide."
       }
-    },
-    "abort": {
-      "no_options": "Egy Hik-Connect-fióknak nincsenek beállításai."
     }
   },
   "config_subentries": {

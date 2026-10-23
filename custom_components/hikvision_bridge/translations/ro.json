@@ -120,22 +120,23 @@
           "rtsp_transport": "Transport RTSP",
           "target_sensors": "Senzori separați pentru persoane și vehicule",
           "playback": "Redare în browserul media",
-          "stream_key": "Cod de verificare (înregistrări criptate)"
+          "stream_key": "Cod de verificare (înregistrări criptate)",
+          "sidebar_panel": "Afișează panoul Hikvision în bara laterală",
+          "panel_admin_only": "Doar administratorii văd panoul"
         },
         "data_description": {
           "event_path": "Fluxul de evenimente nu necesită modificări pe dispozitiv. Webhook-ul necesită ca dispozitivul să trimită către Home Assistant.",
           "hold_seconds": "Dispozitivele raportează doar începutul multor detecții; senzorul rămâne activ atât timp după ultima raportare.",
           "playback": "Înregistrările sunt H.265 sau H.264. „MP4 așa cum a fost înregistrat” pornește imediat, dar browserele redau H.265 doar cu suport hardware. „Convertire în H.264” funcționează oriunde și necesită mult procesor. „Flux de la dispozitiv” lasă dispozitivul să redea înregistrarea prin RTSP.",
-          "stream_key": "Înregistrările făcute cu criptarea fluxului sunt decriptate cu codul de verificare al dispozitivului, citit de pe dispozitiv. Introdu-l aici doar dacă dispozitivul nu îl raportează, ca multe camere."
+          "stream_key": "Înregistrările făcute cu criptarea fluxului sunt decriptate cu codul de verificare al dispozitivului, citit de pe dispozitiv. Introdu-l aici doar dacă dispozitivul nu îl raportează, ca multe camere.",
+          "sidebar_panel": "Se aplică tuturor dispozitivelor și conturilor acestei integrări. Cardul de pe tabloul de bord rămâne disponibil.",
+          "panel_admin_only": "Utilizatorii fără drepturi de administrator nu mai văd panoul. Se aplică tuturor dispozitivelor și conturilor."
         }
       },
       "webhook": {
         "title": "Webhook",
         "description": "Notificările sunt acceptate la {path} (doar rețea locală). Folosește acțiunea „Setează gazda de notificare” sau interfața web a dispozitivului pentru a-l direcționa acolo."
       }
-    },
-    "abort": {
-      "no_options": "Un cont Hik-Connect nu are opțiuni."
     }
   },
   "config_subentries": {
