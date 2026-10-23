@@ -153,6 +153,7 @@
             "channel_id": "レコーダーのチャンネル",
             "host": "ホスト",
             "port": "ポート（任意）",
+            "rtsp_port": "RTSP ポート（任意）",
             "connection": "接続",
             "verify_tls": "HTTPS 証明書を検証",
             "username": "ユーザー名",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Home Assistant がカメラに直接到達するアドレス（例: ルーティングされている場合はレコーダーの PoE サブネット）。",
+            "rtsp_port": "空欄の場合：ホストがレコーダーのアドレス（レコーダーのポート転送）なら上のポート、それ以外は 554。",
             "reuse_recorder_credentials": "カメラに独自の認証情報がある場合はオフのままにしてください。"
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "レコーダーのチャンネル",
             "host": "ホスト",
             "port": "ポート（任意）",
+            "rtsp_port": "RTSP ポート（任意）",
             "connection": "接続",
             "verify_tls": "HTTPS 証明書を検証",
             "username": "ユーザー名",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Home Assistant がカメラに直接到達するアドレス（例: ルーティングされている場合はレコーダーの PoE サブネット）。",
+            "rtsp_port": "空欄の場合：ホストがレコーダーのアドレス（レコーダーのポート転送）なら上のポート、それ以外は 554。",
             "reuse_recorder_credentials": "カメラに独自の認証情報がある場合はオフのままにしてください。"
           }
         }

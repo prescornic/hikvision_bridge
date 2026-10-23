@@ -8,10 +8,12 @@ from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import device_registry as dr, issue_registry as ir
+from homeassistant.helpers.entity_platform import async_get_platforms
 import pytest
 
 from custom_components.hikvision_bridge import repairs
 from custom_components.hikvision_bridge.const import DOMAIN, SUBENTRY_CHANNEL_LINK
+from custom_components.hikvision_bridge.runtime.bridge import direct_rtsp_port
 from tests.conftest import device_entry
 from tests.fakedevice import FakeDevice
 
@@ -190,3 +192,59 @@ async def test_direct_link_refuses_wrong_camera(hass: HomeAssistant, recorder, s
         },
     )
     assert result["errors"] == {"base": "wrong_camera"}
+
+
+async def _stream_source_of_direct_link(
+    hass: HomeAssistant, entry, serve, extra: dict
+) -> tuple[str, int]:
+    camera = FakeDevice("camera_g3", password="camera-own-pass")
+    server = await serve(camera)
+    result = await hass.config_entries.subentries.async_init(
+        (entry.entry_id, SUBENTRY_CHANNEL_LINK), context={"source": config_entries.SOURCE_USER}
+    )
+    result = await hass.config_entries.subentries.async_configure(
+        result["flow_id"],
+        {
+            "channel_id": "1",
+            CONF_HOST: server.host,
+            CONF_PORT: server.port,
+            "connection": "http",
+            "verify_tls": True,
+            "reuse_recorder_credentials": False,
+            CONF_USERNAME: camera.username,
+            CONF_PASSWORD: camera.password,
+            "event_source": "recorder",
+            **extra,
+        },
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    await hass.config_entries.async_reload(entry.entry_id)
+    await hass.async_block_till_done()
+    (platform,) = [p for p in async_get_platforms(hass, DOMAIN) if p.domain == "camera"]
+    main = next(
+        e for e in platform.entities.values() if e.channel_id == "1" and e._stream.rank == 1
+    )
+    return await main.stream_source(), server.port
+
+
+async def test_direct_link_streams_through_recorder_port_forwarding(
+    hass: HomeAssistant, recorder, serve
+) -> None:
+    """A camera at the recorder's address is a forwarded port, which also carries RTSP."""
+    _, entry = recorder
+    source, port = await _stream_source_of_direct_link(hass, entry, serve, {})
+    assert source.endswith(f":{port}/Streaming/Channels/101")
+
+
+async def test_direct_link_rtsp_port_can_be_set(hass: HomeAssistant, recorder, serve) -> None:
+    _, entry = recorder
+    source, _ = await _stream_source_of_direct_link(hass, entry, serve, {"rtsp_port": 65002})
+    assert source.endswith(":65002/Streaming/Channels/101")
+    (link,) = [s for s in entry.subentries.values() if s.subentry_type == SUBENTRY_CHANNEL_LINK]
+    assert link.data["rtsp_port"] == 65002
+
+
+def test_direct_link_elsewhere_uses_default_rtsp_port() -> None:
+    data = {CONF_HOST: "198.51.100.7", CONF_PORT: 80}
+    assert direct_rtsp_port(data, "203.0.113.5") == 554
+    assert direct_rtsp_port({**data, CONF_HOST: "203.0.113.5 "}, "203.0.113.5") == 80

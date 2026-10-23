@@ -229,6 +229,7 @@ detections. The channel device is then listed under its connection.
 | Recorder channel | The channel the camera is connected to (only channels without a direct connection) |
 | Host | Address under which Home Assistant reaches the camera directly |
 | Port, Connection, Verify HTTPS certificate | As for devices |
+| RTSP port (optional) | Port of the camera's live stream. Empty uses the port above when the host is the recorder's own address (the recorder forwards a port to the camera, which carries RTSP as well), otherwise 554 |
 | Use the recorder's username and password | Leave off if the camera has its own credentials |
 | Username / Password | The camera's credentials |
 | Take detections from | *Recorder* (default) or *Camera* |
@@ -259,7 +260,7 @@ matching local device when there is one.
 | --- | --- | --- |
 | How events arrive | Event stream | *Event stream*: Home Assistant keeps a connection to the device's alert stream, no change on the device needed. *Webhook*: the device sends events to Home Assistant. *Both*: stream and webhook at the same time |
 | Hold detections on for (seconds) | 5 | Many devices only report the start of a detection. The sensor stays on this long after the last report (1–300); each new report extends it |
-| RTSP port (optional) | empty | Empty uses the port reported by the device, otherwise 554. Applies to the device's own streams; direct camera connections use 554 |
+| RTSP port (optional) | empty | Empty uses the port reported by the device, otherwise 554. Applies to the device's own streams; direct camera connections have their own RTSP port |
 | RTSP transport | TCP | *TCP* is reliable; *UDP* can have less delay but shows artefacts on packet loss |
 | Separate sensors for people and vehicles | off | Adds person and vehicle binary sensors for detections with a target filter |
 | Playback in the media browser | MP4 as recorded | *MP4 as recorded*, *Convert to H.264* or *Stream from the device*, see [Recordings](#recordings) |

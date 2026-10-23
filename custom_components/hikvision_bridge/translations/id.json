@@ -153,6 +153,7 @@
             "channel_id": "Kanal perekam",
             "host": "Host",
             "port": "Port (opsional)",
+            "rtsp_port": "Port RTSP (opsional)",
             "connection": "Koneksi",
             "verify_tls": "Verifikasi sertifikat HTTPS",
             "username": "Nama pengguna",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Alamat yang digunakan Home Assistant untuk menjangkau kamera secara langsung (misalnya di subnet PoE perekam, jika dirutekan).",
+            "rtsp_port": "Kosong: port di atas jika host adalah alamat perekam (penerusan port perekam), selain itu 554.",
             "reuse_recorder_credentials": "Biarkan nonaktif jika kamera memiliki kredensialnya sendiri."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Kanal perekam",
             "host": "Host",
             "port": "Port (opsional)",
+            "rtsp_port": "Port RTSP (opsional)",
             "connection": "Koneksi",
             "verify_tls": "Verifikasi sertifikat HTTPS",
             "username": "Nama pengguna",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Alamat yang digunakan Home Assistant untuk menjangkau kamera secara langsung (misalnya di subnet PoE perekam, jika dirutekan).",
+            "rtsp_port": "Kosong: port di atas jika host adalah alamat perekam (penerusan port perekam), selain itu 554.",
             "reuse_recorder_credentials": "Biarkan nonaktif jika kamera memiliki kredensialnya sendiri."
           }
         }

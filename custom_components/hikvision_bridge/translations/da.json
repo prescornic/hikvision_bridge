@@ -153,6 +153,7 @@
             "channel_id": "Optagerkanal",
             "host": "Vært",
             "port": "Port (valgfri)",
+            "rtsp_port": "RTSP-port (valgfri)",
             "connection": "Forbindelse",
             "verify_tls": "Bekræft HTTPS-certifikat",
             "username": "Brugernavn",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Adresse, hvor Home Assistant når kameraet direkte (for eksempel i optagerens PoE-undernet, hvis det er routet).",
+            "rtsp_port": "Tom: porten ovenfor, hvis værten er optagerens adresse (optagerens portvideresendelse), ellers 554.",
             "reuse_recorder_credentials": "Lad være slået fra, hvis kameraet har egne loginoplysninger."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Optagerkanal",
             "host": "Vært",
             "port": "Port (valgfri)",
+            "rtsp_port": "RTSP-port (valgfri)",
             "connection": "Forbindelse",
             "verify_tls": "Bekræft HTTPS-certifikat",
             "username": "Brugernavn",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Adresse, hvor Home Assistant når kameraet direkte (for eksempel i optagerens PoE-undernet, hvis det er routet).",
+            "rtsp_port": "Tom: porten ovenfor, hvis værten er optagerens adresse (optagerens portvideresendelse), ellers 554.",
             "reuse_recorder_credentials": "Lad være slået fra, hvis kameraet har egne loginoplysninger."
           }
         }

@@ -116,13 +116,14 @@ class ChannelCamera(BridgeEntity, Camera):
         if not self._playable:
             return None
         link, stream_id, data = self._source()
-        port = RTSP_PORT_DEFAULT
         if link is self.bridge.link:
             port = (
                 self.bridge.entry.options.get(OPT_RTSP_PORT)
                 or self.bridge.profile.rtsp_port
                 or RTSP_PORT_DEFAULT
             )
+        else:
+            port = self.bridge.routes[self.channel_id].rtsp_port
         user = quote(data[CONF_USERNAME], safe="")
         password = quote(data[CONF_PASSWORD], safe="")
         host = link.endpoint.base.split("://", 1)[1].rsplit(":", 1)[0]

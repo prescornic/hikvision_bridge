@@ -30,6 +30,7 @@ from .const import (
     CONF_ENTRY_KIND,
     CONF_EVENT_SOURCE,
     CONF_REGION_HOST,
+    CONF_RTSP_PORT,
     CONF_SCHEME,
     CONF_SERIAL,
     CONF_VERIFY_TLS,
@@ -592,6 +593,8 @@ class ChannelLinkFlow(ConfigSubentryFlow):
                         CONF_CAMERA_SERIAL: identity.serial,
                         CONF_EVENT_SOURCE: user_input[CONF_EVENT_SOURCE],
                     }
+                    if user_input.get(CONF_RTSP_PORT):
+                        payload[CONF_RTSP_PORT] = int(user_input[CONF_RTSP_PORT])
                     title = f"{channel.name} ({channel.channel_id})"
                     if existing is not None:
                         return self.async_update_and_abort(
@@ -621,6 +624,9 @@ class ChannelLinkFlow(ConfigSubentryFlow):
                 ): str,
                 vol.Optional(
                     CONF_PORT, description={"suggested_value": defaults.get(CONF_PORT)}
+                ): vol.All(vol.Coerce(int), vol.Range(min=1, max=65535)),
+                vol.Optional(
+                    CONF_RTSP_PORT, description={"suggested_value": defaults.get(CONF_RTSP_PORT)}
                 ): vol.All(vol.Coerce(int), vol.Range(min=1, max=65535)),
                 vol.Required(
                     CONF_CONNECTION, default=defaults.get(CONF_SCHEME, CONNECTION_AUTO)

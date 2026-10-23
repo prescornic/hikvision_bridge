@@ -153,6 +153,7 @@
             "channel_id": "Canal de l'enregistreur",
             "host": "Hôte",
             "port": "Port (facultatif)",
+            "rtsp_port": "Port RTSP (facultatif)",
             "connection": "Connexion",
             "verify_tls": "Vérifier le certificat HTTPS",
             "username": "Nom d'utilisateur",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Adresse à laquelle Home Assistant joint directement la caméra (par exemple dans le sous-réseau PoE de l'enregistreur, s'il est routé).",
+            "rtsp_port": "Vide : le port ci-dessus si l'hôte est l'adresse de l'enregistreur (redirection de ports de l'enregistreur), sinon 554.",
             "reuse_recorder_credentials": "Laisser désactivé si la caméra a ses propres identifiants."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Canal de l'enregistreur",
             "host": "Hôte",
             "port": "Port (facultatif)",
+            "rtsp_port": "Port RTSP (facultatif)",
             "connection": "Connexion",
             "verify_tls": "Vérifier le certificat HTTPS",
             "username": "Nom d'utilisateur",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Adresse à laquelle Home Assistant joint directement la caméra (par exemple dans le sous-réseau PoE de l'enregistreur, s'il est routé).",
+            "rtsp_port": "Vide : le port ci-dessus si l'hôte est l'adresse de l'enregistreur (redirection de ports de l'enregistreur), sinon 554.",
             "reuse_recorder_credentials": "Laisser désactivé si la caméra a ses propres identifiants."
           }
         }

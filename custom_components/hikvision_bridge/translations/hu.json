@@ -153,6 +153,7 @@
             "channel_id": "Rögzítő csatornája",
             "host": "Gazdagép",
             "port": "Port (nem kötelező)",
+            "rtsp_port": "RTSP-port (nem kötelező)",
             "connection": "Kapcsolat",
             "verify_tls": "HTTPS-tanúsítvány ellenőrzése",
             "username": "Felhasználónév",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Az a cím, amelyen a Home Assistant közvetlenül eléri a kamerát (például a rögzítő PoE-alhálózatában, ha útválasztott).",
+            "rtsp_port": "Üresen: a fenti port, ha a gazdagép a rögzítő címe (a rögzítő porttovábbítása), egyébként 554.",
             "reuse_recorder_credentials": "Hagyja kikapcsolva, ha a kamerának saját hitelesítő adatai vannak."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Rögzítő csatornája",
             "host": "Gazdagép",
             "port": "Port (nem kötelező)",
+            "rtsp_port": "RTSP-port (nem kötelező)",
             "connection": "Kapcsolat",
             "verify_tls": "HTTPS-tanúsítvány ellenőrzése",
             "username": "Felhasználónév",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Az a cím, amelyen a Home Assistant közvetlenül eléri a kamerát (például a rögzítő PoE-alhálózatában, ha útválasztott).",
+            "rtsp_port": "Üresen: a fenti port, ha a gazdagép a rögzítő címe (a rögzítő porttovábbítása), egyébként 554.",
             "reuse_recorder_credentials": "Hagyja kikapcsolva, ha a kamerának saját hitelesítő adatai vannak."
           }
         }

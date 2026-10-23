@@ -153,6 +153,7 @@
             "channel_id": "Recorderkanaal",
             "host": "Host",
             "port": "Poort (optioneel)",
+            "rtsp_port": "RTSP-poort (optioneel)",
             "connection": "Verbinding",
             "verify_tls": "HTTPS-certificaat controleren",
             "username": "Gebruikersnaam",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Adres waarop Home Assistant de camera direct bereikt (bijvoorbeeld in het PoE-subnet van de recorder, als dat gerouteerd is).",
+            "rtsp_port": "Leeg: de poort hierboven als de host het adres van de recorder is (port forwarding van de recorder), anders 554.",
             "reuse_recorder_credentials": "Uit laten als de camera eigen inloggegevens heeft."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Recorderkanaal",
             "host": "Host",
             "port": "Poort (optioneel)",
+            "rtsp_port": "RTSP-poort (optioneel)",
             "connection": "Verbinding",
             "verify_tls": "HTTPS-certificaat controleren",
             "username": "Gebruikersnaam",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Adres waarop Home Assistant de camera direct bereikt (bijvoorbeeld in het PoE-subnet van de recorder, als dat gerouteerd is).",
+            "rtsp_port": "Leeg: de poort hierboven als de host het adres van de recorder is (port forwarding van de recorder), anders 554.",
             "reuse_recorder_credentials": "Uit laten als de camera eigen inloggegevens heeft."
           }
         }

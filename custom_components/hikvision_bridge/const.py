@@ -33,6 +33,7 @@ SUBENTRY_CHANNEL_LINK: Final = "channel_link"
 CONF_CHANNEL_ID: Final = "channel_id"
 CONF_CAMERA_SERIAL: Final = "camera_serial"
 CONF_EVENT_SOURCE: Final = "event_source"
+CONF_RTSP_PORT: Final = "rtsp_port"
 EVENT_SOURCE_RECORDER: Final = "recorder"
 EVENT_SOURCE_CAMERA: Final = "camera"
 

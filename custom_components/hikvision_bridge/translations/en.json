@@ -153,6 +153,7 @@
             "channel_id": "Recorder channel",
             "host": "Host",
             "port": "Port (optional)",
+            "rtsp_port": "RTSP port (optional)",
             "connection": "Connection",
             "verify_tls": "Verify HTTPS certificate",
             "username": "Username",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Address under which Home Assistant reaches the camera directly (for example in the recorder's PoE subnet, if routed).",
+            "rtsp_port": "Empty: the port above if the host is the recorder's address (port forwarding of the recorder), otherwise 554.",
             "reuse_recorder_credentials": "Leave off if the camera has its own credentials."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Recorder channel",
             "host": "Host",
             "port": "Port (optional)",
+            "rtsp_port": "RTSP port (optional)",
             "connection": "Connection",
             "verify_tls": "Verify HTTPS certificate",
             "username": "Username",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Address under which Home Assistant reaches the camera directly (for example in the recorder's PoE subnet, if routed).",
+            "rtsp_port": "Empty: the port above if the host is the recorder's address (port forwarding of the recorder), otherwise 554.",
             "reuse_recorder_credentials": "Leave off if the camera has its own credentials."
           }
         }

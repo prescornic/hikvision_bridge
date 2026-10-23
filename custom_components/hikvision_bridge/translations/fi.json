@@ -153,6 +153,7 @@
             "channel_id": "Tallentimen kanava",
             "host": "Isäntä",
             "port": "Portti (valinnainen)",
+            "rtsp_port": "RTSP-portti (valinnainen)",
             "connection": "Yhteys",
             "verify_tls": "Tarkista HTTPS-varmenne",
             "username": "Käyttäjätunnus",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Osoite, josta Home Assistant tavoittaa kameran suoraan (esimerkiksi tallentimen PoE-aliverkossa, jos se on reititetty).",
+            "rtsp_port": "Tyhjä: yllä oleva portti, jos isäntä on tallentimen osoite (tallentimen portinohjaus), muuten 554.",
             "reuse_recorder_credentials": "Jätä pois päältä, jos kameralla on omat tunnukset."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Tallentimen kanava",
             "host": "Isäntä",
             "port": "Portti (valinnainen)",
+            "rtsp_port": "RTSP-portti (valinnainen)",
             "connection": "Yhteys",
             "verify_tls": "Tarkista HTTPS-varmenne",
             "username": "Käyttäjätunnus",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Osoite, josta Home Assistant tavoittaa kameran suoraan (esimerkiksi tallentimen PoE-aliverkossa, jos se on reititetty).",
+            "rtsp_port": "Tyhjä: yllä oleva portti, jos isäntä on tallentimen osoite (tallentimen portinohjaus), muuten 554.",
             "reuse_recorder_credentials": "Jätä pois päältä, jos kameralla on omat tunnukset."
           }
         }

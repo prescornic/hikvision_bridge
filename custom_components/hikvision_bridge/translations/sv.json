@@ -153,6 +153,7 @@
             "channel_id": "Inspelarkanal",
             "host": "Värd",
             "port": "Port (valfritt)",
+            "rtsp_port": "RTSP-port (valfritt)",
             "connection": "Anslutning",
             "verify_tls": "Verifiera HTTPS-certifikat",
             "username": "Användarnamn",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Adress där Home Assistant når kameran direkt (till exempel i inspelarens PoE-subnät, om det är routat).",
+            "rtsp_port": "Tom: porten ovan om värden är inspelarens adress (inspelarens portvidarebefordran), annars 554.",
             "reuse_recorder_credentials": "Lämna avstängt om kameran har egna inloggningsuppgifter."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Inspelarkanal",
             "host": "Värd",
             "port": "Port (valfritt)",
+            "rtsp_port": "RTSP-port (valfritt)",
             "connection": "Anslutning",
             "verify_tls": "Verifiera HTTPS-certifikat",
             "username": "Användarnamn",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Adress där Home Assistant når kameran direkt (till exempel i inspelarens PoE-subnät, om det är routat).",
+            "rtsp_port": "Tom: porten ovan om värden är inspelarens adress (inspelarens portvidarebefordran), annars 554.",
             "reuse_recorder_credentials": "Lämna avstängt om kameran har egna inloggningsuppgifter."
           }
         }

@@ -153,6 +153,7 @@
             "channel_id": "녹화기 채널",
             "host": "호스트",
             "port": "포트(선택 사항)",
+            "rtsp_port": "RTSP 포트(선택 사항)",
             "connection": "연결",
             "verify_tls": "HTTPS 인증서 확인",
             "username": "사용자 이름",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Home Assistant가 카메라에 직접 접근하는 주소입니다(예: 라우팅된 경우 녹화기의 PoE 서브넷).",
+            "rtsp_port": "비워 두면: 호스트가 레코더 주소(레코더의 포트 포워딩)이면 위의 포트, 그렇지 않으면 554.",
             "reuse_recorder_credentials": "카메라에 자체 자격 증명이 있으면 끈 상태로 두세요."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "녹화기 채널",
             "host": "호스트",
             "port": "포트(선택 사항)",
+            "rtsp_port": "RTSP 포트(선택 사항)",
             "connection": "연결",
             "verify_tls": "HTTPS 인증서 확인",
             "username": "사용자 이름",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Home Assistant가 카메라에 직접 접근하는 주소입니다(예: 라우팅된 경우 녹화기의 PoE 서브넷).",
+            "rtsp_port": "비워 두면: 호스트가 레코더 주소(레코더의 포트 포워딩)이면 위의 포트, 그렇지 않으면 554.",
             "reuse_recorder_credentials": "카메라에 자체 자격 증명이 있으면 끈 상태로 두세요."
           }
         }

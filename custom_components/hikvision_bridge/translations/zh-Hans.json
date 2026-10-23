@@ -153,6 +153,7 @@
             "channel_id": "录像机通道",
             "host": "主机",
             "port": "端口（可选）",
+            "rtsp_port": "RTSP 端口（可选）",
             "connection": "连接",
             "verify_tls": "验证 HTTPS 证书",
             "username": "用户名",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Home Assistant 直接访问摄像机的地址（例如录像机的 PoE 子网，前提是已路由）。",
+            "rtsp_port": "留空：如果主机是录像机的地址（录像机的端口转发），则使用上方端口，否则使用 554。",
             "reuse_recorder_credentials": "如果摄像机有自己的凭据，请保持关闭。"
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "录像机通道",
             "host": "主机",
             "port": "端口（可选）",
+            "rtsp_port": "RTSP 端口（可选）",
             "connection": "连接",
             "verify_tls": "验证 HTTPS 证书",
             "username": "用户名",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Home Assistant 直接访问摄像机的地址（例如录像机的 PoE 子网，前提是已路由）。",
+            "rtsp_port": "留空：如果主机是录像机的地址（录像机的端口转发），则使用上方端口，否则使用 554。",
             "reuse_recorder_credentials": "如果摄像机有自己的凭据，请保持关闭。"
           }
         }

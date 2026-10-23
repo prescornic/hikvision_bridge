@@ -153,6 +153,7 @@
             "channel_id": "Kayıt cihazı kanalı",
             "host": "Ana bilgisayar",
             "port": "Bağlantı noktası (isteğe bağlı)",
+            "rtsp_port": "RTSP bağlantı noktası (isteğe bağlı)",
             "connection": "Bağlantı",
             "verify_tls": "HTTPS sertifikasını doğrula",
             "username": "Kullanıcı adı",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Home Assistant'ın kameraya doğrudan ulaştığı adres (örneğin yönlendirilmişse kayıt cihazının PoE alt ağında).",
+            "rtsp_port": "Boş: ana bilgisayar kaydedicinin adresiyse (kaydedicinin bağlantı noktası yönlendirmesi) yukarıdaki bağlantı noktası, aksi halde 554.",
             "reuse_recorder_credentials": "Kameranın kendi kimlik bilgileri varsa kapalı bırakın."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Kayıt cihazı kanalı",
             "host": "Ana bilgisayar",
             "port": "Bağlantı noktası (isteğe bağlı)",
+            "rtsp_port": "RTSP bağlantı noktası (isteğe bağlı)",
             "connection": "Bağlantı",
             "verify_tls": "HTTPS sertifikasını doğrula",
             "username": "Kullanıcı adı",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Home Assistant'ın kameraya doğrudan ulaştığı adres (örneğin yönlendirilmişse kayıt cihazının PoE alt ağında).",
+            "rtsp_port": "Boş: ana bilgisayar kaydedicinin adresiyse (kaydedicinin bağlantı noktası yönlendirmesi) yukarıdaki bağlantı noktası, aksi halde 554.",
             "reuse_recorder_credentials": "Kameranın kendi kimlik bilgileri varsa kapalı bırakın."
           }
         }

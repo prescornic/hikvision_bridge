@@ -153,6 +153,7 @@
             "channel_id": "Kanál rekordéru",
             "host": "Hostitel",
             "port": "Port (volitelný)",
+            "rtsp_port": "Port RTSP (volitelný)",
             "connection": "Připojení",
             "verify_tls": "Ověřovat certifikát HTTPS",
             "username": "Uživatelské jméno",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Adresa, na které Home Assistant kameru přímo dosáhne (například v PoE podsíti rekordéru, pokud je směrována).",
+            "rtsp_port": "Prázdné: port výše, pokud je hostitel adresou rekordéru (přesměrování portů rekordéru), jinak 554.",
             "reuse_recorder_credentials": "Ponechte vypnuté, pokud má kamera vlastní přihlašovací údaje."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Kanál rekordéru",
             "host": "Hostitel",
             "port": "Port (volitelný)",
+            "rtsp_port": "Port RTSP (volitelný)",
             "connection": "Připojení",
             "verify_tls": "Ověřovat certifikát HTTPS",
             "username": "Uživatelské jméno",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Adresa, na které Home Assistant kameru přímo dosáhne (například v PoE podsíti rekordéru, pokud je směrována).",
+            "rtsp_port": "Prázdné: port výše, pokud je hostitel adresou rekordéru (přesměrování portů rekordéru), jinak 554.",
             "reuse_recorder_credentials": "Ponechte vypnuté, pokud má kamera vlastní přihlašovací údaje."
           }
         }

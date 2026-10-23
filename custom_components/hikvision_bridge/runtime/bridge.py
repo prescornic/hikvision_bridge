@@ -17,6 +17,7 @@ from ..const import (
     CONF_CAMERA_SERIAL,
     CONF_CHANNEL_ID,
     CONF_EVENT_SOURCE,
+    CONF_RTSP_PORT,
     CONF_SCHEME,
     CONF_VERIFY_TLS,
     DEFAULT_HOLD_SECONDS,
@@ -26,6 +27,7 @@ from ..const import (
     EVENT_SOURCE_CAMERA,
     OPT_EVENT_PATH,
     OPT_HOLD_SECONDS,
+    RTSP_PORT_DEFAULT,
     SCHEME_HTTPS,
     SUBENTRY_CHANNEL_LINK,
 )
@@ -59,6 +61,19 @@ def build_link(hass: HomeAssistant, data: dict) -> IsapiLink:
     )
 
 
+def direct_rtsp_port(data: dict, recorder_host: str) -> int:
+    """RTSP port of a direct camera connection.
+
+    A camera at the recorder's own address is reached through the recorder's port forwarding,
+    which carries RTSP on the same port as HTTP.
+    """
+    if data.get(CONF_RTSP_PORT):
+        return int(data[CONF_RTSP_PORT])
+    if data[CONF_HOST].strip().lower() == recorder_host.strip().lower():
+        return int(data[CONF_PORT])
+    return RTSP_PORT_DEFAULT
+
+
 @dataclass(slots=True)
 class ChannelRoute:
     """A direct connection to the camera behind a recorder channel."""
@@ -67,6 +82,7 @@ class ChannelRoute:
     channel_id: str
     link: IsapiLink
     remote_channel: str = "1"
+    rtsp_port: int = RTSP_PORT_DEFAULT
     events_from_camera: bool = False
     healthy: bool = True
 
@@ -144,6 +160,7 @@ class DeviceBridge:
                 subentry_id=subentry.subentry_id,
                 channel_id=channel_id,
                 link=build_link(self.hass, data),
+                rtsp_port=direct_rtsp_port(data, self.link.endpoint.host),
                 events_from_camera=data.get(CONF_EVENT_SOURCE) == EVENT_SOURCE_CAMERA,
             )
             self.routes[channel_id] = route

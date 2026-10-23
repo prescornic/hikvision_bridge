@@ -114,7 +114,7 @@ def sources(bridge: DeviceBridge, channel_id: str) -> list[PlaybackSource]:
                         route.link,
                         recordings.track_of(route.remote_channel),
                         dict(sub.data),
-                        RTSP_PORT_DEFAULT,
+                        route.rtsp_port,
                     )
                 )
     elif profile.storage:

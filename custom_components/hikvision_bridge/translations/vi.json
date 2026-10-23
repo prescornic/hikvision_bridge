@@ -153,6 +153,7 @@
             "channel_id": "Kênh đầu ghi",
             "host": "Máy chủ",
             "port": "Cổng (tùy chọn)",
+            "rtsp_port": "Cổng RTSP (tùy chọn)",
             "connection": "Kết nối",
             "verify_tls": "Xác minh chứng chỉ HTTPS",
             "username": "Tên người dùng",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Địa chỉ mà Home Assistant truy cập trực tiếp camera (ví dụ trong mạng con PoE của đầu ghi, nếu được định tuyến).",
+            "rtsp_port": "Để trống: cổng ở trên nếu máy chủ là địa chỉ của đầu ghi (chuyển tiếp cổng của đầu ghi), nếu không thì 554.",
             "reuse_recorder_credentials": "Để tắt nếu camera có thông tin đăng nhập riêng."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Kênh đầu ghi",
             "host": "Máy chủ",
             "port": "Cổng (tùy chọn)",
+            "rtsp_port": "Cổng RTSP (tùy chọn)",
             "connection": "Kết nối",
             "verify_tls": "Xác minh chứng chỉ HTTPS",
             "username": "Tên người dùng",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Địa chỉ mà Home Assistant truy cập trực tiếp camera (ví dụ trong mạng con PoE của đầu ghi, nếu được định tuyến).",
+            "rtsp_port": "Để trống: cổng ở trên nếu máy chủ là địa chỉ của đầu ghi (chuyển tiếp cổng của đầu ghi), nếu không thì 554.",
             "reuse_recorder_credentials": "Để tắt nếu camera có thông tin đăng nhập riêng."
           }
         }

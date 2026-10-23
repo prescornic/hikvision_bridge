@@ -153,6 +153,7 @@
             "channel_id": "Canal del grabador",
             "host": "Host",
             "port": "Puerto (opcional)",
+            "rtsp_port": "Puerto RTSP (opcional)",
             "connection": "Conexión",
             "verify_tls": "Verificar el certificado HTTPS",
             "username": "Usuario",
@@ -162,6 +163,7 @@
           },
           "data_description": {
             "host": "Dirección con la que Home Assistant llega directamente a la cámara (por ejemplo en la subred PoE del grabador, si está enrutada).",
+            "rtsp_port": "Vacío: el puerto de arriba si el host es la dirección del grabador (reenvío de puertos del grabador); si no, 554.",
             "reuse_recorder_credentials": "Dejar desactivado si la cámara tiene sus propias credenciales."
           }
         },
@@ -172,6 +174,7 @@
             "channel_id": "Canal del grabador",
             "host": "Host",
             "port": "Puerto (opcional)",
+            "rtsp_port": "Puerto RTSP (opcional)",
             "connection": "Conexión",
             "verify_tls": "Verificar el certificado HTTPS",
             "username": "Usuario",
@@ -181,6 +184,7 @@
           },
           "data_description": {
             "host": "Dirección con la que Home Assistant llega directamente a la cámara (por ejemplo en la subred PoE del grabador, si está enrutada).",
+            "rtsp_port": "Vacío: el puerto de arriba si el host es la dirección del grabador (reenvío de puertos del grabador); si no, 554.",
             "reuse_recorder_credentials": "Dejar desactivado si la cámara tiene sus propias credenciales."
           }
         }
