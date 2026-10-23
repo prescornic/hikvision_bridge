@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "Adres IP"
+      },
+      "license_plate": {
+        "name": "Tablica rejestracyjna"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Czas parkowania"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Zdjęcie pojazdu"
+      },
+      "anpr_plate_picture": {
+        "name": "Zdjęcie tablicy rejestracyjnej"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg nie jest dostępny w Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Urządzenie nie jest teraz skonfigurowane. Sprawdź, czy jest osiągalne, i spróbuj ponownie."
     }
   },
   "selector": {

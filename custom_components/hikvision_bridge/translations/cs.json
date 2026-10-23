@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP adresa"
+      },
+      "license_plate": {
+        "name": "SPZ"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Doba do parkování"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Snímek vozidla"
+      },
+      "anpr_plate_picture": {
+        "name": "Snímek SPZ"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg není v Home Assistant k dispozici."
+    },
+    "device_not_ready": {
+      "message": "Zařízení teď není nastavené. Zkontrolujte, zda je dostupné, a zkuste to znovu."
     }
   },
   "selector": {

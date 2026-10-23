@@ -42,7 +42,12 @@
       "cpu_load": { "default": "mdi:cpu-64-bit" },
       "memory_use": { "default": "mdi:memory" },
       "reboots": { "default": "mdi:restart-alert" },
-      "network_address": { "default": "mdi:ip-network-outline" }
+      "network_address": { "default": "mdi:ip-network-outline" },
+      "license_plate": { "default": "mdi:card-text-outline" }
+    },
+    "image": {
+      "anpr_scene_picture": { "default": "mdi:car-side" },
+      "anpr_plate_picture": { "default": "mdi:card-text-outline" }
     },
     "button": {
       "rescan": { "default": "mdi:magnify-scan" },

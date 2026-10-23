@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP-osoite"
+      },
+      "license_plate": {
+        "name": "Rekisterikilpi"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Pysäköintiaika"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Ajoneuvon kuva"
+      },
+      "anpr_plate_picture": {
+        "name": "Rekisterikilven kuva"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg ei ole käytettävissä Home Assistantissa."
+    },
+    "device_not_ready": {
+      "message": "Laitetta ei ole juuri nyt otettu käyttöön. Tarkista, että se on tavoitettavissa, ja yritä uudelleen."
     }
   },
   "selector": {

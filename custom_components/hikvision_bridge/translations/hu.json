@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP-cím"
+      },
+      "license_plate": {
+        "name": "Rendszámtábla"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Parkolási idő"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Jármű képe"
+      },
+      "anpr_plate_picture": {
+        "name": "Rendszámtábla képe"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Az ffmpeg nem érhető el a Home Assistantban."
+    },
+    "device_not_ready": {
+      "message": "Az eszköz jelenleg nincs beállítva. Ellenőrizd, hogy elérhető-e, és próbáld újra."
     }
   },
   "selector": {

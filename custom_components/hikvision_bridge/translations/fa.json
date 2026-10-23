@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "نشانی IP"
+      },
+      "license_plate": {
+        "name": "پلاک خودرو"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "زمان پارک"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "تصویر خودرو"
+      },
+      "anpr_plate_picture": {
+        "name": "تصویر پلاک"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg در Home Assistant در دسترس نیست."
+    },
+    "device_not_ready": {
+      "message": "دستگاه در حال حاضر راه‌اندازی نشده است. بررسی کنید که در دسترس باشد و دوباره تلاش کنید."
     }
   },
   "selector": {

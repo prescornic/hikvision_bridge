@@ -34,6 +34,7 @@ PLATFORMS: list[Platform] = [
     Platform.BUTTON,
     Platform.CAMERA,
     Platform.EVENT,
+    Platform.IMAGE,
     Platform.NUMBER,
     Platform.SELECT,
     Platform.SENSOR,
@@ -109,8 +110,13 @@ async def _async_setup_device(hass: HomeAssistant, entry: BridgeConfigEntry) -> 
     except BridgeFault as err:
         raise ConfigEntryNotReady(str(err)) from err
     bridge.register_devices()
+    try:
+        await bridge.refresher.async_config_entry_first_refresh()
+    except BaseException:
+        await bridge.async_shutdown()
+        raise
+    # Only a fully set up bridge is published: HA keeps runtime_data after a failed setup.
     entry.runtime_data = bridge
-    await bridge.refresher.async_config_entry_first_refresh()
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     bridge.start_feeds()

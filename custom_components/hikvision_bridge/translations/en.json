@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP address"
+      },
+      "license_plate": {
+        "name": "License plate"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Park time"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Vehicle picture"
+      },
+      "anpr_plate_picture": {
+        "name": "License plate picture"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg is not available in Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "The device is not set up right now. Check that it is reachable and try again."
     }
   },
   "selector": {

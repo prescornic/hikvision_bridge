@@ -25,6 +25,10 @@ SILENCE_LIMIT = 60.0
 BACKOFF_FIRST = 5.0
 BACKOFF_MAX = 300.0
 BACKLOG_TOLERANCE = timedelta(seconds=5)
+# How long a frame waits for the pictures it announces (ANPR sends plate and scene pictures).
+PICTURE_WAIT = 2.0
+# Values plate cameras report when they saw a vehicle but could not read its plate.
+_NO_PLATE = {"", "unknown", "noplate", "none", "无车牌"}  # last: "no plate" (zh)
 
 
 @dataclass(slots=True)
@@ -35,6 +39,17 @@ class Part:
     @property
     def content_type(self) -> str:
         return self.headers.get("content-type", "").split(";")[0].strip().lower()
+
+    @property
+    def name(self) -> str | None:
+        """File name of a picture part (``licensePlatePicture.jpg``), if the device sends one."""
+        disposition = self.headers.get("content-disposition", "")
+        for key in ("filename", "name"):
+            match = re.search(rf'(?:^|;)\s*{key}="?([^";]+)"?', disposition, flags=re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        content_id = self.headers.get("content-id", "").strip("<> ")
+        return content_id or None
 
 
 class MultipartSplitter:
@@ -119,6 +134,61 @@ class MultipartSplitter:
         return Part(headers, body)
 
 
+@dataclass(frozen=True, slots=True)
+class PlateRead:
+    """What a licence plate (ANPR) camera read for one vehicle."""
+
+    number: str | None
+    country: str | None = None
+    direction: str | None = None
+    confidence: int | None = None
+    plate_type: str | None = None
+    plate_color: str | None = None
+    vehicle_type: str | None = None
+    vehicle_color: str | None = None
+    list_name: str | None = None
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "plate": self.number,
+            "country": self.country,
+            "direction": self.direction,
+            "confidence": self.confidence,
+            "plate_type": self.plate_type,
+            "plate_color": self.plate_color,
+            "vehicle_type": self.vehicle_type,
+            "vehicle_color": self.vehicle_color,
+            "list": self.list_name,
+        }
+
+
+def _plate_number(raw: Any) -> str | None:
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    return None if text.lower() in _NO_PLATE else text
+
+
+def _list_name(raw: Any) -> str | None:
+    """allowList / blockList / otherList (older firmware: whiteList / blackList)."""
+    if raw in (None, ""):
+        return None
+    text = str(raw).strip().lower().removesuffix("list")
+    return {"white": "allow", "black": "block"}.get(text, text) or None
+
+
+def _to_int(raw: Any) -> int | None:
+    try:
+        return int(float(str(raw)))
+    except (TypeError, ValueError):
+        return None
+
+
+def picture_slot(name: str | None) -> str:
+    """Which picture a part is: the plate crop or the full scene."""
+    return "plate" if name and "plate" in name.lower() else "scene"
+
+
 @dataclass(slots=True)
 class FeedFrame:
     """One normalised notification from a device."""
@@ -135,7 +205,22 @@ class FeedFrame:
     channel_name: str | None = None
     mac: str | None = None
     picture: bytes | None = None
+    pictures: dict[str, bytes] = field(default_factory=dict)  # by picture_slot
+    pictures_expected: int = 0
+    pictures_received: int = 0
+    plate: PlateRead | None = None
     extra: dict[str, Any] = field(default_factory=dict)
+
+    def add_picture(self, data: bytes, name: str | None) -> None:
+        if self.picture is None:
+            self.picture = data
+        self.pictures.setdefault(picture_slot(name), data)
+        self.pictures_received += 1
+
+    @property
+    def pictures_complete(self) -> bool:
+        """True once every announced picture arrived (at least one when none are announced)."""
+        return self.pictures_received >= max(self.pictures_expected, 1)
 
     @property
     def is_active(self) -> bool:
@@ -166,6 +251,25 @@ def _is_duration(raw_type: str) -> bool:
     return raw_type.strip().lower() == "duration"
 
 
+def _plate_from_xml(node: XmlNode) -> PlateRead | None:
+    """Read the ``ANPR`` block of a plate notification (``vehicleInfo`` holds the vehicle)."""
+    anpr = next(node.walk("ANPR"), None)
+    if anpr is None:
+        return None
+    vehicle = anpr.first("vehicleInfo")
+    return PlateRead(
+        number=_plate_number(anpr.text("licensePlate") or anpr.text("originalLicensePlate")),
+        country=anpr.text("country"),
+        direction=anpr.text("direction"),
+        confidence=anpr.numeric("confidenceLevel"),
+        plate_type=anpr.text("plateType"),
+        plate_color=anpr.text("plateColor"),
+        vehicle_type=anpr.text("vehicleType") or (vehicle.text("vehicleType") if vehicle else None),
+        vehicle_color=vehicle.text("color") if vehicle else None,
+        list_name=_list_name(anpr.text("vehicleListName")),
+    )
+
+
 def frame_from_xml(node: XmlNode) -> FeedFrame | None:
     raw_type = node.text("eventType")
     if not raw_type:
@@ -188,6 +292,7 @@ def frame_from_xml(node: XmlNode) -> FeedFrame | None:
         or next((n.value for n in node.walk("inputIOPortID") if n.value), None)
     )
     channel = _non_empty(node.text("channelID")) or _non_empty(node.text("dynChannelID"))
+    announced = sum(1 for _ in node.walk("pictureInfo")) or node.numeric("picNum") or 0
     return FeedFrame(
         raw_type=raw_type,
         state=(node.text("eventState") or "active").lower(),
@@ -199,6 +304,8 @@ def frame_from_xml(node: XmlNode) -> FeedFrame | None:
         description=node.text("eventDescription"),
         channel_name=node.text("channelName"),
         mac=node.text("macAddress"),
+        pictures_expected=announced,
+        plate=_plate_from_xml(node),
         extra=extra,
     )
 
@@ -219,6 +326,32 @@ def _json_find(data: Any, key: str) -> Any:
             if found is not None:
                 return found
     return None
+
+
+def _json_text(data: Any, key: str) -> str | None:
+    value = _json_find(data, key)
+    return None if value in (None, "") or isinstance(value, dict | list) else str(value)
+
+
+def _plate_from_json(data: Any) -> PlateRead | None:
+    anpr = _json_find(data, "ANPR")
+    if not isinstance(anpr, dict):
+        return None
+    vehicle = _json_find(anpr, "vehicleInfo")
+    vehicle = vehicle if isinstance(vehicle, dict) else {}
+    return PlateRead(
+        number=_plate_number(
+            _json_find(anpr, "licensePlate") or _json_find(anpr, "originalLicensePlate")
+        ),
+        country=_json_text(anpr, "country"),
+        direction=_json_text(anpr, "direction"),
+        confidence=_to_int(_json_find(anpr, "confidenceLevel")),
+        plate_type=_json_text(anpr, "plateType"),
+        plate_color=_json_text(anpr, "plateColor"),
+        vehicle_type=_json_text(anpr, "vehicleType") or _json_text(vehicle, "vehicleType"),
+        vehicle_color=_json_text(vehicle, "color"),
+        list_name=_list_name(_json_find(anpr, "vehicleListName")),
+    )
 
 
 def frame_from_json(data: Any) -> FeedFrame | None:
@@ -246,6 +379,8 @@ def frame_from_json(data: Any) -> FeedFrame | None:
         description=_json_find(data, "eventDescription"),
         channel_name=_json_find(data, "channelName"),
         mac=_json_find(data, "macAddress"),
+        pictures_expected=_to_int(_json_find(data, "picNum")) or 0,
+        plate=_plate_from_json(data),
         extra=extra,
     )
 
@@ -374,25 +509,39 @@ class AlarmFeed:
             splitter = MultipartSplitter(boundary_of(response.headers.get("Content-Type", "")))
             await self._set_state(True, None)
             pending: FeedFrame | None = None
+            pending_until = 0.0
+            last_chunk = time.monotonic()
             while True:
+                wait = SILENCE_LIMIT - (time.monotonic() - last_chunk)
+                if pending is not None:
+                    wait = min(wait, pending_until - time.monotonic())
                 try:
-                    async with asyncio.timeout(SILENCE_LIMIT):
+                    async with asyncio.timeout(max(wait, 0.0)):
                         chunk = await response.content.readany()
                 except TimeoutError:
+                    if pending is not None:
+                        # The announced pictures did not all arrive: deliver what came.
+                        self._deliver(pending, connected_at)
+                        pending = None
+                        continue
                     _LOGGER.debug(
                         "Event stream of %s went silent; reconnecting", self._link.endpoint.host
                     )
                     return
                 if not chunk:
+                    if pending is not None:
+                        self._deliver(pending, connected_at)
                     return
+                last_chunk = time.monotonic()
                 for part in splitter.push(chunk):
                     item = frame_from_part(part)
                     if isinstance(item, bytes):
                         self.stats.pictures += 1
                         if pending is not None:
-                            pending.picture = item
-                            self._deliver(pending, connected_at)
-                            pending = None
+                            pending.add_picture(item, part.name)
+                            if pending.pictures_complete:
+                                self._deliver(pending, connected_at)
+                                pending = None
                         continue
                     if pending is not None:
                         self._deliver(pending, connected_at)
@@ -408,7 +557,12 @@ class AlarmFeed:
                         continue
                     # Hold the frame briefly: a picture part may follow it.
                     pending = item
-                if pending is not None and splitter_idle(splitter):
+                    pending_until = time.monotonic() + PICTURE_WAIT
+                if (
+                    pending is not None
+                    and pending.pictures_received >= pending.pictures_expected
+                    and splitter_idle(splitter)
+                ):
                     self._deliver(pending, connected_at)
                     pending = None
 

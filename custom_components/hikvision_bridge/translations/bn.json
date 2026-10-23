@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP ঠিকানা"
+      },
+      "license_plate": {
+        "name": "লাইসেন্স প্লেট"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "পার্ক সময়"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "যানবাহনের ছবি"
+      },
+      "anpr_plate_picture": {
+        "name": "লাইসেন্স প্লেটের ছবি"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Home Assistant-এ ffmpeg পাওয়া যাচ্ছে না।"
+    },
+    "device_not_ready": {
+      "message": "ডিভাইসটি এখন সেট আপ করা নেই। এটি পৌঁছানো যায় কিনা দেখুন এবং আবার চেষ্টা করুন।"
     }
   },
   "selector": {

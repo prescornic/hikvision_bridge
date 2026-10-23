@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP adresi"
+      },
+      "license_plate": {
+        "name": "Plaka"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Park süresi"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Araç görüntüsü"
+      },
+      "anpr_plate_picture": {
+        "name": "Plaka görüntüsü"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg Home Assistant'ta kullanılamıyor."
+    },
+    "device_not_ready": {
+      "message": "Cihaz şu anda kurulu değil. Erişilebilir olduğunu kontrol edip tekrar deneyin."
     }
   },
   "selector": {

@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "Adresse IP"
+      },
+      "license_plate": {
+        "name": "Plaque d'immatriculation"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Délai de stationnement"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Image du véhicule"
+      },
+      "anpr_plate_picture": {
+        "name": "Image de la plaque"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg n'est pas disponible dans Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "L'appareil n'est pas configuré pour le moment. Vérifiez qu'il est joignable et réessayez."
     }
   },
   "selector": {

@@ -36,6 +36,8 @@ class FakeDevice:
     overrides: dict[str, tuple[int, str]] = field(default_factory=dict)
     stream_parts: list[bytes] = field(default_factory=list)
     stream_hold: float = 0.0
+    # Pause between parts, so each arrives in its own read (as from a device encoding pictures).
+    stream_gap: float = 0.0
     failed_logins: int = 0
     challenges_sent: int = 0
     writes: list[tuple[str, str, str]] = field(default_factory=list)
@@ -154,7 +156,7 @@ class FakeDevice:
         await response.prepare(request)
         for part in self.stream_parts:
             await response.write(part)
-            await asyncio.sleep(0)
+            await asyncio.sleep(self.stream_gap)
         if self.stream_hold:
             await asyncio.sleep(self.stream_hold)
         return response
@@ -204,4 +206,43 @@ def event_xml(
         f"<dateTime>{when}</dateTime>\n<activePostCount>1</activePostCount>\n"
         f"<eventType>{event_type}</eventType>\n<eventState>{state}</eventState>\n"
         f"<eventDescription>test</eventDescription>\n{extra}</EventNotificationAlert>\n"
+    )
+
+
+def picture_part(data: bytes, name: str | None = None) -> bytes:
+    disposition = (
+        f'Content-Disposition: form-data; name="{name}"; filename="{name}"\r\n' if name else ""
+    )
+    return (
+        b"--boundary\r\n"
+        + f"Content-Type: image/jpeg\r\n{disposition}Content-Length: {len(data)}\r\n\r\n".encode()
+        + data
+        + b"\r\n"
+    )
+
+
+def anpr_xml(
+    plate: str = "B AB 1234",
+    channel: str = "1",
+    when: str = "2026-10-21T11:18:01+02:00",
+    pictures: tuple[str, ...] = ("licensePlatePicture.jpg", "detectionPicture.jpg"),
+) -> str:
+    """Plate notification as ANPR cameras send it (pictures follow as separate parts)."""
+    infos = "".join(
+        f"<pictureInfo><fileName>{name}</fileName><type>{name.split('.')[0]}</type></pictureInfo>"
+        for name in pictures
+    )
+    return event_xml(
+        "ANPR",
+        channel=channel,
+        when=when,
+        extra=(
+            "<ANPR>\n<country>DE</country>\n"
+            f"<licensePlate>{plate}</licensePlate>\n<line>1</line>\n<direction>forward</direction>\n"
+            "<confidenceLevel>97</confidenceLevel>\n<plateType>unknown</plateType>\n"
+            "<plateColor>white</plateColor>\n<vehicleType>vehicle</vehicleType>\n"
+            "<vehicleInfo><index>1</index><vehicleType>0</vehicleType><color>blue</color>"
+            "</vehicleInfo>\n<vehicleListName>whiteList</vehicleListName>\n"
+            f"<pictureInfoList>{infos}</pictureInfoList>\n</ANPR>\n"
+        ),
     )

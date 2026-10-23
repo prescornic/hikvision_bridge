@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP-адреса"
+      },
+      "license_plate": {
+        "name": "Номерний знак"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Час до паркування"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Знімок автомобіля"
+      },
+      "anpr_plate_picture": {
+        "name": "Знімок номерного знака"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg недоступний у Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Пристрій зараз не налаштовано. Перевірте, чи він доступний, і спробуйте ще раз."
     }
   },
   "selector": {

@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP アドレス"
+      },
+      "license_plate": {
+        "name": "ナンバープレート"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "パーク時間"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "車両画像"
+      },
+      "anpr_plate_picture": {
+        "name": "ナンバープレート画像"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Home Assistant で ffmpeg を利用できません。"
+    },
+    "device_not_ready": {
+      "message": "デバイスは現在セットアップされていません。接続できることを確認してから、もう一度お試しください。"
     }
   },
   "selector": {

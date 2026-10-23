@@ -71,6 +71,8 @@ class EventRouter:
         self._feeds_down_since: dict[str, float] = {}
         self.recent: dict[str, deque[dict[str, Any]]] = {}
         self.unknown_channels: dict[str, int] = {}
+        # Last plate notification per channel (ANPR), for the plate sensor.
+        self.last_plate: dict[str, FeedFrame] = {}
         self.latency_ms: float | None = None
 
     # ---------------------------------------------------------- availability
@@ -135,6 +137,9 @@ class EventRouter:
             self.latency_ms = round((frame.received - frame.device_time).total_seconds() * 1000)
         self._remember(scope, kind, frame)
 
+        if kind == Kind.ANPR and frame.plate is not None and frame.is_active:
+            self.last_plate[scope] = frame
+
         if frame.is_active:
             self._activate((scope, key))
             for target in frame.targets:
@@ -180,6 +185,7 @@ class EventRouter:
                 "state": frame.state,
                 "targets": list(frame.targets),
                 "region": frame.region_id,
+                "plate": frame.plate.number if frame.plate else None,
                 "device_time": frame.device_time.isoformat() if frame.device_time else None,
                 "received": frame.received.isoformat(),
             }
@@ -199,6 +205,7 @@ class EventRouter:
                 "targets": list(frame.targets),
                 "region": frame.region_id,
                 "port": frame.port_id,
+                "anpr": frame.plate.as_dict() if frame.plate else None,
                 "device_time": frame.device_time.isoformat() if frame.device_time else None,
                 "received": frame.received.isoformat(),
             },

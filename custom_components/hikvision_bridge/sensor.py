@@ -1,8 +1,9 @@
-"""Sensors: storage units, device status, network address and event latency."""
+"""Sensors: storage units, device status, network address, event latency and plates."""
 
 from __future__ import annotations
 
 from datetime import datetime, timedelta
+from typing import Any
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -18,6 +19,7 @@ from homeassistant.util import dt as dt_util
 from .entity import PolledEntity, PushEntity, add_entities
 from .model.features.health import DeviceHealth
 from .model.inventory import StorageUnit
+from .model.vocabulary import Kind
 from .runtime import identity
 from .runtime.bridge import DeviceBridge
 
@@ -55,6 +57,11 @@ async def async_setup_entry(
             if bridge.channel_address(channel_id)
         )
     entities.append(EventLatency(bridge))
+    entities.extend(
+        LicensePlate(bridge, channel.channel_id)
+        for channel in profile.channels.values()
+        if Kind.ANPR in channel.kinds
+    )
     add_entities(bridge, async_add_entities, entities)
 
 
@@ -143,6 +150,30 @@ class EventLatency(PushEntity, SensorEntity):
     @property
     def native_value(self) -> float | None:
         return self.bridge.router.latency_ms
+
+
+class LicensePlate(PushEntity, SensorEntity):
+    """The plate an ANPR camera read last; details as attributes."""
+
+    _attr_translation_key = "license_plate"
+
+    def __init__(self, bridge: DeviceBridge, channel_id: str) -> None:
+        super().__init__(bridge, channel_id, "license_plate")
+
+    @property
+    def native_value(self) -> str | None:
+        frame = self.bridge.router.last_plate.get(self.channel_id)
+        return frame.plate.number if frame and frame.plate else None
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        frame = self.bridge.router.last_plate.get(self.channel_id)
+        if frame is None or frame.plate is None:
+            return None
+        details = frame.plate.as_dict()
+        details.pop("plate")
+        details["time"] = (frame.device_time or frame.received).isoformat()
+        return details
 
 
 class _HealthBase(PolledEntity, SensorEntity):

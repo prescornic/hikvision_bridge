@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import ATTR_DEVICE_ID
 from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse, SupportsResponse
 from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
@@ -56,7 +57,11 @@ def _target_of(hass: HomeAssistant, device_id: str) -> tuple[Any, str | None]:
     if device is None:
         raise ServiceValidationError(translation_domain=DOMAIN, translation_key="unknown_device")
     entry = hass.config_entries.async_get_entry(device.config_entry_id)
-    bridge = getattr(entry, "runtime_data", None) if entry and entry.domain == DOMAIN else None
+    if entry is None or entry.domain != DOMAIN:
+        raise ServiceValidationError(translation_domain=DOMAIN, translation_key="unknown_device")
+    if entry.state is not ConfigEntryState.LOADED:
+        raise ServiceValidationError(translation_domain=DOMAIN, translation_key="device_not_ready")
+    bridge = getattr(entry, "runtime_data", None)
     if not isinstance(bridge, DeviceBridge):
         raise ServiceValidationError(translation_domain=DOMAIN, translation_key="unknown_device")
     for channel_id, registered in bridge.device_ids.items():

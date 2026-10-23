@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP-adres"
+      },
+      "license_plate": {
+        "name": "Kenteken"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Parkeertijd"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Afbeelding voertuig"
+      },
+      "anpr_plate_picture": {
+        "name": "Afbeelding kenteken"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg is niet beschikbaar in Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Het apparaat is op dit moment niet ingesteld. Controleer of het bereikbaar is en probeer het opnieuw."
     }
   },
   "selector": {

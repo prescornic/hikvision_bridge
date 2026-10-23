@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP پتہ"
+      },
+      "license_plate": {
+        "name": "لائسنس پلیٹ"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "پارک کا وقت"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "گاڑی کی تصویر"
+      },
+      "anpr_plate_picture": {
+        "name": "لائسنس پلیٹ کی تصویر"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Home Assistant میں ffmpeg دستیاب نہیں ہے۔"
+    },
+    "device_not_ready": {
+      "message": "ڈیوائس ابھی سیٹ اپ نہیں ہے۔ چیک کریں کہ وہ قابلِ رسائی ہے اور دوبارہ کوشش کریں۔"
     }
   },
   "selector": {

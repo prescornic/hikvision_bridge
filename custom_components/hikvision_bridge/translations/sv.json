@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP-adress"
+      },
+      "license_plate": {
+        "name": "Registreringsskylt"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Parkeringstid"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Bild på fordon"
+      },
+      "anpr_plate_picture": {
+        "name": "Bild på registreringsskylt"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg är inte tillgängligt i Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Enheten är inte konfigurerad just nu. Kontrollera att den går att nå och försök igen."
     }
   },
   "selector": {

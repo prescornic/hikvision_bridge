@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "Indirizzo IP"
+      },
+      "license_plate": {
+        "name": "Targa"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Tempo di parcheggio"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Immagine del veicolo"
+      },
+      "anpr_plate_picture": {
+        "name": "Immagine della targa"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg non è disponibile in Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Il dispositivo non è configurato al momento. Verifica che sia raggiungibile e riprova."
     }
   },
   "selector": {

@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "عنوان IP"
+      },
+      "license_plate": {
+        "name": "لوحة الترخيص"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "وقت التوقف"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "صورة المركبة"
+      },
+      "anpr_plate_picture": {
+        "name": "صورة لوحة الترخيص"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg غير متاح في Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "الجهاز غير مُعدّ حاليًا. تحقق من إمكانية الوصول إليه ثم حاول مرة أخرى."
     }
   },
   "selector": {

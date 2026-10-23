@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "Διεύθυνση IP"
+      },
+      "license_plate": {
+        "name": "Πινακίδα κυκλοφορίας"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Χρόνος στάθμευσης"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Εικόνα οχήματος"
+      },
+      "anpr_plate_picture": {
+        "name": "Εικόνα πινακίδας"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Το ffmpeg δεν είναι διαθέσιμο στο Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Η συσκευή δεν είναι ρυθμισμένη αυτή τη στιγμή. Ελέγξτε ότι είναι προσβάσιμη και δοκιμάστε ξανά."
     }
   },
   "selector": {

@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "Alamat IP"
+      },
+      "license_plate": {
+        "name": "Pelat nomor"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Waktu parkir"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Gambar kendaraan"
+      },
+      "anpr_plate_picture": {
+        "name": "Gambar pelat nomor"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg tidak tersedia di Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Perangkat sedang tidak disiapkan. Periksa apakah perangkat dapat dijangkau, lalu coba lagi."
     }
   },
   "selector": {

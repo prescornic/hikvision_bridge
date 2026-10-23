@@ -58,14 +58,14 @@ class DetectionEvents(BridgeEntity, EventEntity):
     def _on_hit(self, hit: Hit) -> None:
         if hit.channel != self.channel_id or hit.kind.value not in self.event_types:
             return
-        self._trigger_event(
-            hit.kind.value,
-            {
-                "targets": list(hit.frame.targets),
-                "region": hit.frame.region_id,
-                "raw_type": hit.frame.raw_type,
-            },
-        )
+        attributes = {
+            "targets": list(hit.frame.targets),
+            "region": hit.frame.region_id,
+            "raw_type": hit.frame.raw_type,
+        }
+        if hit.frame.plate is not None:
+            attributes |= hit.frame.plate.as_dict()
+        self._trigger_event(hit.kind.value, attributes)
         self.async_write_ha_state()
 
     @property

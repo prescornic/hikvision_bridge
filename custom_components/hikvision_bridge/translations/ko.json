@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP 주소"
+      },
+      "license_plate": {
+        "name": "번호판"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "파킹 시간"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "차량 이미지"
+      },
+      "anpr_plate_picture": {
+        "name": "번호판 이미지"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Home Assistant에서 ffmpeg를 사용할 수 없습니다."
+    },
+    "device_not_ready": {
+      "message": "기기가 현재 설정되어 있지 않습니다. 연결 가능한지 확인한 후 다시 시도하세요."
     }
   },
   "selector": {

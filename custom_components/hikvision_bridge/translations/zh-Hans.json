@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP 地址"
+      },
+      "license_plate": {
+        "name": "车牌"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "守望时间"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "车辆图片"
+      },
+      "anpr_plate_picture": {
+        "name": "车牌图片"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Home Assistant 中没有可用的 ffmpeg。"
+    },
+    "device_not_ready": {
+      "message": "设备当前未完成设置。请检查设备是否可访问，然后重试。"
     }
   },
   "selector": {

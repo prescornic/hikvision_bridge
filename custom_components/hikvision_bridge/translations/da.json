@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP-adresse"
+      },
+      "license_plate": {
+        "name": "Nummerplade"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Parkeringstid"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Billede af køretøj"
+      },
+      "anpr_plate_picture": {
+        "name": "Billede af nummerplade"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg er ikke tilgængelig i Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Enheden er ikke sat op lige nu. Kontrollér, at den kan nås, og prøv igen."
     }
   },
   "selector": {

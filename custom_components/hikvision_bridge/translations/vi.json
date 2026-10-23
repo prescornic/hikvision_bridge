@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "Địa chỉ IP"
+      },
+      "license_plate": {
+        "name": "Biển số xe"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "Thời gian đỗ"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "Ảnh phương tiện"
+      },
+      "anpr_plate_picture": {
+        "name": "Ảnh biển số"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "ffmpeg không có trong Home Assistant."
+    },
+    "device_not_ready": {
+      "message": "Thiết bị hiện chưa được thiết lập. Hãy kiểm tra xem có thể kết nối tới thiết bị không rồi thử lại."
     }
   },
   "selector": {

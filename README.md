@@ -42,6 +42,7 @@
 | --- | --- |
 | Detections | Binary sensor per channel and detection kind (motion, line crossing, intrusion, region entrance/exit, tamper, video loss, scene change, defocus, audio exception); optional person/vehicle sensors |
 | Event entities | One per channel, fires on every smart detection (good for automations that must not miss repeated triggers) |
+| Plate recognition (ANPR) | On channels that report plate events: last plate as a sensor (country, direction, confidence, plate and vehicle colour, allow/block list as attributes), vehicle picture and plate close-up (close-up disabled by default); the plate details are also on the event entity and the `hikvision_bridge_event` bus event |
 | Switches | Detections on/off including video loss on recorders (only the `enabled` flag is written back, everything else stays byte-identical); alarm outputs; arm/disarm alarm inputs |
 | Image settings | Day/night, supplement light, colour, WDR and more per channel (see below) |
 | Deterrence and audio | Strobe light duration and frequency, siren sound, volume and repeats, speaker and microphone volume (cameras that have them) |
@@ -353,6 +354,23 @@ actions:
       message: "Intrusion in the front yard"
 ```
 
+**Open the gate for plates on the camera's allow list**
+
+```yaml
+triggers:
+  - trigger: state
+    entity_id: event.driveway_detection
+conditions:
+  - condition: template
+    value_template: >-
+      {{ trigger.to_state.attributes.event_type == 'anpr'
+         and trigger.to_state.attributes.list == 'allow' }}
+actions:
+  - action: switch.turn_on
+    target:
+      entity_id: switch.driveway_alarm_output_1
+```
+
 ## Tested devices
 
 | Type | Model | Firmware |
@@ -405,6 +423,7 @@ Logged requests never contain passwords; still check the log before attaching it
 * Encrypted Hik-Connect live streams cannot be decoded (recordings can, see [Recordings](#recordings)).
 * In the media browser, converted playback starts at the beginning of the recorded file and cannot seek; the Hikvision panel can.
 * Cameras play one recording at a time; recordings exist only in main stream quality.
+* Plate recognition (ANPR) follows Hikvision's documented notification format but has not been verified on a real plate camera yet. Plate entities appear when the device lists `ANPR` or `vehicleDetection` among a channel's events; plate events from other channels still reach the bus event.
 
 ## Development
 

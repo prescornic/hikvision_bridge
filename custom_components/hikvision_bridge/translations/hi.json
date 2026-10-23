@@ -409,6 +409,9 @@
       },
       "network_address": {
         "name": "IP पता"
+      },
+      "license_plate": {
+        "name": "लाइसेंस प्लेट"
       }
     },
     "button": {
@@ -641,6 +644,14 @@
       "park_time": {
         "name": "पार्क समय"
       }
+    },
+    "image": {
+      "anpr_scene_picture": {
+        "name": "वाहन की तस्वीर"
+      },
+      "anpr_plate_picture": {
+        "name": "लाइसेंस प्लेट की तस्वीर"
+      }
     }
   },
   "issues": {
@@ -774,6 +785,9 @@
     },
     "no_ffmpeg": {
       "message": "Home Assistant में ffmpeg उपलब्ध नहीं है।"
+    },
+    "device_not_ready": {
+      "message": "डिवाइस अभी सेट अप नहीं है। जाँचें कि वह पहुँच में है और फिर से प्रयास करें।"
     }
   },
   "selector": {
