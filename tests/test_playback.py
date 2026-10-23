@@ -40,7 +40,13 @@ from tests.model.test_recordings import match, program_stream, result, searcher
 from tests.model.test_scrambling import CODE, recording
 
 NOW = dt_util.utcnow().replace(microsecond=0)
-START = NOW - timedelta(hours=2)
+# Clips sit at noon in the test time zone of Home Assistant, so they share one day
+# whatever the hour the tests run.
+_NOON = (NOW - timedelta(hours=2)).astimezone(dt_util.get_time_zone("US/Pacific"))
+_NOON = _NOON.replace(hour=12, minute=0, second=0)
+if NOW - timedelta(hours=2) < _NOON:
+    _NOON -= timedelta(days=1)
+START = dt_util.as_utc(_NOON)
 CLIPS = [match(START, 10, "timing", "a"), match(START + timedelta(minutes=30), 1, "motion", "b")]
 
 
@@ -62,11 +68,11 @@ def ezviz(code: str):
 
 
 def days(_method: str, body: str) -> web.Response:
-    """Only today has recordings."""
-    today = dt_util.now()
-    listed = f"<monthOfYear>{today.month}</monthOfYear>" in body
+    """Only the day of the clips has recordings."""
+    recorded_on = dt_util.as_local(START)
+    listed = f"<monthOfYear>{recorded_on.month}</monthOfYear>" in body
     day = (
-        f"<day><id>1</id><dayOfMonth>{today.day}</dayOfMonth><record>true</record></day>"
+        f"<day><id>1</id><dayOfMonth>{recorded_on.day}</dayOfMonth><record>true</record></day>"
         if listed
         else ""
     )
