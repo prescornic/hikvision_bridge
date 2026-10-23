@@ -220,10 +220,14 @@ async def _stream_source_of_direct_link(
     assert result["type"] is FlowResultType.CREATE_ENTRY
     await hass.config_entries.async_reload(entry.entry_id)
     await hass.async_block_till_done()
-    (platform,) = [p for p in async_get_platforms(hass, DOMAIN) if p.domain == "camera"]
-    main = next(
-        e for e in platform.entities.values() if e.channel_id == "1" and e._stream.rank == 1
-    )
+    # Home Assistant 2026.9 keeps the emptied camera platforms of earlier setups.
+    cameras = [
+        e
+        for p in async_get_platforms(hass, DOMAIN)
+        if p.domain == "camera"
+        for e in p.entities.values()
+    ]
+    main = next(e for e in cameras if e.channel_id == "1" and e._stream.rank == 1)
     return await main.stream_source(), server.port
 
 
