@@ -568,6 +568,9 @@
           "panoramascan": "Skanowanie panoramiczne",
           "tiltscan": "Skanowanie pionowe"
         }
+      },
+      "park_action_number": {
+        "name": "Numer akcji parkowania"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Czas parkowania"
-      },
-      "park_action_number": {
-        "name": "Numer akcji parkowania"
       }
     }
   },

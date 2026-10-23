@@ -10,7 +10,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .const import DOMAIN
 from .entity import BridgeEntity, ImageSettingEntity, add_entities, image_entities
-from .model.features import ptz
+from .model.features import park, ptz
 from .model.features.image import ImageCapability, option_key
 from .runtime.bridge import DeviceBridge
 from .wire.faults import BridgeFault
@@ -22,13 +22,21 @@ async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddConfigEntryEntitiesCallback
 ) -> None:
     bridge: DeviceBridge = entry.runtime_data
-    entities: list[BridgeEntity] = list(image_entities(bridge, "select", ImageSelect))
+    entities: list[BridgeEntity] = list(image_entities(bridge, "select", _image_select))
     entities.extend(
         PtzPresetSelect(bridge, channel.channel_id, channel.ptz.presets)
         for channel in bridge.profile.channels.values()
         if channel.ptz is not None and channel.ptz.presets
     )
     add_entities(bridge, async_add_entities, entities)
+
+
+def _image_select(
+    bridge: DeviceBridge, channel_id: str, capability: ImageCapability
+) -> ImageSettingEntity:
+    if capability.key == "park_action_number":
+        return ParkNumberSelect(bridge, channel_id, capability)
+    return ImageSelect(bridge, channel_id, capability)
 
 
 class ImageSelect(ImageSettingEntity, SelectEntity):
@@ -55,6 +63,51 @@ class ImageSelect(ImageSettingEntity, SelectEntity):
 
     async def async_select_option(self, option: str) -> None:
         await self.async_write_value(self._device_option[option])
+
+
+class ParkNumberSelect(ImageSettingEntity, SelectEntity):
+    """Number of the park action: a stored preset, a patrol or a pattern.
+
+    The choices follow the current action type; scans take no number, so the select is
+    unavailable while one is chosen.
+    """
+
+    def _numbers(self) -> dict[str, str]:
+        values = self.coordinator.data.image.get(self.channel_id, {})
+        kind = values.get("park_action_type")
+        channel = self.bridge.profile.channels.get(self.channel_id)
+        presets = channel.ptz.presets if channel is not None and channel.ptz else {}
+        span = (
+            self.capability.minimum or park.DEFAULT_NUMBER[0],
+            self.capability.maximum or park.DEFAULT_NUMBER[1],
+        )
+        return park.action_numbers(kind.value if kind else None, span, presets)
+
+    def _choices(self) -> dict[str, str]:
+        """Shown name -> number, with a current number outside the list kept as it is."""
+        choices = {name: number for number, name in self._numbers().items()}
+        current = self.current
+        if choices and current is not None and current.value not in choices.values():
+            choices.setdefault(current.value, current.value)
+        return choices
+
+    @property
+    def available(self) -> bool:
+        return super().available and bool(self._numbers())
+
+    @property
+    def options(self) -> list[str]:
+        return list(self._choices())
+
+    @property
+    def current_option(self) -> str | None:
+        current = self.current
+        if current is None:
+            return None
+        return next((n for n, v in self._choices().items() if v == current.value), None)
+
+    async def async_select_option(self, option: str) -> None:
+        await self.async_write_value(self._choices()[option])
 
 
 class PtzPresetSelect(BridgeEntity, SelectEntity):

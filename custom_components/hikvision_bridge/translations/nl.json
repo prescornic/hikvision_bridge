@@ -568,6 +568,9 @@
           "panoramascan": "Panoramascan",
           "tiltscan": "Kantelscan"
         }
+      },
+      "park_action_number": {
+        "name": "Nummer parkeeractie"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Parkeertijd"
-      },
-      "park_action_number": {
-        "name": "Nummer parkeeractie"
       }
     }
   },

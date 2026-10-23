@@ -568,6 +568,9 @@
           "panoramascan": "Panorama tarama",
           "tiltscan": "Eğim tarama"
         }
+      },
+      "park_action_number": {
+        "name": "Park eylemi numarası"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Park süresi"
-      },
-      "park_action_number": {
-        "name": "Park eylemi numarası"
       }
     }
   },

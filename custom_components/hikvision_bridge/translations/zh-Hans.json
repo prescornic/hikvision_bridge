@@ -568,6 +568,9 @@
           "panoramascan": "全景扫描",
           "tiltscan": "垂直扫描"
         }
+      },
+      "park_action_number": {
+        "name": "守望动作编号"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "守望时间"
-      },
-      "park_action_number": {
-        "name": "守望动作编号"
       }
     }
   },

@@ -568,6 +568,9 @@
           "panoramascan": "Quét toàn cảnh",
           "tiltscan": "Quét nghiêng"
         }
+      },
+      "park_action_number": {
+        "name": "Số hành động đỗ"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Thời gian đỗ"
-      },
-      "park_action_number": {
-        "name": "Số hành động đỗ"
       }
     }
   },

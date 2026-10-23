@@ -568,6 +568,9 @@
           "panoramascan": "پینوراما اسکین",
           "tiltscan": "ٹلٹ اسکین"
         }
+      },
+      "park_action_number": {
+        "name": "پارک کارروائی نمبر"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "پارک کا وقت"
-      },
-      "park_action_number": {
-        "name": "پارک کارروائی نمبر"
       }
     }
   },

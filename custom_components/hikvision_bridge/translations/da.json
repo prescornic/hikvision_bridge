@@ -568,6 +568,9 @@
           "panoramascan": "Panoramascanning",
           "tiltscan": "Vippescanning"
         }
+      },
+      "park_action_number": {
+        "name": "Parkeringshandlingens nummer"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Parkeringstid"
-      },
-      "park_action_number": {
-        "name": "Parkeringshandlingens nummer"
       }
     }
   },

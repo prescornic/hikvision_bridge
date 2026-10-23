@@ -4,13 +4,16 @@
 time and the action (preset, patrol, pattern, scans) with its number. Ranges and action types
 come from ``parkaction/capabilities`` where the device offers it; otherwise the limits of the
 web interface are used, as long as the park action document itself is readable.
+
+Type and number are one setting on the device: after a scan it stores the number 0, which a
+preset refuses. A change of type therefore sends a number the new action accepts.
 """
 
 from __future__ import annotations
 
 from ...wire.link import IsapiLink
 from ...wire.xmlview import XmlNode
-from . import patch_and_verify
+from . import patch_and_verify, ptz
 from .image import ImageCapability, ImageSetting, ImageValue, Platform
 
 PARK_PATH = "/ISAPI/PTZCtrl/channels/{ch}/parkaction"
@@ -26,7 +29,7 @@ SETTINGS: tuple[ImageSetting, ...] = (
     _s("park_action", "switch", "enabled"),
     _s("park_time", "number", "Parktime", seconds=True),
     _s("park_action_type", "select", "Action/ActionType"),
-    _s("park_action_number", "number", "Action/ActionNum"),
+    _s("park_action_number", "select", "Action/ActionNum"),
 )
 
 # Used when the device has no capability document for the park action.
@@ -42,6 +45,9 @@ DEFAULT_TYPES = (
     "panoramascan",
     "tiltscan",
 )
+# Actions that take a number, with the numbers of the web interface; scans take none.
+NUMBERED: dict[str, tuple[int, int]] = {"preset": (1, 32), "patrol": (1, 8), "pattern": (1, 4)}
+NUMBER_FIELD = "Action/ActionNum"
 
 
 def _span(node: XmlNode | None, default: tuple[int, int]) -> tuple[int, int]:
@@ -73,7 +79,7 @@ def parse_capabilities(
             "park_action_type", options=types if len(types) > 1 else DEFAULT_TYPES
         )
     if "park_action_number" in present:
-        low, high = _span(caps.first("Action/ActionNum") if caps else None, DEFAULT_NUMBER)
+        low, high = _span(caps.first(NUMBER_FIELD) if caps else None, DEFAULT_NUMBER)
         found["park_action_number"] = ImageCapability(
             "park_action_number", minimum=low, maximum=high
         )
@@ -94,6 +100,44 @@ def parse_values(document: XmlNode | None, keys: set[str] | None = None) -> dict
     return values
 
 
+def action_numbers(
+    action_type: str | None, span: tuple[int, int], presets: dict[str, str]
+) -> dict[str, str]:
+    """Numbers the action takes (number -> shown name); empty for the scans.
+
+    A preset is one of the stored presets where the channel has any. Otherwise the numbers of
+    the web interface are used, within the range the device reports.
+    """
+    kind = (action_type or "").lower()
+    if kind not in NUMBERED:
+        return {}
+    if kind == "preset" and presets:
+        return dict(presets)
+    low, high = NUMBERED[kind]
+    if max(low, span[0]) <= min(high, span[1]):
+        low, high = max(low, span[0]), min(high, span[1])
+    return {str(n): str(n) for n in range(low, high + 1)}
+
+
+async def _number_for(link: IsapiLink, channel_id: str, action_type: str) -> dict[str, str]:
+    """Number to send with a new action type: the current one if it fits, else the first."""
+    path = PARK_PATH.format(ch=channel_id)
+    document = await link.read_xml(path, optional=True)
+    if document is None or document.first(NUMBER_FIELD) is None:
+        return {}
+    caps = await link.read_xml(f"{path}/capabilities", optional=True)
+    presets = await link.read_xml(f"{ptz.BASE.format(channel_id)}/presets", optional=True)
+    numbers = action_numbers(
+        action_type,
+        _span(caps.first(NUMBER_FIELD) if caps else None, DEFAULT_NUMBER),
+        ptz.parse_presets(presets),
+    )
+    if not numbers:
+        return {}
+    current = document.text(NUMBER_FIELD)
+    return {NUMBER_FIELD: current if current in numbers else next(iter(numbers))}
+
+
 async def read_capabilities(link: IsapiLink, channel_id: str) -> dict[str, ImageCapability]:
     path = PARK_PATH.format(ch=channel_id)
     document = await link.read_xml(path, optional=True)
@@ -111,4 +155,7 @@ async def read_values(
 
 
 async def write(link: IsapiLink, channel_id: str, key: str, field: str, value: str) -> None:
-    await patch_and_verify(link, PARK_PATH.format(ch=channel_id), {field: value})
+    edits = {field: value}
+    if key == "park_action_type":
+        edits.update(await _number_for(link, channel_id, value))
+    await patch_and_verify(link, PARK_PATH.format(ch=channel_id), edits)

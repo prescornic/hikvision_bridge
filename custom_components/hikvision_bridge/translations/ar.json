@@ -568,6 +568,9 @@
           "panoramascan": "مسح بانورامي",
           "tiltscan": "مسح الإمالة"
         }
+      },
+      "park_action_number": {
+        "name": "رقم إجراء التوقف"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "وقت التوقف"
-      },
-      "park_action_number": {
-        "name": "رقم إجراء التوقف"
       }
     }
   },

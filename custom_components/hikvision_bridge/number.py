@@ -8,7 +8,7 @@ from homeassistant.const import PERCENTAGE, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from .entity import ImageSettingEntity, add_entities, image_entities
+from .entity import ImageSettingEntity, add_entities, drop_entities, image_entities
 from .model.features.image import ImageCapability
 from .runtime.bridge import DeviceBridge
 
@@ -20,6 +20,13 @@ async def async_setup_entry(
 ) -> None:
     bridge: DeviceBridge = entry.runtime_data
     add_entities(bridge, async_add_entities, image_entities(bridge, "number", ImageNumber))
+    # The park action number of earlier versions; it is a select now.
+    drop_entities(
+        hass,
+        bridge,
+        "number",
+        ((channel_id, "image_park_action_number") for channel_id in bridge.profile.channels),
+    )
 
 
 class ImageNumber(ImageSettingEntity, NumberEntity):

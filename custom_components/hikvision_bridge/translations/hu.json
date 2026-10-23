@@ -568,6 +568,9 @@
           "panoramascan": "Panoráma-pásztázás",
           "tiltscan": "Döntési pásztázás"
         }
+      },
+      "park_action_number": {
+        "name": "Parkolási művelet száma"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Parkolási idő"
-      },
-      "park_action_number": {
-        "name": "Parkolási művelet száma"
       }
     }
   },

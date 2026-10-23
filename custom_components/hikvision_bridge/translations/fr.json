@@ -568,6 +568,9 @@
           "panoramascan": "Balayage panoramique",
           "tiltscan": "Balayage vertical"
         }
+      },
+      "park_action_number": {
+        "name": "Numéro de l'action de stationnement"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Délai de stationnement"
-      },
-      "park_action_number": {
-        "name": "Numéro de l'action de stationnement"
       }
     }
   },

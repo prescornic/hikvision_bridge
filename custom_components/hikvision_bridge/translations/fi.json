@@ -568,6 +568,9 @@
           "panoramascan": "Panoraamaskannaus",
           "tiltscan": "Kallistusskannaus"
         }
+      },
+      "park_action_number": {
+        "name": "Pysäköintitoiminnon numero"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Pysäköintiaika"
-      },
-      "park_action_number": {
-        "name": "Pysäköintitoiminnon numero"
       }
     }
   },

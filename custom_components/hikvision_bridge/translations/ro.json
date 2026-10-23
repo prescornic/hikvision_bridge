@@ -568,6 +568,9 @@
           "panoramascan": "Scanare panoramică",
           "tiltscan": "Scanare înclinare"
         }
+      },
+      "park_action_number": {
+        "name": "Număr acțiune de parcare"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Timp de parcare"
-      },
-      "park_action_number": {
-        "name": "Număr acțiune de parcare"
       }
     }
   },

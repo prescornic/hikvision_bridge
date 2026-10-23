@@ -568,6 +568,9 @@
           "panoramascan": "প্যানোরামা স্ক্যান",
           "tiltscan": "টিল্ট স্ক্যান"
         }
+      },
+      "park_action_number": {
+        "name": "পার্ক অ্যাকশন নম্বর"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "পার্ক সময়"
-      },
-      "park_action_number": {
-        "name": "পার্ক অ্যাকশন নম্বর"
       }
     }
   },

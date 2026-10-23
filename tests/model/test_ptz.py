@@ -108,3 +108,19 @@ def test_park_action_without_capabilities() -> None:
     assert (found["park_time"].minimum, found["park_time"].maximum) == park.DEFAULT_TIME
     assert found["park_action_type"].options == park.DEFAULT_TYPES
     assert park.parse_capabilities(None, parse(PARK_CAPS)) == {}
+
+
+def test_park_action_numbers() -> None:
+    presets = {"1": "Gate", "3": "Preset 3"}
+    assert park.action_numbers("preset", park.DEFAULT_NUMBER, presets) == presets
+    assert list(park.action_numbers("preset", park.DEFAULT_NUMBER, {})) == [
+        str(n) for n in range(1, 33)
+    ]
+    assert list(park.action_numbers("patrol", park.DEFAULT_NUMBER, presets)) == [
+        str(n) for n in range(1, 9)
+    ]
+    assert list(park.action_numbers("Pattern", park.DEFAULT_NUMBER, {})) == ["1", "2", "3", "4"]
+    # The device's range narrows the web interface numbers.
+    assert list(park.action_numbers("preset", (1, 8), {})) == [str(n) for n in range(1, 9)]
+    assert park.action_numbers("autoscan", park.DEFAULT_NUMBER, presets) == {}
+    assert park.action_numbers(None, park.DEFAULT_NUMBER, presets) == {}

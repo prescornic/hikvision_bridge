@@ -104,7 +104,8 @@ class ImageSettingEntity(PolledEntity):
         values = dict(self.coordinator.data.image.get(self.channel_id, {}))
         values[self.capability.key] = ImageValue(current.field, value)
         self.coordinator.data.image[self.channel_id] = values
-        self.async_write_ha_state()
+        # Settings that follow this one (the park action number) show the change at once.
+        self.coordinator.async_update_listeners()
         # Other settings depend on modes (e.g. light brightness); read them all again.
         self.bridge.refresher.request_full()
         await self.bridge.refresher.async_request_refresh()

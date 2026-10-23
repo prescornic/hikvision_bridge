@@ -46,7 +46,7 @@
 | Image settings | Day/night, supplement light, colour, WDR and more per channel (see below) |
 | Deterrence and audio | Strobe light duration and frequency, siren sound, volume and repeats, speaker and microphone volume (cameras that have them) |
 | Cameras | Main/sub stream per channel, snapshots, codec and resolution as attributes |
-| PTZ | Pan/tilt/zoom step buttons and a preset select per PTZ channel (also through a recorder); motorised zoom lenses get the zoom buttons only. Park action: switch, idle time, action type (preset, patrol, pattern, scans) and its number |
+| PTZ | Pan/tilt/zoom step buttons and a preset select per PTZ channel (also through a recorder); motorised zoom lenses get the zoom buttons only. Park action: switch, idle time, action type (preset, patrol, pattern, scans) and its number, chosen from the stored presets, patrols 1–8 or patterns 1–4 (none for scans) |
 | Recorder | One HA device per channel below the recorder, channel connected, recording per channel, storage status/free/capacity, alarm inputs |
 | Health | Event connection, event delay, stream encryption, IP address, repairs for misconfigured devices (see below); uptime/last boot, CPU, memory and reboot count (diagnostic, disabled by default; firmware that reports a timestamp instead of a count shows it as the `reported_timestamp` attribute); memory card of directly connected cameras |
 | Recordings | Recorder and memory-card recordings in the media browser, by day and kind, with thumbnails; playback as MP4, as H.264 or streamed by the device; saving to the media folder (see below) |

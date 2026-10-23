@@ -568,6 +568,9 @@
           "panoramascan": "Pindai panorama",
           "tiltscan": "Pindai kemiringan"
         }
+      },
+      "park_action_number": {
+        "name": "Nomor aksi parkir"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Waktu parkir"
-      },
-      "park_action_number": {
-        "name": "Nomor aksi parkir"
       }
     }
   },

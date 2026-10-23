@@ -568,6 +568,9 @@
           "panoramascan": "اسکن پانوراما",
           "tiltscan": "اسکن شیب"
         }
+      },
+      "park_action_number": {
+        "name": "شمارهٔ عملیات پارک"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "زمان پارک"
-      },
-      "park_action_number": {
-        "name": "شمارهٔ عملیات پارک"
       }
     }
   },

@@ -568,6 +568,9 @@
           "panoramascan": "파노라마 스캔",
           "tiltscan": "틸트 스캔"
         }
+      },
+      "park_action_number": {
+        "name": "파킹 동작 번호"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "파킹 시간"
-      },
-      "park_action_number": {
-        "name": "파킹 동작 번호"
       }
     }
   },

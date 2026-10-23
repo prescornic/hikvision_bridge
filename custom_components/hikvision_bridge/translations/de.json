@@ -568,6 +568,9 @@
           "panoramascan": "Panorama-Scan",
           "tiltscan": "Neige-Scan"
         }
+      },
+      "park_action_number": {
+        "name": "Parkaktion Nummer"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Parkzeit"
-      },
-      "park_action_number": {
-        "name": "Parkaktion Nummer"
       }
     }
   },

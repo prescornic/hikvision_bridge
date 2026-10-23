@@ -568,6 +568,9 @@
           "panoramascan": "Panorama scan",
           "tiltscan": "Tilt scan"
         }
+      },
+      "park_action_number": {
+        "name": "Park action number"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Park time"
-      },
-      "park_action_number": {
-        "name": "Park action number"
       }
     }
   },

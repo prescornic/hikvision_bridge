@@ -568,6 +568,9 @@
           "panoramascan": "Varrimento panorâmico",
           "tiltscan": "Varrimento vertical"
         }
+      },
+      "park_action_number": {
+        "name": "Número da ação de estacionamento"
       }
     },
     "number": {
@@ -636,9 +639,6 @@
       },
       "park_time": {
         "name": "Tempo de estacionamento"
-      },
-      "park_action_number": {
-        "name": "Número da ação de estacionamento"
       }
     }
   },
