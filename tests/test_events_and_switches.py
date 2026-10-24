@@ -57,6 +57,38 @@ async def test_line_crossing_turns_sensor_on_and_fires_event(hass: HomeAssistant
     await hass.async_block_till_done()
 
 
+async def test_inactive_report_keeps_detection_on_for_the_hold(hass: HomeAssistant, serve) -> None:
+    now = datetime.now(UTC).isoformat(timespec="seconds")
+    device = FakeDevice(
+        "nvr",
+        stream_parts=[
+            xml_part(event_xml("fielddetection", channel="1", when=now)),
+            xml_part(event_xml("fielddetection", "inactive", channel="1", when=now)),
+        ],
+        stream_hold=2,
+    )
+    server = await serve(device)
+    entry = device_entry(server, device)
+    entry.add_to_hass(hass)
+    hass.config_entries.async_update_entry(entry, options={OPT_HOLD_SECONDS: 60})
+    bus = async_capture_events(hass, BUS_EVENT)
+
+    await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+    for _ in range(100):  # the feed runs in the background over a real socket
+        if len(bus) >= 2:
+            break
+        await asyncio.sleep(0.02)
+    await hass.async_block_till_done()
+
+    assert [event.data["state"] for event in bus] == ["active", "inactive"]
+    sensor = _entity_id(hass, entry, "binary_sensor", "_ch1_event_intrusion")
+    assert hass.states.get(sensor).state == STATE_ON
+
+    await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+
 async def test_switch_writes_back_only_the_enabled_flag(hass: HomeAssistant, serve) -> None:
     device = FakeDevice("nvr")
     server = await serve(device)

@@ -147,7 +147,8 @@ class EventRouter:
             async_dispatcher_send(
                 self.hass, signal_trigger(self._bridge.entry.entry_id), Hit(scope, kind, frame)
             )
-        else:
+        elif kind == Kind.IO:
+            # An input reports its real state; detections end when the hold runs out.
             self._deactivate((scope, key))
         if kind == Kind.STORAGE:
             self._bridge.refresher.request_full()
