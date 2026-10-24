@@ -159,11 +159,13 @@
             "username": "Usuario",
             "password": "Contraseña",
             "reuse_recorder_credentials": "Usar el usuario y la contraseña del grabador",
-            "event_source": "Tomar las detecciones de"
+            "event_source": "Tomar las detecciones de",
+            "stream_source": "Tomar la transmisión en vivo de"
           },
           "data_description": {
             "host": "Dirección con la que Home Assistant llega directamente a la cámara (por ejemplo en la subred PoE del grabador, si está enrutada).",
             "rtsp_port": "Vacío: el puerto de arriba si el host es la dirección del grabador (reenvío de puertos del grabador); si no, 554.",
+            "stream_source": "Grabador: la transmisión propia del grabador para este canal, cuando la de la cámara no es accesible. Los ajustes, las detecciones y las instantáneas siguen yendo a la cámara.",
             "reuse_recorder_credentials": "Dejar desactivado si la cámara tiene sus propias credenciales."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Usuario",
             "password": "Contraseña",
             "reuse_recorder_credentials": "Usar el usuario y la contraseña del grabador",
-            "event_source": "Tomar las detecciones de"
+            "event_source": "Tomar las detecciones de",
+            "stream_source": "Tomar la transmisión en vivo de"
           },
           "data_description": {
             "host": "Dirección con la que Home Assistant llega directamente a la cámara (por ejemplo en la subred PoE del grabador, si está enrutada).",
             "rtsp_port": "Vacío: el puerto de arriba si el host es la dirección del grabador (reenvío de puertos del grabador); si no, 554.",
+            "stream_source": "Grabador: la transmisión propia del grabador para este canal, cuando la de la cámara no es accesible. Los ajustes, las detecciones y las instantáneas siguen yendo a la cámara.",
             "reuse_recorder_credentials": "Dejar desactivado si la cámara tiene sus propias credenciales."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Grabador",
+        "camera": "Cámara"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Grabador",
         "camera": "Cámara"

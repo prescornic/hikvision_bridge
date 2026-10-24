@@ -159,11 +159,13 @@
             "username": "Gebruikersnaam",
             "password": "Wachtwoord",
             "reuse_recorder_credentials": "Gebruikersnaam en wachtwoord van de recorder gebruiken",
-            "event_source": "Detecties overnemen van"
+            "event_source": "Detecties overnemen van",
+            "stream_source": "Livestream overnemen van"
           },
           "data_description": {
             "host": "Adres waarop Home Assistant de camera direct bereikt (bijvoorbeeld in het PoE-subnet van de recorder, als dat gerouteerd is).",
             "rtsp_port": "Leeg: de poort hierboven als de host het adres van de recorder is (port forwarding van de recorder), anders 554.",
+            "stream_source": "Recorder: de eigen stream van de recorder voor dit kanaal, als de stream van de camera niet bereikbaar is. Instellingen, detecties en snapshots gaan nog steeds naar de camera.",
             "reuse_recorder_credentials": "Uit laten als de camera eigen inloggegevens heeft."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Gebruikersnaam",
             "password": "Wachtwoord",
             "reuse_recorder_credentials": "Gebruikersnaam en wachtwoord van de recorder gebruiken",
-            "event_source": "Detecties overnemen van"
+            "event_source": "Detecties overnemen van",
+            "stream_source": "Livestream overnemen van"
           },
           "data_description": {
             "host": "Adres waarop Home Assistant de camera direct bereikt (bijvoorbeeld in het PoE-subnet van de recorder, als dat gerouteerd is).",
             "rtsp_port": "Leeg: de poort hierboven als de host het adres van de recorder is (port forwarding van de recorder), anders 554.",
+            "stream_source": "Recorder: de eigen stream van de recorder voor dit kanaal, als de stream van de camera niet bereikbaar is. Instellingen, detecties en snapshots gaan nog steeds naar de camera.",
             "reuse_recorder_credentials": "Uit laten als de camera eigen inloggegevens heeft."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Recorder",
+        "camera": "Camera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Recorder",
         "camera": "Camera"

@@ -19,6 +19,7 @@ from ..const import (
     CONF_EVENT_SOURCE,
     CONF_RTSP_PORT,
     CONF_SCHEME,
+    CONF_STREAM_SOURCE,
     CONF_VERIFY_TLS,
     DEFAULT_HOLD_SECONDS,
     DOMAIN,
@@ -29,6 +30,7 @@ from ..const import (
     OPT_HOLD_SECONDS,
     RTSP_PORT_DEFAULT,
     SCHEME_HTTPS,
+    STREAM_SOURCE_RECORDER,
     SUBENTRY_CHANNEL_LINK,
 )
 from ..model import audit
@@ -84,6 +86,7 @@ class ChannelRoute:
     remote_channel: str = "1"
     rtsp_port: int = RTSP_PORT_DEFAULT
     events_from_camera: bool = False
+    stream_from_recorder: bool = False
     healthy: bool = True
 
 
@@ -162,6 +165,7 @@ class DeviceBridge:
                 link=build_link(self.hass, data),
                 rtsp_port=direct_rtsp_port(data, self.link.endpoint.host),
                 events_from_camera=data.get(CONF_EVENT_SOURCE) == EVENT_SOURCE_CAMERA,
+                stream_from_recorder=data.get(CONF_STREAM_SOURCE) == STREAM_SOURCE_RECORDER,
             )
             self.routes[channel_id] = route
             try:

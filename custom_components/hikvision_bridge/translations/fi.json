@@ -159,11 +159,13 @@
             "username": "Käyttäjätunnus",
             "password": "Salasana",
             "reuse_recorder_credentials": "Käytä tallentimen käyttäjätunnusta ja salasanaa",
-            "event_source": "Ota tunnistukset kohteesta"
+            "event_source": "Ota tunnistukset kohteesta",
+            "stream_source": "Ota suoratoisto kohteesta"
           },
           "data_description": {
             "host": "Osoite, josta Home Assistant tavoittaa kameran suoraan (esimerkiksi tallentimen PoE-aliverkossa, jos se on reititetty).",
             "rtsp_port": "Tyhjä: yllä oleva portti, jos isäntä on tallentimen osoite (tallentimen portinohjaus), muuten 554.",
+            "stream_source": "Tallennin: tallentimen oma suoratoisto tälle kanavalle, kun kameran suoratoistoon ei saada yhteyttä. Asetukset, tunnistukset ja tilannekuvat menevät edelleen kameralle.",
             "reuse_recorder_credentials": "Jätä pois päältä, jos kameralla on omat tunnukset."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Käyttäjätunnus",
             "password": "Salasana",
             "reuse_recorder_credentials": "Käytä tallentimen käyttäjätunnusta ja salasanaa",
-            "event_source": "Ota tunnistukset kohteesta"
+            "event_source": "Ota tunnistukset kohteesta",
+            "stream_source": "Ota suoratoisto kohteesta"
           },
           "data_description": {
             "host": "Osoite, josta Home Assistant tavoittaa kameran suoraan (esimerkiksi tallentimen PoE-aliverkossa, jos se on reititetty).",
             "rtsp_port": "Tyhjä: yllä oleva portti, jos isäntä on tallentimen osoite (tallentimen portinohjaus), muuten 554.",
+            "stream_source": "Tallennin: tallentimen oma suoratoisto tälle kanavalle, kun kameran suoratoistoon ei saada yhteyttä. Asetukset, tunnistukset ja tilannekuvat menevät edelleen kameralle.",
             "reuse_recorder_credentials": "Jätä pois päältä, jos kameralla on omat tunnukset."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Tallennin",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Tallennin",
         "camera": "Kamera"

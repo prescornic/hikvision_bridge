@@ -33,6 +33,7 @@ from .const import (
     CONF_RTSP_PORT,
     CONF_SCHEME,
     CONF_SERIAL,
+    CONF_STREAM_SOURCE,
     CONF_VERIFY_TLS,
     CONNECTION_AUTO,
     DEFAULT_HOLD_SECONDS,
@@ -62,6 +63,8 @@ from .const import (
     RTSP_UDP,
     SCHEME_HTTP,
     SCHEME_HTTPS,
+    STREAM_SOURCE_CAMERA,
+    STREAM_SOURCE_RECORDER,
     SUBENTRY_CHANNEL_LINK,
 )
 from .model.discover import read_identity_only
@@ -592,6 +595,7 @@ class ChannelLinkFlow(ConfigSubentryFlow):
                         CONF_CHANNEL_ID: channel.channel_id,
                         CONF_CAMERA_SERIAL: identity.serial,
                         CONF_EVENT_SOURCE: user_input[CONF_EVENT_SOURCE],
+                        CONF_STREAM_SOURCE: user_input[CONF_STREAM_SOURCE],
                     }
                     if user_input.get(CONF_RTSP_PORT):
                         payload[CONF_RTSP_PORT] = int(user_input[CONF_RTSP_PORT])
@@ -649,6 +653,15 @@ class ChannelLinkFlow(ConfigSubentryFlow):
                     selector.SelectSelectorConfig(
                         options=[EVENT_SOURCE_RECORDER, EVENT_SOURCE_CAMERA],
                         translation_key="event_source",
+                    )
+                ),
+                vol.Required(
+                    CONF_STREAM_SOURCE,
+                    default=defaults.get(CONF_STREAM_SOURCE, STREAM_SOURCE_CAMERA),
+                ): selector.SelectSelector(
+                    selector.SelectSelectorConfig(
+                        options=[STREAM_SOURCE_CAMERA, STREAM_SOURCE_RECORDER],
+                        translation_key="stream_source",
                     )
                 ),
             }

@@ -159,11 +159,13 @@
             "username": "Nome de usuário",
             "password": "Senha",
             "reuse_recorder_credentials": "Usar o usuário e a senha do gravador",
-            "event_source": "Obter as detecções de"
+            "event_source": "Obter as detecções de",
+            "stream_source": "Obter a transmissão ao vivo de"
           },
           "data_description": {
             "host": "Endereço pelo qual o Home Assistant alcança a câmera diretamente (por exemplo na sub-rede PoE do gravador, se roteada).",
             "rtsp_port": "Vazio: a porta acima se o host for o endereço do gravador (redirecionamento de portas do gravador); caso contrário, 554.",
+            "stream_source": "Gravador: a transmissão do próprio gravador para este canal, quando a da câmera não está acessível. Configurações, detecções e capturas continuam indo para a câmera.",
             "reuse_recorder_credentials": "Deixe desativado se a câmera tiver credenciais próprias."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Nome de usuário",
             "password": "Senha",
             "reuse_recorder_credentials": "Usar o usuário e a senha do gravador",
-            "event_source": "Obter as detecções de"
+            "event_source": "Obter as detecções de",
+            "stream_source": "Obter a transmissão ao vivo de"
           },
           "data_description": {
             "host": "Endereço pelo qual o Home Assistant alcança a câmera diretamente (por exemplo na sub-rede PoE do gravador, se roteada).",
             "rtsp_port": "Vazio: a porta acima se o host for o endereço do gravador (redirecionamento de portas do gravador); caso contrário, 554.",
+            "stream_source": "Gravador: a transmissão do próprio gravador para este canal, quando a da câmera não está acessível. Configurações, detecções e capturas continuam indo para a câmera.",
             "reuse_recorder_credentials": "Deixe desativado se a câmera tiver credenciais próprias."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Gravador",
+        "camera": "Câmera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Gravador",
         "camera": "Câmera"

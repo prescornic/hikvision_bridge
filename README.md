@@ -233,6 +233,7 @@ detections. The channel device is then listed under its connection.
 | Use the recorder's username and password | Leave off if the camera has its own credentials |
 | Username / Password | The camera's credentials |
 | Take detections from | *Recorder* (default) or *Camera* |
+| Take the live stream from | *Camera* (default) or *Recorder*: the recorder's own stream of this channel, for when the camera's RTSP stream is not reachable (for example behind the recorder's port forwarding). Settings, detections and snapshots still go to the camera |
 
 A direct connection can be changed later with **Reconfigure** on the subentry, or removed again.
 

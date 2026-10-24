@@ -159,11 +159,13 @@
             "username": "Benutzername",
             "password": "Passwort",
             "reuse_recorder_credentials": "Benutzername und Passwort des Rekorders verwenden",
-            "event_source": "Erkennungen übernehmen von"
+            "event_source": "Erkennungen übernehmen von",
+            "stream_source": "Livestream übernehmen von"
           },
           "data_description": {
             "host": "Adresse, unter der Home Assistant die Kamera direkt erreicht (z. B. im PoE-Netz des Rekorders, falls geroutet).",
             "rtsp_port": "Leer: der Port oben, wenn der Host die Adresse des Rekorders ist (Portweiterleitung des Rekorders), sonst 554.",
+            "stream_source": "Rekorder: der eigene Stream des Rekorders für diesen Kanal, wenn der Stream der Kamera nicht erreichbar ist. Einstellungen, Erkennungen und Schnappschüsse gehen weiterhin an die Kamera.",
             "reuse_recorder_credentials": "Aus lassen, wenn die Kamera eigene Zugangsdaten hat."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Benutzername",
             "password": "Passwort",
             "reuse_recorder_credentials": "Benutzername und Passwort des Rekorders verwenden",
-            "event_source": "Erkennungen übernehmen von"
+            "event_source": "Erkennungen übernehmen von",
+            "stream_source": "Livestream übernehmen von"
           },
           "data_description": {
             "host": "Adresse, unter der Home Assistant die Kamera direkt erreicht (z. B. im PoE-Netz des Rekorders, falls geroutet).",
             "rtsp_port": "Leer: der Port oben, wenn der Host die Adresse des Rekorders ist (Portweiterleitung des Rekorders), sonst 554.",
+            "stream_source": "Rekorder: der eigene Stream des Rekorders für diesen Kanal, wenn der Stream der Kamera nicht erreichbar ist. Einstellungen, Erkennungen und Schnappschüsse gehen weiterhin an die Kamera.",
             "reuse_recorder_credentials": "Aus lassen, wenn die Kamera eigene Zugangsdaten hat."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Rekorder",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Rekorder",
         "camera": "Kamera"

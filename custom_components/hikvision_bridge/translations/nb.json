@@ -159,11 +159,13 @@
             "username": "Brukernavn",
             "password": "Passord",
             "reuse_recorder_credentials": "Bruk opptakerens brukernavn og passord",
-            "event_source": "Hent deteksjoner fra"
+            "event_source": "Hent deteksjoner fra",
+            "stream_source": "Hent direktestrøm fra"
           },
           "data_description": {
             "host": "Adresse der Home Assistant når kameraet direkte (for eksempel i opptakerens PoE-subnett, hvis det rutes).",
             "rtsp_port": "Tom: porten ovenfor hvis verten er opptakerens adresse (opptakerens portvideresending), ellers 554.",
+            "stream_source": "Opptaker: opptakerens egen strøm for denne kanalen, når kameraets strøm ikke kan nås. Innstillinger, deteksjoner og stillbilder går fortsatt til kameraet.",
             "reuse_recorder_credentials": "La være av hvis kameraet har egen påloggingsinformasjon."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Brukernavn",
             "password": "Passord",
             "reuse_recorder_credentials": "Bruk opptakerens brukernavn og passord",
-            "event_source": "Hent deteksjoner fra"
+            "event_source": "Hent deteksjoner fra",
+            "stream_source": "Hent direktestrøm fra"
           },
           "data_description": {
             "host": "Adresse der Home Assistant når kameraet direkte (for eksempel i opptakerens PoE-subnett, hvis det rutes).",
             "rtsp_port": "Tom: porten ovenfor hvis verten er opptakerens adresse (opptakerens portvideresending), ellers 554.",
+            "stream_source": "Opptaker: opptakerens egen strøm for denne kanalen, når kameraets strøm ikke kan nås. Innstillinger, deteksjoner og stillbilder går fortsatt til kameraet.",
             "reuse_recorder_credentials": "La være av hvis kameraet har egen påloggingsinformasjon."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Opptaker",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Opptaker",
         "camera": "Kamera"

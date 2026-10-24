@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from urllib.parse import urlsplit
+
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_PORT, CONF_USERNAME
 from homeassistant.core import HomeAssistant
@@ -252,3 +254,22 @@ def test_direct_link_elsewhere_uses_default_rtsp_port() -> None:
     data = {CONF_HOST: "198.51.100.7", CONF_PORT: 80}
     assert direct_rtsp_port(data, "203.0.113.5") == 554
     assert direct_rtsp_port({**data, CONF_HOST: "203.0.113.5 "}, "203.0.113.5") == 80
+
+
+async def test_direct_link_can_leave_live_stream_on_recorder(
+    hass: HomeAssistant, recorder, serve
+) -> None:
+    """Live stream from the recorder; the direct link still serves everything else."""
+    nvr, entry = recorder
+    source, port = await _stream_source_of_direct_link(
+        hass, entry, serve, {"stream_source": "recorder"}
+    )
+    url = urlsplit(source)
+    assert (url.username, url.password) == (nvr.username, nvr.password)
+    assert f":{port}/" not in source
+    assert source.endswith("/Streaming/Channels/101")
+    bridge = entry.runtime_data
+    assert bridge.routes["1"].stream_from_recorder
+    assert bridge.route("1")[0] is bridge.routes["1"].link
+    (link,) = [s for s in entry.subentries.values() if s.subentry_type == SUBENTRY_CHANNEL_LINK]
+    assert link.data["stream_source"] == "recorder"

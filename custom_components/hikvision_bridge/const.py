@@ -34,8 +34,11 @@ CONF_CHANNEL_ID: Final = "channel_id"
 CONF_CAMERA_SERIAL: Final = "camera_serial"
 CONF_EVENT_SOURCE: Final = "event_source"
 CONF_RTSP_PORT: Final = "rtsp_port"
+CONF_STREAM_SOURCE: Final = "stream_source"
 EVENT_SOURCE_RECORDER: Final = "recorder"
 EVENT_SOURCE_CAMERA: Final = "camera"
+STREAM_SOURCE_CAMERA: Final = "camera"
+STREAM_SOURCE_RECORDER: Final = "recorder"
 
 # Options
 OPT_EVENT_PATH: Final = "event_path"

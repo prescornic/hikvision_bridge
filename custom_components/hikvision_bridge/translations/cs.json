@@ -159,11 +159,13 @@
             "username": "Uživatelské jméno",
             "password": "Heslo",
             "reuse_recorder_credentials": "Použít uživatelské jméno a heslo rekordéru",
-            "event_source": "Přebírat detekce z"
+            "event_source": "Přebírat detekce z",
+            "stream_source": "Přebírat živý stream z"
           },
           "data_description": {
             "host": "Adresa, na které Home Assistant kameru přímo dosáhne (například v PoE podsíti rekordéru, pokud je směrována).",
             "rtsp_port": "Prázdné: port výše, pokud je hostitel adresou rekordéru (přesměrování portů rekordéru), jinak 554.",
+            "stream_source": "Rekordér: vlastní stream rekordéru pro tento kanál, pokud stream kamery není dosažitelný. Nastavení, detekce a snímky jdou dál přímo do kamery.",
             "reuse_recorder_credentials": "Ponechte vypnuté, pokud má kamera vlastní přihlašovací údaje."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Uživatelské jméno",
             "password": "Heslo",
             "reuse_recorder_credentials": "Použít uživatelské jméno a heslo rekordéru",
-            "event_source": "Přebírat detekce z"
+            "event_source": "Přebírat detekce z",
+            "stream_source": "Přebírat živý stream z"
           },
           "data_description": {
             "host": "Adresa, na které Home Assistant kameru přímo dosáhne (například v PoE podsíti rekordéru, pokud je směrována).",
             "rtsp_port": "Prázdné: port výše, pokud je hostitel adresou rekordéru (přesměrování portů rekordéru), jinak 554.",
+            "stream_source": "Rekordér: vlastní stream rekordéru pro tento kanál, pokud stream kamery není dosažitelný. Nastavení, detekce a snímky jdou dál přímo do kamery.",
             "reuse_recorder_credentials": "Ponechte vypnuté, pokud má kamera vlastní přihlašovací údaje."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Rekordér",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Rekordér",
         "camera": "Kamera"

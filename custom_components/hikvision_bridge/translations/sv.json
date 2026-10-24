@@ -159,11 +159,13 @@
             "username": "Användarnamn",
             "password": "Lösenord",
             "reuse_recorder_credentials": "Använd inspelarens användarnamn och lösenord",
-            "event_source": "Hämta detekteringar från"
+            "event_source": "Hämta detekteringar från",
+            "stream_source": "Hämta livestream från"
           },
           "data_description": {
             "host": "Adress där Home Assistant når kameran direkt (till exempel i inspelarens PoE-subnät, om det är routat).",
             "rtsp_port": "Tom: porten ovan om värden är inspelarens adress (inspelarens portvidarebefordran), annars 554.",
+            "stream_source": "Inspelare: inspelarens egen ström för den här kanalen, när kamerans ström inte kan nås. Inställningar, detekteringar och ögonblicksbilder går fortfarande till kameran.",
             "reuse_recorder_credentials": "Lämna avstängt om kameran har egna inloggningsuppgifter."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Användarnamn",
             "password": "Lösenord",
             "reuse_recorder_credentials": "Använd inspelarens användarnamn och lösenord",
-            "event_source": "Hämta detekteringar från"
+            "event_source": "Hämta detekteringar från",
+            "stream_source": "Hämta livestream från"
           },
           "data_description": {
             "host": "Adress där Home Assistant når kameran direkt (till exempel i inspelarens PoE-subnät, om det är routat).",
             "rtsp_port": "Tom: porten ovan om värden är inspelarens adress (inspelarens portvidarebefordran), annars 554.",
+            "stream_source": "Inspelare: inspelarens egen ström för den här kanalen, när kamerans ström inte kan nås. Inställningar, detekteringar och ögonblicksbilder går fortfarande till kameran.",
             "reuse_recorder_credentials": "Lämna avstängt om kameran har egna inloggningsuppgifter."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Inspelare",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Inspelare",
         "camera": "Kamera"

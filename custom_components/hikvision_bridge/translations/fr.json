@@ -159,11 +159,13 @@
             "username": "Nom d'utilisateur",
             "password": "Mot de passe",
             "reuse_recorder_credentials": "Utiliser le nom d'utilisateur et le mot de passe de l'enregistreur",
-            "event_source": "Prendre les détections de"
+            "event_source": "Prendre les détections de",
+            "stream_source": "Prendre le flux en direct de"
           },
           "data_description": {
             "host": "Adresse à laquelle Home Assistant joint directement la caméra (par exemple dans le sous-réseau PoE de l'enregistreur, s'il est routé).",
             "rtsp_port": "Vide : le port ci-dessus si l'hôte est l'adresse de l'enregistreur (redirection de ports de l'enregistreur), sinon 554.",
+            "stream_source": "Enregistreur : le flux propre de l'enregistreur pour ce canal, lorsque celui de la caméra n'est pas joignable. Les réglages, détections et instantanés passent toujours par la caméra.",
             "reuse_recorder_credentials": "Laisser désactivé si la caméra a ses propres identifiants."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Nom d'utilisateur",
             "password": "Mot de passe",
             "reuse_recorder_credentials": "Utiliser le nom d'utilisateur et le mot de passe de l'enregistreur",
-            "event_source": "Prendre les détections de"
+            "event_source": "Prendre les détections de",
+            "stream_source": "Prendre le flux en direct de"
           },
           "data_description": {
             "host": "Adresse à laquelle Home Assistant joint directement la caméra (par exemple dans le sous-réseau PoE de l'enregistreur, s'il est routé).",
             "rtsp_port": "Vide : le port ci-dessus si l'hôte est l'adresse de l'enregistreur (redirection de ports de l'enregistreur), sinon 554.",
+            "stream_source": "Enregistreur : le flux propre de l'enregistreur pour ce canal, lorsque celui de la caméra n'est pas joignable. Les réglages, détections et instantanés passent toujours par la caméra.",
             "reuse_recorder_credentials": "Laisser désactivé si la caméra a ses propres identifiants."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Enregistreur",
+        "camera": "Caméra"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Enregistreur",
         "camera": "Caméra"

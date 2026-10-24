@@ -159,11 +159,13 @@
             "username": "Username",
             "password": "Password",
             "reuse_recorder_credentials": "Use the recorder's username and password",
-            "event_source": "Take detections from"
+            "event_source": "Take detections from",
+            "stream_source": "Take the live stream from"
           },
           "data_description": {
             "host": "Address under which Home Assistant reaches the camera directly (for example in the recorder's PoE subnet, if routed).",
             "rtsp_port": "Empty: the port above if the host is the recorder's address (port forwarding of the recorder), otherwise 554.",
+            "stream_source": "Recorder: the recorder's own stream of this channel, for when the camera's stream is not reachable. Settings, detections and snapshots still go to the camera.",
             "reuse_recorder_credentials": "Leave off if the camera has its own credentials."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Username",
             "password": "Password",
             "reuse_recorder_credentials": "Use the recorder's username and password",
-            "event_source": "Take detections from"
+            "event_source": "Take detections from",
+            "stream_source": "Take the live stream from"
           },
           "data_description": {
             "host": "Address under which Home Assistant reaches the camera directly (for example in the recorder's PoE subnet, if routed).",
             "rtsp_port": "Empty: the port above if the host is the recorder's address (port forwarding of the recorder), otherwise 554.",
+            "stream_source": "Recorder: the recorder's own stream of this channel, for when the camera's stream is not reachable. Settings, detections and snapshots still go to the camera.",
             "reuse_recorder_credentials": "Leave off if the camera has its own credentials."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Recorder",
+        "camera": "Camera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Recorder",
         "camera": "Camera"

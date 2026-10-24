@@ -159,11 +159,13 @@
             "username": "Nama pengguna",
             "password": "Kata sandi",
             "reuse_recorder_credentials": "Gunakan nama pengguna dan kata sandi perekam",
-            "event_source": "Ambil deteksi dari"
+            "event_source": "Ambil deteksi dari",
+            "stream_source": "Ambil siaran langsung dari"
           },
           "data_description": {
             "host": "Alamat yang digunakan Home Assistant untuk menjangkau kamera secara langsung (misalnya di subnet PoE perekam, jika dirutekan).",
             "rtsp_port": "Kosong: port di atas jika host adalah alamat perekam (penerusan port perekam), selain itu 554.",
+            "stream_source": "Perekam: stream milik perekam untuk saluran ini, saat stream kamera tidak dapat dijangkau. Pengaturan, deteksi, dan snapshot tetap ke kamera.",
             "reuse_recorder_credentials": "Biarkan nonaktif jika kamera memiliki kredensialnya sendiri."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Nama pengguna",
             "password": "Kata sandi",
             "reuse_recorder_credentials": "Gunakan nama pengguna dan kata sandi perekam",
-            "event_source": "Ambil deteksi dari"
+            "event_source": "Ambil deteksi dari",
+            "stream_source": "Ambil siaran langsung dari"
           },
           "data_description": {
             "host": "Alamat yang digunakan Home Assistant untuk menjangkau kamera secara langsung (misalnya di subnet PoE perekam, jika dirutekan).",
             "rtsp_port": "Kosong: port di atas jika host adalah alamat perekam (penerusan port perekam), selain itu 554.",
+            "stream_source": "Perekam: stream milik perekam untuk saluran ini, saat stream kamera tidak dapat dijangkau. Pengaturan, deteksi, dan snapshot tetap ke kamera.",
             "reuse_recorder_credentials": "Biarkan nonaktif jika kamera memiliki kredensialnya sendiri."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Perekam",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Perekam",
         "camera": "Kamera"

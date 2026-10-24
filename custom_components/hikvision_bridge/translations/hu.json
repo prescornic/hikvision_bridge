@@ -159,11 +159,13 @@
             "username": "Felhasználónév",
             "password": "Jelszó",
             "reuse_recorder_credentials": "A rögzítő felhasználónevének és jelszavának használata",
-            "event_source": "Észlelések forrása"
+            "event_source": "Észlelések forrása",
+            "stream_source": "Élő kép forrása"
           },
           "data_description": {
             "host": "Az a cím, amelyen a Home Assistant közvetlenül eléri a kamerát (például a rögzítő PoE-alhálózatában, ha útválasztott).",
             "rtsp_port": "Üresen: a fenti port, ha a gazdagép a rögzítő címe (a rögzítő porttovábbítása), egyébként 554.",
+            "stream_source": "Rögzítő: a rögzítő saját streamje ehhez a csatornához, ha a kamera streamje nem érhető el. A beállítások, észlelések és pillanatképek továbbra is a kamerához mennek.",
             "reuse_recorder_credentials": "Hagyja kikapcsolva, ha a kamerának saját hitelesítő adatai vannak."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Felhasználónév",
             "password": "Jelszó",
             "reuse_recorder_credentials": "A rögzítő felhasználónevének és jelszavának használata",
-            "event_source": "Észlelések forrása"
+            "event_source": "Észlelések forrása",
+            "stream_source": "Élő kép forrása"
           },
           "data_description": {
             "host": "Az a cím, amelyen a Home Assistant közvetlenül eléri a kamerát (például a rögzítő PoE-alhálózatában, ha útválasztott).",
             "rtsp_port": "Üresen: a fenti port, ha a gazdagép a rögzítő címe (a rögzítő porttovábbítása), egyébként 554.",
+            "stream_source": "Rögzítő: a rögzítő saját streamje ehhez a csatornához, ha a kamera streamje nem érhető el. A beállítások, észlelések és pillanatképek továbbra is a kamerához mennek.",
             "reuse_recorder_credentials": "Hagyja kikapcsolva, ha a kamerának saját hitelesítő adatai vannak."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Rögzítő",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Rögzítő",
         "camera": "Kamera"

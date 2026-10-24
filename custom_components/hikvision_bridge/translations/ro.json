@@ -159,11 +159,13 @@
             "username": "Nume de utilizator",
             "password": "Parolă",
             "reuse_recorder_credentials": "Folosește numele de utilizator și parola înregistratorului",
-            "event_source": "Preia detecțiile de la"
+            "event_source": "Preia detecțiile de la",
+            "stream_source": "Preia transmisiunea live de la"
           },
           "data_description": {
             "host": "Adresa prin care Home Assistant ajunge direct la cameră (de exemplu în subrețeaua PoE a înregistratorului, dacă este rutată).",
             "rtsp_port": "Gol: portul de mai sus dacă gazda este adresa înregistratorului (redirecționarea porturilor înregistratorului), altfel 554.",
+            "stream_source": "Înregistrator: fluxul propriu al înregistratorului pentru acest canal, când fluxul camerei nu este accesibil. Setările, detecțiile și instantaneele merg în continuare la cameră.",
             "reuse_recorder_credentials": "Lasă dezactivat dacă camera are propriile date de autentificare."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Nume de utilizator",
             "password": "Parolă",
             "reuse_recorder_credentials": "Folosește numele de utilizator și parola înregistratorului",
-            "event_source": "Preia detecțiile de la"
+            "event_source": "Preia detecțiile de la",
+            "stream_source": "Preia transmisiunea live de la"
           },
           "data_description": {
             "host": "Adresa prin care Home Assistant ajunge direct la cameră (de exemplu în subrețeaua PoE a înregistratorului, dacă este rutată).",
             "rtsp_port": "Gol: portul de mai sus dacă gazda este adresa înregistratorului (redirecționarea porturilor înregistratorului), altfel 554.",
+            "stream_source": "Înregistrator: fluxul propriu al înregistratorului pentru acest canal, când fluxul camerei nu este accesibil. Setările, detecțiile și instantaneele merg în continuare la cameră.",
             "reuse_recorder_credentials": "Lasă dezactivat dacă camera are propriile date de autentificare."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Înregistrator",
+        "camera": "Cameră"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Înregistrator",
         "camera": "Cameră"

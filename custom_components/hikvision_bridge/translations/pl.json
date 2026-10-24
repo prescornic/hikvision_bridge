@@ -159,11 +159,13 @@
             "username": "Nazwa użytkownika",
             "password": "Hasło",
             "reuse_recorder_credentials": "Użyj nazwy użytkownika i hasła rejestratora",
-            "event_source": "Pobieraj wykrycia z"
+            "event_source": "Pobieraj wykrycia z",
+            "stream_source": "Pobieraj podgląd na żywo z"
           },
           "data_description": {
             "host": "Adres, pod którym Home Assistant osiąga kamerę bezpośrednio (np. w podsieci PoE rejestratora, jeśli jest routowana).",
             "rtsp_port": "Puste: port powyżej, jeśli host jest adresem rejestratora (przekierowanie portów rejestratora), w przeciwnym razie 554.",
+            "stream_source": "Rejestrator: własny strumień rejestratora dla tego kanału, gdy strumień kamery jest nieosiągalny. Ustawienia, wykrycia i zrzuty nadal trafiają do kamery.",
             "reuse_recorder_credentials": "Pozostaw wyłączone, jeśli kamera ma własne dane logowania."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Nazwa użytkownika",
             "password": "Hasło",
             "reuse_recorder_credentials": "Użyj nazwy użytkownika i hasła rejestratora",
-            "event_source": "Pobieraj wykrycia z"
+            "event_source": "Pobieraj wykrycia z",
+            "stream_source": "Pobieraj podgląd na żywo z"
           },
           "data_description": {
             "host": "Adres, pod którym Home Assistant osiąga kamerę bezpośrednio (np. w podsieci PoE rejestratora, jeśli jest routowana).",
             "rtsp_port": "Puste: port powyżej, jeśli host jest adresem rejestratora (przekierowanie portów rejestratora), w przeciwnym razie 554.",
+            "stream_source": "Rejestrator: własny strumień rejestratora dla tego kanału, gdy strumień kamery jest nieosiągalny. Ustawienia, wykrycia i zrzuty nadal trafiają do kamery.",
             "reuse_recorder_credentials": "Pozostaw wyłączone, jeśli kamera ma własne dane logowania."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Rejestrator",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Rejestrator",
         "camera": "Kamera"

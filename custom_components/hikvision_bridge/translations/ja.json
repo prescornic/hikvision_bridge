@@ -159,11 +159,13 @@
             "username": "ユーザー名",
             "password": "パスワード",
             "reuse_recorder_credentials": "レコーダーのユーザー名とパスワードを使用",
-            "event_source": "検知の取得元"
+            "event_source": "検知の取得元",
+            "stream_source": "ライブストリームの取得元"
           },
           "data_description": {
             "host": "Home Assistant がカメラに直接到達するアドレス（例: ルーティングされている場合はレコーダーの PoE サブネット）。",
             "rtsp_port": "空欄の場合：ホストがレコーダーのアドレス（レコーダーのポート転送）なら上のポート、それ以外は 554。",
+            "stream_source": "レコーダー：カメラのストリームに到達できない場合に、このチャンネルのレコーダー自身のストリームを使用します。設定、検知、スナップショットは引き続きカメラに送られます。",
             "reuse_recorder_credentials": "カメラに独自の認証情報がある場合はオフのままにしてください。"
           }
         },
@@ -180,11 +182,13 @@
             "username": "ユーザー名",
             "password": "パスワード",
             "reuse_recorder_credentials": "レコーダーのユーザー名とパスワードを使用",
-            "event_source": "検知の取得元"
+            "event_source": "検知の取得元",
+            "stream_source": "ライブストリームの取得元"
           },
           "data_description": {
             "host": "Home Assistant がカメラに直接到達するアドレス（例: ルーティングされている場合はレコーダーの PoE サブネット）。",
             "rtsp_port": "空欄の場合：ホストがレコーダーのアドレス（レコーダーのポート転送）なら上のポート、それ以外は 554。",
+            "stream_source": "レコーダー：カメラのストリームに到達できない場合に、このチャンネルのレコーダー自身のストリームを使用します。設定、検知、スナップショットは引き続きカメラに送られます。",
             "reuse_recorder_credentials": "カメラに独自の認証情報がある場合はオフのままにしてください。"
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "レコーダー",
+        "camera": "カメラ"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "レコーダー",
         "camera": "カメラ"

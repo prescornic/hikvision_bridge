@@ -159,11 +159,13 @@
             "username": "Tên người dùng",
             "password": "Mật khẩu",
             "reuse_recorder_credentials": "Dùng tên người dùng và mật khẩu của đầu ghi",
-            "event_source": "Lấy phát hiện từ"
+            "event_source": "Lấy phát hiện từ",
+            "stream_source": "Lấy luồng trực tiếp từ"
           },
           "data_description": {
             "host": "Địa chỉ mà Home Assistant truy cập trực tiếp camera (ví dụ trong mạng con PoE của đầu ghi, nếu được định tuyến).",
             "rtsp_port": "Để trống: cổng ở trên nếu máy chủ là địa chỉ của đầu ghi (chuyển tiếp cổng của đầu ghi), nếu không thì 554.",
+            "stream_source": "Đầu ghi: luồng riêng của đầu ghi cho kênh này, khi không truy cập được luồng của camera. Cài đặt, phát hiện và ảnh chụp vẫn đi tới camera.",
             "reuse_recorder_credentials": "Để tắt nếu camera có thông tin đăng nhập riêng."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Tên người dùng",
             "password": "Mật khẩu",
             "reuse_recorder_credentials": "Dùng tên người dùng và mật khẩu của đầu ghi",
-            "event_source": "Lấy phát hiện từ"
+            "event_source": "Lấy phát hiện từ",
+            "stream_source": "Lấy luồng trực tiếp từ"
           },
           "data_description": {
             "host": "Địa chỉ mà Home Assistant truy cập trực tiếp camera (ví dụ trong mạng con PoE của đầu ghi, nếu được định tuyến).",
             "rtsp_port": "Để trống: cổng ở trên nếu máy chủ là địa chỉ của đầu ghi (chuyển tiếp cổng của đầu ghi), nếu không thì 554.",
+            "stream_source": "Đầu ghi: luồng riêng của đầu ghi cho kênh này, khi không truy cập được luồng của camera. Cài đặt, phát hiện và ảnh chụp vẫn đi tới camera.",
             "reuse_recorder_credentials": "Để tắt nếu camera có thông tin đăng nhập riêng."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Đầu ghi",
+        "camera": "Camera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Đầu ghi",
         "camera": "Camera"

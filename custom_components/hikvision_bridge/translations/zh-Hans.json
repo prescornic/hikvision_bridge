@@ -159,11 +159,13 @@
             "username": "用户名",
             "password": "密码",
             "reuse_recorder_credentials": "使用录像机的用户名和密码",
-            "event_source": "检测来源"
+            "event_source": "检测来源",
+            "stream_source": "实时流来源"
           },
           "data_description": {
             "host": "Home Assistant 直接访问摄像机的地址（例如录像机的 PoE 子网，前提是已路由）。",
             "rtsp_port": "留空：如果主机是录像机的地址（录像机的端口转发），则使用上方端口，否则使用 554。",
+            "stream_source": "录像机：当无法访问摄像机的流时，使用录像机自身的该通道流。设置、检测和快照仍发送到摄像机。",
             "reuse_recorder_credentials": "如果摄像机有自己的凭据，请保持关闭。"
           }
         },
@@ -180,11 +182,13 @@
             "username": "用户名",
             "password": "密码",
             "reuse_recorder_credentials": "使用录像机的用户名和密码",
-            "event_source": "检测来源"
+            "event_source": "检测来源",
+            "stream_source": "实时流来源"
           },
           "data_description": {
             "host": "Home Assistant 直接访问摄像机的地址（例如录像机的 PoE 子网，前提是已路由）。",
             "rtsp_port": "留空：如果主机是录像机的地址（录像机的端口转发），则使用上方端口，否则使用 554。",
+            "stream_source": "录像机：当无法访问摄像机的流时，使用录像机自身的该通道流。设置、检测和快照仍发送到摄像机。",
             "reuse_recorder_credentials": "如果摄像机有自己的凭据，请保持关闭。"
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "录像机",
+        "camera": "摄像机"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "录像机",
         "camera": "摄像机"

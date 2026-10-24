@@ -60,7 +60,11 @@ class ChannelCamera(BridgeEntity, Camera):
 
     @property
     def _blocked_by_encryption(self) -> bool:
-        """Hik-Connect stream encryption is on and no direct camera link avoids it."""
+        """Hik-Connect stream encryption is on and no direct camera link avoids it.
+
+        A direct link that leaves the live stream on the recorder is an explicit choice to
+        try the recorder's stream anyway.
+        """
         cloud = self.bridge.profile.cloud
         route = self.bridge.routes.get(self.channel_id)
         direct = route is not None and route.healthy
@@ -112,10 +116,17 @@ class ChannelCamera(BridgeEntity, Camera):
             return route.link, remote_stream, dict(sub.data)
         return self.bridge.link, self._stream.stream_id, dict(self.bridge.entry.data)
 
+    def _live_source(self) -> tuple[IsapiLink, str, dict]:
+        """Like ``_source``, but a direct link may leave the live stream on the recorder."""
+        route = self.bridge.routes.get(self.channel_id)
+        if route is not None and route.stream_from_recorder:
+            return self.bridge.link, self._stream.stream_id, dict(self.bridge.entry.data)
+        return self._source()
+
     async def stream_source(self) -> str | None:
         if not self._playable:
             return None
-        link, stream_id, data = self._source()
+        link, stream_id, data = self._live_source()
         if link is self.bridge.link:
             port = (
                 self.bridge.entry.options.get(OPT_RTSP_PORT)

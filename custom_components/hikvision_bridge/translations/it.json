@@ -159,11 +159,13 @@
             "username": "Nome utente",
             "password": "Password",
             "reuse_recorder_credentials": "Usa nome utente e password del registratore",
-            "event_source": "Prendi le rilevazioni da"
+            "event_source": "Prendi le rilevazioni da",
+            "stream_source": "Prendi la diretta da"
           },
           "data_description": {
             "host": "Indirizzo con cui Home Assistant raggiunge direttamente la telecamera (ad esempio nella sottorete PoE del registratore, se instradata).",
             "rtsp_port": "Vuoto: la porta sopra se l'host è l'indirizzo del registratore (inoltro porte del registratore), altrimenti 554.",
+            "stream_source": "Registratore: lo stream del registratore per questo canale, quando quello della telecamera non è raggiungibile. Impostazioni, rilevazioni e istantanee vanno comunque alla telecamera.",
             "reuse_recorder_credentials": "Lascia disattivato se la telecamera ha credenziali proprie."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Nome utente",
             "password": "Password",
             "reuse_recorder_credentials": "Usa nome utente e password del registratore",
-            "event_source": "Prendi le rilevazioni da"
+            "event_source": "Prendi le rilevazioni da",
+            "stream_source": "Prendi la diretta da"
           },
           "data_description": {
             "host": "Indirizzo con cui Home Assistant raggiunge direttamente la telecamera (ad esempio nella sottorete PoE del registratore, se instradata).",
             "rtsp_port": "Vuoto: la porta sopra se l'host è l'indirizzo del registratore (inoltro porte del registratore), altrimenti 554.",
+            "stream_source": "Registratore: lo stream del registratore per questo canale, quando quello della telecamera non è raggiungibile. Impostazioni, rilevazioni e istantanee vanno comunque alla telecamera.",
             "reuse_recorder_credentials": "Lascia disattivato se la telecamera ha credenziali proprie."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Registratore",
+        "camera": "Telecamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Registratore",
         "camera": "Telecamera"

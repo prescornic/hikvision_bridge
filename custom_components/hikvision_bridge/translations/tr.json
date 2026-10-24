@@ -159,11 +159,13 @@
             "username": "Kullanıcı adı",
             "password": "Parola",
             "reuse_recorder_credentials": "Kayıt cihazının kullanıcı adını ve parolasını kullan",
-            "event_source": "Algılamaların kaynağı"
+            "event_source": "Algılamaların kaynağı",
+            "stream_source": "Canlı yayının kaynağı"
           },
           "data_description": {
             "host": "Home Assistant'ın kameraya doğrudan ulaştığı adres (örneğin yönlendirilmişse kayıt cihazının PoE alt ağında).",
             "rtsp_port": "Boş: ana bilgisayar kaydedicinin adresiyse (kaydedicinin bağlantı noktası yönlendirmesi) yukarıdaki bağlantı noktası, aksi halde 554.",
+            "stream_source": "Kayıt cihazı: kameranın yayınına ulaşılamadığında bu kanal için kayıt cihazının kendi yayını. Ayarlar, algılamalar ve anlık görüntüler yine kameraya gider.",
             "reuse_recorder_credentials": "Kameranın kendi kimlik bilgileri varsa kapalı bırakın."
           }
         },
@@ -180,11 +182,13 @@
             "username": "Kullanıcı adı",
             "password": "Parola",
             "reuse_recorder_credentials": "Kayıt cihazının kullanıcı adını ve parolasını kullan",
-            "event_source": "Algılamaların kaynağı"
+            "event_source": "Algılamaların kaynağı",
+            "stream_source": "Canlı yayının kaynağı"
           },
           "data_description": {
             "host": "Home Assistant'ın kameraya doğrudan ulaştığı adres (örneğin yönlendirilmişse kayıt cihazının PoE alt ağında).",
             "rtsp_port": "Boş: ana bilgisayar kaydedicinin adresiyse (kaydedicinin bağlantı noktası yönlendirmesi) yukarıdaki bağlantı noktası, aksi halde 554.",
+            "stream_source": "Kayıt cihazı: kameranın yayınına ulaşılamadığında bu kanal için kayıt cihazının kendi yayını. Ayarlar, algılamalar ve anlık görüntüler yine kameraya gider.",
             "reuse_recorder_credentials": "Kameranın kendi kimlik bilgileri varsa kapalı bırakın."
           }
         }
@@ -816,6 +820,12 @@
       }
     },
     "event_source": {
+      "options": {
+        "recorder": "Kayıt cihazı",
+        "camera": "Kamera"
+      }
+    },
+    "stream_source": {
       "options": {
         "recorder": "Kayıt cihazı",
         "camera": "Kamera"
