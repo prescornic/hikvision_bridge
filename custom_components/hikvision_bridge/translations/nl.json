@@ -1064,6 +1064,72 @@
           "description": "Knipt de bestanden bij tot de periode; het originele bestand wordt nooit geknipt."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Cloudgebied maken",
+      "description": "Maak een nieuw beveiligingsgebied (cameragroep) op een Hik-Connect-apparaat.",
+      "fields": {
+        "device_id": {
+          "name": "Apparaat",
+          "description": "Hik-Connect-apparaat."
+        },
+        "device_serial": {
+          "name": "Serienummer van apparaat",
+          "description": "Serienummer van de recorder of het apparaat."
+        },
+        "group_name": {
+          "name": "Gebiedsnaam",
+          "description": "Leesbare naam voor het nieuwe gebied."
+        },
+        "resource_ids": {
+          "name": "Camera-ID's",
+          "description": "Lijst van camera-ID's om op te nemen in het gebied."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Cloudgebied bijwerken",
+      "description": "Werk de camera's en naam van een bestaand beveiligingsgebied bij op Hik-Connect (maakt het gebied opnieuw aan).",
+      "fields": {
+        "device_id": {
+          "name": "Apparaat",
+          "description": "Hik-Connect-apparaat."
+        },
+        "device_serial": {
+          "name": "Serienummer van apparaat",
+          "description": "Serienummer van de recorder of het apparaat."
+        },
+        "group_id": {
+          "name": "Gebieds-ID",
+          "description": "Numerieke ID van het gebied."
+        },
+        "group_name": {
+          "name": "Gebiedsnaam",
+          "description": "Leesbare naam voor het gebied."
+        },
+        "resource_ids": {
+          "name": "Camera-ID's",
+          "description": "Volledige lijst van camera-ID's om op te nemen in het gebied."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Cloudgebied verwijderen",
+      "description": "Verwijder een beveiligingsgebied van een Hik-Connect-apparaat.",
+      "fields": {
+        "device_id": {
+          "name": "Apparaat",
+          "description": "Hik-Connect-apparaat."
+        },
+        "device_serial": {
+          "name": "Serienummer van apparaat",
+          "description": "Serienummer van de recorder of het apparaat."
+        },
+        "group_id": {
+          "name": "Gebieds-ID",
+          "description": "Numerieke ID van het te verwijderen gebied."
+        }
+      }
     }
   }
 }

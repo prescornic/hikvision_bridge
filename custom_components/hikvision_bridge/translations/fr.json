@@ -1064,6 +1064,72 @@
           "description": "Coupe les fichiers à la période ; le fichier original n'est jamais coupé."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Créer une zone cloud",
+      "description": "Crée une nouvelle zone de sécurité (groupe de caméras) sur un appareil Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Appareil",
+          "description": "Appareil Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Numéro de série de l'appareil",
+          "description": "Numéro de série de l'enregistreur ou de l'appareil."
+        },
+        "group_name": {
+          "name": "Nom de la zone",
+          "description": "Nom lisible pour la nouvelle zone."
+        },
+        "resource_ids": {
+          "name": "Identifiants des caméras",
+          "description": "Liste des identifiants des caméras à inclure dans la zone."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Mettre à jour la zone cloud",
+      "description": "Met à jour les caméras et le nom d'une zone de sécurité existante sur Hik-Connect (recrée la zone).",
+      "fields": {
+        "device_id": {
+          "name": "Appareil",
+          "description": "Appareil Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Numéro de série de l'appareil",
+          "description": "Numéro de série de l'enregistreur ou de l'appareil."
+        },
+        "group_id": {
+          "name": "Identifiant de la zone",
+          "description": "Identifiant numérique de la zone."
+        },
+        "group_name": {
+          "name": "Nom de la zone",
+          "description": "Nom lisible pour la zone."
+        },
+        "resource_ids": {
+          "name": "Identifiants des caméras",
+          "description": "Liste complète des identifiants des caméras à inclure dans la zone."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Supprimer la zone cloud",
+      "description": "Supprime une zone de sécurité d'un appareil Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Appareil",
+          "description": "Appareil Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Numéro de série de l'appareil",
+          "description": "Numéro de série de l'enregistreur ou de l'appareil."
+        },
+        "group_id": {
+          "name": "Identifiant de la zone",
+          "description": "Identifiant numérique de la zone à supprimer."
+        }
+      }
     }
   }
 }

@@ -1064,6 +1064,72 @@
           "description": "A fájlokat az időszakra vágja; az eredeti fájlt soha nem vágja."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Felhőterület létrehozása",
+      "description": "Új biztonsági terület (kameracsoport) létrehozása egy Hik-Connect eszközön.",
+      "fields": {
+        "device_id": {
+          "name": "Eszköz",
+          "description": "Hik-Connect eszköz."
+        },
+        "device_serial": {
+          "name": "Eszköz sorozatszáma",
+          "description": "Az NVR/eszköz sorozatszáma."
+        },
+        "group_name": {
+          "name": "Terület neve",
+          "description": "Az új terület olvasható neve."
+        },
+        "resource_ids": {
+          "name": "Kamera-azonosítók",
+          "description": "A területhez adandó kamera-azonosítók listája."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Felhőterület frissítése",
+      "description": "Egy meglévő biztonsági terület kameráinak és nevének frissítése a Hik-Connecten (újra létrehozza a területet).",
+      "fields": {
+        "device_id": {
+          "name": "Eszköz",
+          "description": "Hik-Connect eszköz."
+        },
+        "device_serial": {
+          "name": "Eszköz sorozatszáma",
+          "description": "Az NVR/eszköz sorozatszáma."
+        },
+        "group_id": {
+          "name": "Területazonosító",
+          "description": "A terület numerikus azonosítója."
+        },
+        "group_name": {
+          "name": "Terület neve",
+          "description": "A terület olvasható neve."
+        },
+        "resource_ids": {
+          "name": "Kamera-azonosítók",
+          "description": "A területhez tartozó kamera-azonosítók teljes listája."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Felhőterület törlése",
+      "description": "Biztonsági terület törlése egy Hik-Connect eszközről.",
+      "fields": {
+        "device_id": {
+          "name": "Eszköz",
+          "description": "Hik-Connect eszköz."
+        },
+        "device_serial": {
+          "name": "Eszköz sorozatszáma",
+          "description": "Az NVR/eszköz sorozatszáma."
+        },
+        "group_id": {
+          "name": "Területazonosító",
+          "description": "A törlendő terület numerikus azonosítója."
+        }
+      }
     }
   }
 }

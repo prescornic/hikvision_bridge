@@ -1064,6 +1064,72 @@
           "description": "Recorta los archivos al periodo; el archivo original nunca se recorta."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Crear área en la nube",
+      "description": "Crea una nueva área de seguridad (grupo de cámaras) en un dispositivo Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Dispositivo",
+          "description": "Dispositivo Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Número de serie del dispositivo",
+          "description": "Número de serie del NVR/dispositivo."
+        },
+        "group_name": {
+          "name": "Nombre del área",
+          "description": "Nombre legible para la nueva área."
+        },
+        "resource_ids": {
+          "name": "IDs de cámaras",
+          "description": "Lista de IDs de cámaras para incluir en el área."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Actualizar área en la nube",
+      "description": "Actualiza las cámaras y el nombre de un área de seguridad existente en Hik-Connect (vuelve a crear el área).",
+      "fields": {
+        "device_id": {
+          "name": "Dispositivo",
+          "description": "Dispositivo Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Número de serie del dispositivo",
+          "description": "Número de serie del NVR/dispositivo."
+        },
+        "group_id": {
+          "name": "ID del área",
+          "description": "ID numérico del área."
+        },
+        "group_name": {
+          "name": "Nombre del área",
+          "description": "Nombre legible para el área."
+        },
+        "resource_ids": {
+          "name": "IDs de cámaras",
+          "description": "Lista completa de IDs de cámaras para incluir en el área."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Eliminar área en la nube",
+      "description": "Elimina un área de seguridad de un dispositivo Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Dispositivo",
+          "description": "Dispositivo Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Número de serie del dispositivo",
+          "description": "Número de serie del NVR/dispositivo."
+        },
+        "group_id": {
+          "name": "ID del área",
+          "description": "ID numérico del área a eliminar."
+        }
+      }
     }
   }
 }

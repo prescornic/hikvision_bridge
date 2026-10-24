@@ -39,6 +39,10 @@ FIELD_END = "end"
 FIELD_SOURCE = "source"
 FIELD_FORMAT = "format"
 FIELD_TRIM = "trim"
+FIELD_GROUP_ID = "group_id"
+FIELD_GROUP_NAME = "group_name"
+FIELD_RESOURCE_IDS = "resource_ids"
+FIELD_SERIAL = "device_serial"
 
 MAX_PERIOD = timedelta(days=1)
 MAX_FILES = 50
@@ -315,6 +319,105 @@ async def _save_chunks(hass: HomeAssistant, chunks: Any, path: Path) -> None:
         await hass.async_add_executor_job(handle.close)
 
 
+def _cloud_target_of(
+    hass: HomeAssistant, device_id: str | None = None, serial: str | None = None
+) -> tuple[Any, str]:
+    """Return (CloudBridge, serial) for a cloud service call."""
+    from .cloud_entry import CLOUD_PREFIX, CloudBridge  # noqa: PLC0415
+
+    if device_id:
+        device_entry = dr.async_get(hass).async_get(device_id)
+        if device_entry is not None:
+            entry = hass.config_entries.async_get_entry(device_entry.config_entry_id)
+            if entry and isinstance(getattr(entry, "runtime_data", None), CloudBridge):
+                bridge: CloudBridge = entry.runtime_data
+                for domain, ident in device_entry.identifiers:
+                    if domain == DOMAIN and ident.startswith(CLOUD_PREFIX):
+                        key = ident.removeprefix(CLOUD_PREFIX)
+                        if dev := (bridge.refresher.data or {}).get(key):
+                            return bridge, dev.serial
+                if serial:
+                    return bridge, serial
+
+    if serial:
+        for entry in hass.config_entries.async_entries(DOMAIN):
+            bridge = getattr(entry, "runtime_data", None)
+            if entry.state is ConfigEntryState.LOADED and isinstance(bridge, CloudBridge):
+                for dev in (bridge.refresher.data or {}).values():
+                    if dev.serial.lower() == serial.lower():
+                        return bridge, dev.serial
+
+    cloud_bridges = [
+        e.runtime_data
+        for e in hass.config_entries.async_entries(DOMAIN)
+        if e.state is ConfigEntryState.LOADED
+        and isinstance(getattr(e, "runtime_data", None), CloudBridge)
+    ]
+    if len(cloud_bridges) == 1 and serial:
+        return cloud_bridges[0], serial
+
+    raise ServiceValidationError(translation_domain=DOMAIN, translation_key="unknown_device")
+
+
+async def _cloud_create_area(call: ServiceCall) -> ServiceResponse:
+    from .cloud.actions import create_area  # noqa: PLC0415
+
+    bridge, serial = _cloud_target_of(
+        call.hass, call.data.get(ATTR_DEVICE_ID), call.data.get(FIELD_SERIAL)
+    )
+    group_name = call.data[FIELD_GROUP_NAME]
+    resource_ids = [str(r) for r in call.data[FIELD_RESOURCE_IDS]]
+    try:
+        new_id = await create_area(bridge.account, serial, group_name, resource_ids)
+    except Exception as err:
+        raise HomeAssistantError(
+            translation_domain=DOMAIN,
+            translation_key="cloud_failed",
+            translation_placeholders={"reason": str(err)},
+        ) from err
+    await bridge.refresher.async_request_refresh()
+    return {"group_id": new_id}
+
+
+async def _cloud_update_area(call: ServiceCall) -> ServiceResponse:
+    from .cloud.actions import update_area  # noqa: PLC0415
+
+    bridge, serial = _cloud_target_of(
+        call.hass, call.data.get(ATTR_DEVICE_ID), call.data.get(FIELD_SERIAL)
+    )
+    group_id = int(call.data[FIELD_GROUP_ID])
+    group_name = call.data[FIELD_GROUP_NAME]
+    resource_ids = [str(r) for r in call.data[FIELD_RESOURCE_IDS]]
+    try:
+        new_id = await update_area(bridge.account, serial, group_id, group_name, resource_ids)
+    except Exception as err:
+        raise HomeAssistantError(
+            translation_domain=DOMAIN,
+            translation_key="cloud_failed",
+            translation_placeholders={"reason": str(err)},
+        ) from err
+    await bridge.refresher.async_request_refresh()
+    return {"group_id": new_id}
+
+
+async def _cloud_delete_area(call: ServiceCall) -> None:
+    from .cloud.actions import delete_area  # noqa: PLC0415
+
+    bridge, serial = _cloud_target_of(
+        call.hass, call.data.get(ATTR_DEVICE_ID), call.data.get(FIELD_SERIAL)
+    )
+    group_id = int(call.data[FIELD_GROUP_ID])
+    try:
+        await delete_area(bridge.account, serial, group_id)
+    except Exception as err:
+        raise HomeAssistantError(
+            translation_domain=DOMAIN,
+            translation_key="cloud_failed",
+            translation_placeholders={"reason": str(err)},
+        ) from err
+    await bridge.refresher.async_request_refresh()
+
+
 def async_register_services(hass: HomeAssistant) -> None:
     hass.services.async_register(
         DOMAIN,
@@ -406,4 +509,46 @@ def async_register_services(hass: HomeAssistant) -> None:
             }
         ),
         supports_response=SupportsResponse.OPTIONAL,
+    )
+    cloud_area_base = {
+        vol.Optional(ATTR_DEVICE_ID): cv.string,
+        vol.Optional(FIELD_SERIAL): cv.string,
+    }
+    hass.services.async_register(
+        DOMAIN,
+        "cloud_create_area",
+        _cloud_create_area,
+        schema=vol.Schema(
+            {
+                **cloud_area_base,
+                vol.Required(FIELD_GROUP_NAME): cv.string,
+                vol.Required(FIELD_RESOURCE_IDS): vol.All(cv.ensure_list, [cv.string]),
+            }
+        ),
+        supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "cloud_update_area",
+        _cloud_update_area,
+        schema=vol.Schema(
+            {
+                **cloud_area_base,
+                vol.Required(FIELD_GROUP_ID): vol.Coerce(int),
+                vol.Required(FIELD_GROUP_NAME): cv.string,
+                vol.Required(FIELD_RESOURCE_IDS): vol.All(cv.ensure_list, [cv.string]),
+            }
+        ),
+        supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "cloud_delete_area",
+        _cloud_delete_area,
+        schema=vol.Schema(
+            {
+                **cloud_area_base,
+                vol.Required(FIELD_GROUP_ID): vol.Coerce(int),
+            }
+        ),
     )

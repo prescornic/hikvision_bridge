@@ -1064,6 +1064,72 @@
           "description": "Dosyaları döneme göre keser; orijinal dosya asla kesilmez."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Bulut alanı oluştur",
+      "description": "Hik-Connect cihazında yeni bir güvenlik alanı (kamera grubu) oluşturun.",
+      "fields": {
+        "device_id": {
+          "name": "Cihaz",
+          "description": "Hik-Connect cihazı."
+        },
+        "device_serial": {
+          "name": "Cihaz seri numarası",
+          "description": "NVR/cihazın seri numarası."
+        },
+        "group_name": {
+          "name": "Alan adı",
+          "description": "Yeni alan için anlaşılır ad."
+        },
+        "resource_ids": {
+          "name": "Kamera kimlikleri",
+          "description": "Alana dahil edilecek kamera kimliklerinin listesi."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Bulut alanını güncelle",
+      "description": "Hik-Connect üzerindeki mevcut bir güvenlik alanının kameralarını ve adını güncelleyin (alanı yeniden oluşturur).",
+      "fields": {
+        "device_id": {
+          "name": "Cihaz",
+          "description": "Hik-Connect cihazı."
+        },
+        "device_serial": {
+          "name": "Cihaz seri numarası",
+          "description": "NVR/cihazın seri numarası."
+        },
+        "group_id": {
+          "name": "Alan kimliği",
+          "description": "Alanın sayısal kimliği."
+        },
+        "group_name": {
+          "name": "Alan adı",
+          "description": "Alan için anlaşılır ad."
+        },
+        "resource_ids": {
+          "name": "Kamera kimlikleri",
+          "description": "Alana dahil edilecek kamera kimliklerinin tam listesi."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Bulut alanını sil",
+      "description": "Hik-Connect cihazından bir güvenlik alanını silin.",
+      "fields": {
+        "device_id": {
+          "name": "Cihaz",
+          "description": "Hik-Connect cihazı."
+        },
+        "device_serial": {
+          "name": "Cihaz seri numarası",
+          "description": "NVR/cihazın seri numarası."
+        },
+        "group_id": {
+          "name": "Alan kimliği",
+          "description": "Silinecek alanın sayısal kimliği."
+        }
+      }
     }
   }
 }
