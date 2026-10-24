@@ -178,10 +178,13 @@ the first.
 
 ### HACS (recommended)
 
-1. Click **Open in HACS** above, or in HACS → three-dot menu → **Custom repositories** add
-   `https://github.com/yannik2480/hikvision_bridge` with category **Integration**.
+1. Click **Open in HACS** above, or open HACS and search for **Hikvision Bridge**.
 2. Download **Hikvision Bridge** and restart Home Assistant.
 3. Click **Add integration** above, or go to **Settings → Devices & services → Add integration → Hikvision Bridge**.
+
+If the integration doesn't show up in the HACS search yet, add it as a custom repository:
+HACS → three-dot menu → **Custom repositories** → `https://github.com/yannik2480/hikvision_bridge`
+with category **Integration**.
 
 ### Manual
 
