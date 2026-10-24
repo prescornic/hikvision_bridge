@@ -1,0 +1,11 @@
+name: Question
+description: Ask how something works
+labels: [question]
+assignees: [yannik2480]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true

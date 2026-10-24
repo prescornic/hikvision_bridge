@@ -1,0 +1,16 @@
+name: Feature request
+description: Suggest a new feature or device support
+labels: [feature request]
+assignees: [yannik2480]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What would you like?
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: Model and firmware, if the request is about a specific device

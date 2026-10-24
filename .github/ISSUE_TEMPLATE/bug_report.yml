@@ -1,0 +1,29 @@
+name: Bug report
+description: Something isn't working
+labels: [bug]
+assignees: [yannik2480]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: Model and firmware of the NVR or camera, and how it is connected (NVR, direct camera, ...)
+  - type: input
+    id: version
+    attributes:
+      label: Integration version
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant log lines. Remove passwords, IP addresses and serial numbers first.
+      render: text

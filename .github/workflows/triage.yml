@@ -1,0 +1,37 @@
+name: Triage
+
+on:
+  issues:
+    types: [opened, reopened]
+
+permissions:
+  issues: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const params = { ...context.repo, issue_number: issue.number };
+
+            if (!issue.assignees.some((a) => a.login === "yannik2480")) {
+              await github.rest.issues.addAssignees({ ...params, assignees: ["yannik2480"] });
+            }
+
+            // Issues opened from a form already carry their label.
+            if (issue.labels.length > 0) return;
+
+            const text = `${issue.title}\n${issue.body ?? ""}`.toLowerCase();
+            const rules = [
+              ["bug", /\b(bug|error|exception|traceback|crash\w*|broken|fails?|failing|not working|doesn'?t work|fehler|funktioniert nicht)\b/],
+              ["feature request", /\b(feature|request|support for|add support|would be nice|could you add|please add|wunsch)\b/],
+              ["documentation", /\b(readme|docs?|documentation|dokumentation)\b/],
+              ["question", /\b(how (do|can|to)|question|is it possible|frage)\b|\?\s*$/],
+            ];
+            const labels = rules.filter(([, re]) => re.test(text)).map(([label]) => label);
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({ ...params, labels });
+            }
