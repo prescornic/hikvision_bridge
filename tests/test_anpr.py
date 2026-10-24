@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from datetime import UTC, datetime
+import json
 from unittest.mock import patch
 
 from homeassistant.components.image import async_get_image
@@ -16,6 +17,7 @@ import pytest
 from pytest_homeassistant_custom_component.common import async_capture_events
 
 from custom_components.hikvision_bridge.const import BUS_EVENT, DOMAIN
+from custom_components.hikvision_bridge.diagnostics import async_get_config_entry_diagnostics
 from custom_components.hikvision_bridge.runtime.refresh import StatusRefresher
 from tests.conftest import device_entry
 from tests.fakedevice import FakeDevice, anpr_xml, picture_part, xml_part
@@ -74,6 +76,9 @@ async def test_plate_reaches_sensor_pictures_event_and_bus(hass: HomeAssistant, 
     assert event.attributes["plate"] == "B AB 1234"
     assert event.attributes["vehicle_color"] == "blue"
     assert (await async_get_image(hass, scene)).content == scene_jpg
+    # Plates the camera read never end up in a diagnostics download.
+    diagnostics = await async_get_config_entry_diagnostics(hass, entry)
+    assert "B AB 1234" not in json.dumps(diagnostics, default=str)
     # The close-up exists but is off by default; channels without ANPR get no plate entities.
     crop = er.async_get(hass).async_get(_entity_id(hass, entry, "image", "_ch1_anpr_plate_picture"))
     assert crop.disabled_by is er.RegistryEntryDisabler.INTEGRATION

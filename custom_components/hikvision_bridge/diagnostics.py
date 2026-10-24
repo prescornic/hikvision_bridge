@@ -38,6 +38,7 @@ TO_REDACT = {
     "verification_code",
     "token",
     "session",
+    "plate",
 }
 
 

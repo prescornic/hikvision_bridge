@@ -1339,10 +1339,15 @@ class Viewer {
 
   _overlay() {
     const overlay = this.root.querySelector(".overlay");
-    if (this._error) overlay.innerHTML = `<div class="message error">${this._error}</div>`;
-    else if (this._message) overlay.innerHTML = `<div class="message">${this._message}</div>`;
-    else if (this._busy) overlay.innerHTML = `<div class="spinner"></div>`;
-    else overlay.innerHTML = "";
+    const text = this._error || this._message;
+    if (text) {
+      // Messages can carry card config values, so they never go through innerHTML.
+      const box = document.createElement("div");
+      box.className = this._error ? "message error" : "message";
+      box.textContent = text;
+      overlay.replaceChildren(box);
+    } else if (this._busy) overlay.innerHTML = `<div class="spinner"></div>`;
+    else overlay.replaceChildren();
   }
 
   update() {
