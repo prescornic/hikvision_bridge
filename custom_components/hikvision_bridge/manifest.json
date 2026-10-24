@@ -2,7 +2,6 @@
   "domain": "hikvision_bridge",
   "name": "Hikvision Bridge",
   "after_dependencies": ["ffmpeg", "frontend", "media_source", "panel_custom", "recorder", "stream"],
-  "categories": ["security_safety.cameras"],
   "codeowners": ["@yannik2480"],
   "config_flow": true,
   "dependencies": ["http", "webhook"],
