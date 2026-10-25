@@ -114,6 +114,9 @@
     "ptz_preset": { "service": "mdi:map-marker-radius-outline" },
     "set_notification_host": { "service": "mdi:webhook" },
     "search_recordings": { "service": "mdi:filmstrip-box-multiple" },
-    "download_recording": { "service": "mdi:download" }
+    "download_recording": { "service": "mdi:download" },
+    "cloud_create_area": { "service": "mdi:shield-plus" },
+    "cloud_update_area": { "service": "mdi:shield-edit" },
+    "cloud_delete_area": { "service": "mdi:shield-remove" }
   }
 }

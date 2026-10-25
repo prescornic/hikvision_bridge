@@ -1064,6 +1064,72 @@
           "description": "फ़ाइलों को अवधि तक काटता है; मूल फ़ाइल कभी नहीं कटती।"
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "क्लाउड क्षेत्र बनाएं",
+      "description": "Hik-Connect डिवाइस पर एक नया सुरक्षा क्षेत्र (कैमरा समूह) बनाएं।",
+      "fields": {
+        "device_id": {
+          "name": "डिवाइस",
+          "description": "Hik-Connect डिवाइस।"
+        },
+        "device_serial": {
+          "name": "डिवाइस सीरियल नंबर",
+          "description": "NVR/डिवाइस का सीरियल नंबर।"
+        },
+        "group_name": {
+          "name": "क्षेत्र का नाम",
+          "description": "नए क्षेत्र के लिए पढ़ने योग्य नाम।"
+        },
+        "resource_ids": {
+          "name": "कैमरा आईडी",
+          "description": "क्षेत्र में शामिल करने के लिए कैमरा आईडी की सूची।"
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "क्लाउड क्षेत्र अपडेट करें",
+      "description": "Hik-Connect पर मौजूदा सुरक्षा क्षेत्र के कैमरे और नाम अपडेट करें (क्षेत्र को फिर से बनाता है)।",
+      "fields": {
+        "device_id": {
+          "name": "डिवाइस",
+          "description": "Hik-Connect डिवाइस।"
+        },
+        "device_serial": {
+          "name": "डिवाइस सीरियल नंबर",
+          "description": "NVR/डिवाइस का सीरियल नंबर।"
+        },
+        "group_id": {
+          "name": "क्षेत्र आईडी",
+          "description": "क्षेत्र की संख्यात्मक आईडी।"
+        },
+        "group_name": {
+          "name": "क्षेत्र का नाम",
+          "description": "क्षेत्र के लिए पढ़ने योग्य नाम।"
+        },
+        "resource_ids": {
+          "name": "कैमरा आईडी",
+          "description": "क्षेत्र में शामिल करने के लिए कैमरा आईडी की पूरी सूची।"
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "क्लाउड क्षेत्र हटाएं",
+      "description": "Hik-Connect डिवाइस से सुरक्षा क्षेत्र हटाएं।",
+      "fields": {
+        "device_id": {
+          "name": "डिवाइस",
+          "description": "Hik-Connect डिवाइस।"
+        },
+        "device_serial": {
+          "name": "डिवाइस सीरियल नंबर",
+          "description": "NVR/डिवाइस का सीरियल नंबर।"
+        },
+        "group_id": {
+          "name": "क्षेत्र आईडी",
+          "description": "हटाए जाने वाले क्षेत्र की संख्यात्मक आईडी।"
+        }
+      }
     }
   }
 }

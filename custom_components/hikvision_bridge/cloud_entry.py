@@ -5,6 +5,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
+from homeassistant.components.alarm_control_panel import (
+    AlarmControlPanelEntity,
+    AlarmControlPanelEntityFeature,
+    AlarmControlPanelState,
+)
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass, BinarySensorEntity
 from homeassistant.components.button import ButtonEntity
 from homeassistant.components.event import EventEntity
@@ -23,8 +28,8 @@ from homeassistant.helpers.update_coordinator import (
 )
 
 from .cloud.account import CaptchaRequired, CloudAccount, CloudAuthFailed, CloudError
-from .cloud.actions import fetch_devices, open_door_relay
-from .cloud.catalog import CloudDevice
+from .cloud.actions import fetch_devices, open_door_relay, set_area_defence_mode
+from .cloud.catalog import CloudArea, CloudDevice
 from .const import CLOUD_INTERVAL, CONF_ACCOUNT, CONF_REGION_HOST, DOMAIN
 from .runtime.identity import VENDOR
 from .wire.scrub import scrubbed_logger
@@ -221,6 +226,30 @@ async def async_setup_cloud_buttons(
     )
 
 
+async def async_setup_cloud_alarm_control_panels(
+    hass: HomeAssistant,
+    entry: CloudConfigEntry,
+    async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
+    bridge = entry.runtime_data
+    seen: set[tuple[str, int]] = set()
+
+    @callback
+    def _check() -> None:
+        new_entities: list[CloudAreaAlarmPanel] = []
+        for device in (bridge.refresher.data or {}).values():
+            for area in device.areas:
+                key = (device.key, area.group_id)
+                if key not in seen:
+                    seen.add(key)
+                    new_entities.append(CloudAreaAlarmPanel(bridge, device, area.group_id))
+        if new_entities:
+            async_add_entities(new_entities)
+
+    _check()
+    bridge.entry.async_on_unload(bridge.refresher.async_add_listener(_check))
+
+
 class CloudOnline(CloudEntity, BinarySensorEntity):
     _attr_device_class = BinarySensorDeviceClass.CONNECTIVITY
     _attr_entity_category = EntityCategory.DIAGNOSTIC
@@ -287,3 +316,78 @@ class CloudDoorButton(CloudEntity, ButtonEntity):
                 translation_key="cloud_failed",
                 translation_placeholders={"reason": err.reason},
             ) from err
+
+
+class CloudAreaAlarmPanel(CloudEntity, AlarmControlPanelEntity):
+    """Alarm control panel for a Hik-Connect security area (group)."""
+
+    _attr_supported_features = (
+        AlarmControlPanelEntityFeature.ARM_AWAY | AlarmControlPanelEntityFeature.ARM_HOME
+    )
+    _attr_code_arm_required = False
+
+    def __init__(self, bridge: CloudBridge, device: CloudDevice, group_id: int) -> None:
+        super().__init__(bridge, device, f"area_{group_id}")
+        self.group_id = group_id
+
+    @property
+    def area(self) -> CloudArea | None:
+        if self.device is None:
+            return None
+        for a in self.device.areas:
+            if a.group_id == self.group_id:
+                return a
+        return None
+
+    @property
+    def name(self) -> str | None:
+        return self.area.name if self.area else f"Area {self.group_id}"
+
+    @property
+    def alarm_state(self) -> AlarmControlPanelState | None:
+        if self.area is None:
+            return None
+        if self.area.mode == 1:
+            return AlarmControlPanelState.ARMED_AWAY
+        if self.area.mode == 2:
+            return AlarmControlPanelState.ARMED_HOME
+        return AlarmControlPanelState.DISARMED
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        if self.area is None:
+            return {"group_id": self.group_id}
+        return {
+            "group_id": self.area.group_id,
+            "device_serial": self.area.device_serial,
+            "mode": self.area.mode,
+            "camera_ids": list(self.area.camera_ids),
+            "camera_count": len(self.area.camera_ids),
+        }
+
+    @property
+    def available(self) -> bool:
+        return super().available and self.area is not None
+
+    async def async_alarm_disarm(self, code: str | None = None) -> None:
+        await self._set_mode(0)
+
+    async def async_alarm_arm_away(self, code: str | None = None) -> None:
+        await self._set_mode(1)
+
+    async def async_alarm_arm_home(self, code: str | None = None) -> None:
+        await self._set_mode(2)
+
+    async def _set_mode(self, mode: int) -> None:
+        device = self.device
+        if device is None:
+            raise HomeAssistantError(translation_domain=DOMAIN, translation_key="cloud_gone")
+        try:
+            await set_area_defence_mode(self.bridge.account, device.serial, self.group_id, mode)
+        except CloudError as err:
+            raise HomeAssistantError(
+                translation_domain=DOMAIN,
+                translation_key="cloud_failed",
+                translation_placeholders={"reason": err.reason},
+            ) from err
+        await self.coordinator.async_request_refresh()

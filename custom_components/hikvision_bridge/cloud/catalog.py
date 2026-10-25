@@ -20,6 +20,15 @@ _INTERCOM_WORDS = ("vis", "intercom", "doorbell")
 
 
 @dataclass(slots=True, frozen=True)
+class CloudArea:
+    group_id: int
+    device_serial: str
+    name: str
+    mode: int  # 0=disarmed, 1=armed, 2=armed-silent
+    camera_ids: tuple[str, ...] = ()
+
+
+@dataclass(slots=True, frozen=True)
 class CloudDevice:
     serial: str
     full_serial: str
@@ -30,6 +39,7 @@ class CloudDevice:
     online: bool
     channels: int
     stream_encrypted: bool | None
+    areas: tuple[CloudArea, ...] = ()
 
     @property
     def key(self) -> str:
@@ -44,6 +54,46 @@ class CloudDevice:
             return True
         category = self.category.lower()
         return any(word in category for word in _INTERCOM_WORDS)
+
+    def with_areas(self, areas: tuple[CloudArea, ...]) -> CloudDevice:
+        return CloudDevice(
+            serial=self.serial,
+            full_serial=self.full_serial,
+            name=self.name,
+            model=self.model,
+            firmware=self.firmware,
+            category=self.category,
+            online=self.online,
+            channels=self.channels,
+            stream_encrypted=self.stream_encrypted,
+            areas=areas,
+        )
+
+
+def parse_areas(payload: dict[str, Any], serial: str) -> list[CloudArea]:
+    raw_list = payload.get("list")
+    if not isinstance(raw_list, list):
+        return []
+    areas: list[CloudArea] = []
+    for item in raw_list:
+        if not isinstance(item, dict) or "groupId" not in item:
+            continue
+        try:
+            gid = int(item["groupId"])
+            mode = int(item.get("mode", 0))
+        except (TypeError, ValueError):
+            continue
+        name = str(item.get("groupName") or f"Area {gid}")
+        dev_serial = str(item.get("groupDevSerial") or serial)
+        areas.append(
+            CloudArea(
+                group_id=gid,
+                device_serial=dev_serial,
+                name=name,
+                mode=mode,
+            )
+        )
+    return areas
 
 
 def _int(value: Any, default: int = 0) -> int:

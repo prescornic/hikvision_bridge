@@ -1064,6 +1064,72 @@
           "description": "Leikkaa tiedostot ajanjaksoon; alkuperäistä tiedostoa ei koskaan leikata."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Luo pilvialue",
+      "description": "Luo uusi turva-alue (kameraryhmä) Hik-Connect-laitteeseen.",
+      "fields": {
+        "device_id": {
+          "name": "Laite",
+          "description": "Hik-Connect-laite."
+        },
+        "device_serial": {
+          "name": "Laitteen sarjanumero",
+          "description": "Tallentimen/laitteen sarjanumero."
+        },
+        "group_name": {
+          "name": "Alueen nimi",
+          "description": "Selkeä nimi uudelle alueelle."
+        },
+        "resource_ids": {
+          "name": "Kameratunnisteet",
+          "description": "Luettelo alueeseen sisällytettävistä kameratunnisteista."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Päivitä pilvialue",
+      "description": "Päivittää olemassa olevan turva-alueen kamerat ja nimen Hik-Connectissa (luo alueen uudelleen).",
+      "fields": {
+        "device_id": {
+          "name": "Laite",
+          "description": "Hik-Connect-laite."
+        },
+        "device_serial": {
+          "name": "Laitteen sarjanumero",
+          "description": "Tallentimen/laitteen sarjanumero."
+        },
+        "group_id": {
+          "name": "Alueen tunniste",
+          "description": "Alueen numeerinen tunniste."
+        },
+        "group_name": {
+          "name": "Alueen nimi",
+          "description": "Selkeä nimi alueelle."
+        },
+        "resource_ids": {
+          "name": "Kameratunnisteet",
+          "description": "Täydellinen luettelo alueeseen sisällytettävistä kameratunnisteista."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Poista pilvialue",
+      "description": "Poistaa turva-alueen Hik-Connect-laitteesta.",
+      "fields": {
+        "device_id": {
+          "name": "Laite",
+          "description": "Hik-Connect-laite."
+        },
+        "device_serial": {
+          "name": "Laitteen sarjanumero",
+          "description": "Tallentimen/laitteen sarjanumero."
+        },
+        "group_id": {
+          "name": "Alueen tunniste",
+          "description": "Poistettavan alueen numeerinen tunniste."
+        }
+      }
     }
   }
 }

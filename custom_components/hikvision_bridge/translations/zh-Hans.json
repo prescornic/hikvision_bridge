@@ -1064,6 +1064,72 @@
           "description": "将文件裁剪到时间段；原始文件从不裁剪。"
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "创建云端防区",
+      "description": "在 Hik-Connect 设备上创建新的安全防区（摄像机分组）。",
+      "fields": {
+        "device_id": {
+          "name": "设备",
+          "description": "Hik-Connect 设备。"
+        },
+        "device_serial": {
+          "name": "设备序列号",
+          "description": "录像机/设备的序列号。"
+        },
+        "group_name": {
+          "name": "防区名称",
+          "description": "新防区的易读名称。"
+        },
+        "resource_ids": {
+          "name": "摄像机 ID",
+          "description": "要包含在防区中的摄像机 ID 列表。"
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "更新云端防区",
+      "description": "在 Hik-Connect 上更新现有安全防区的摄像机和名称（重新创建防区）。",
+      "fields": {
+        "device_id": {
+          "name": "设备",
+          "description": "Hik-Connect 设备。"
+        },
+        "device_serial": {
+          "name": "设备序列号",
+          "description": "录像机/设备的序列号。"
+        },
+        "group_id": {
+          "name": "防区 ID",
+          "description": "防区的数字 ID。"
+        },
+        "group_name": {
+          "name": "防区名称",
+          "description": "防区的易读名称。"
+        },
+        "resource_ids": {
+          "name": "摄像机 ID",
+          "description": "防区中包含的完整摄像机 ID 列表。"
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "删除云端防区",
+      "description": "从 Hik-Connect 设备删除安全防区。",
+      "fields": {
+        "device_id": {
+          "name": "设备",
+          "description": "Hik-Connect 设备。"
+        },
+        "device_serial": {
+          "name": "设备序列号",
+          "description": "录像机/设备的序列号。"
+        },
+        "group_id": {
+          "name": "防区 ID",
+          "description": "要删除防区的数字 ID。"
+        }
+      }
     }
   }
 }

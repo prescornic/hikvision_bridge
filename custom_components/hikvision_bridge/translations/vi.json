@@ -1064,6 +1064,72 @@
           "description": "Cắt các tệp theo khoảng thời gian; tệp gốc không bao giờ bị cắt."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Tạo khu vực đám mây",
+      "description": "Tạo khu vực an ninh mới (nhóm camera) trên thiết bị Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Thiết bị",
+          "description": "Thiết bị Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Số sê-ri thiết bị",
+          "description": "Số sê-ri của đầu ghi NVR/thiết bị."
+        },
+        "group_name": {
+          "name": "Tên khu vực",
+          "description": "Tên dễ đọc cho khu vực mới."
+        },
+        "resource_ids": {
+          "name": "ID camera",
+          "description": "Danh sách ID camera cần đưa vào khu vực."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Cập nhật khu vực đám mây",
+      "description": "Cập nhật camera và tên của khu vực an ninh hiện có trên Hik-Connect (tạo lại khu vực).",
+      "fields": {
+        "device_id": {
+          "name": "Thiết bị",
+          "description": "Thiết bị Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Số sê-ri thiết bị",
+          "description": "Số sê-ri của đầu ghi NVR/thiết bị."
+        },
+        "group_id": {
+          "name": "ID khu vực",
+          "description": "ID số của khu vực."
+        },
+        "group_name": {
+          "name": "Tên khu vực",
+          "description": "Tên dễ đọc cho khu vực."
+        },
+        "resource_ids": {
+          "name": "ID camera",
+          "description": "Danh sách đầy đủ ID camera cần đưa vào khu vực."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Xóa khu vực đám mây",
+      "description": "Xóa khu vực an ninh khỏi thiết bị Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Thiết bị",
+          "description": "Thiết bị Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Số sê-ri thiết bị",
+          "description": "Số sê-ri của đầu ghi NVR/thiết bị."
+        },
+        "group_id": {
+          "name": "ID khu vực",
+          "description": "ID số của khu vực cần xóa."
+        }
+      }
     }
   }
 }
