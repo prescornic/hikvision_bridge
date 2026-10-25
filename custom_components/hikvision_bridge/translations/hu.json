@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Felvétel"
+      },
+      "doorbell_ringing": {
+        "name": "Csengő szól"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Csengő",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Cseng"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Rendszámtábla"
+      },
+      "call_status": {
+        "name": "Hívásállapot",
+        "state": {
+          "idle": "Tétlen",
+          "ringing": "Cseng",
+          "on_call": "Hívásban"
+        }
       }
     },
     "button": {
@@ -449,6 +470,9 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ kicsinyítés"
+      },
+      "open_door": {
+        "name": "Ajtó nyitása"
       }
     },
     "select": {

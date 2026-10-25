@@ -20,7 +20,7 @@ from ..const import (
     GRACE_BEFORE_UNAVAILABLE,
 )
 from ..model.discover import CLOUD_PATH, read_cloud_state
-from ..model.features import adjust, detection, health, io, storage
+from ..model.features import adjust, detection, health, intercom, io, storage
 from ..model.features.detection import DetectionState
 from ..model.features.health import DeviceHealth
 from ..model.features.image import ImageValue
@@ -55,6 +55,7 @@ class Snapshot:
     # (channel id or None for the entry's device, input port id) -> armed
     armed: dict[tuple[str | None, str], bool] = field(default_factory=dict)
     channel_storage: dict[str, list[StorageUnit]] = field(default_factory=dict)
+    call_status: str | None = None
 
 
 def _put[K, V](target: dict[K, V], key: K, value: V | None) -> None:
@@ -110,10 +111,12 @@ class StatusRefresher(DataUpdateCoordinator[Snapshot]):
                 recording=dict(previous.recording),
                 armed=dict(previous.armed),
                 channel_storage=dict(previous.channel_storage),
+                call_status=previous.call_status,
             )
         )
         try:
             await self._read_io(snapshot)
+            await self._read_intercom(snapshot)
             if due(DETECTION_EVERY):
                 await self._read_detections(snapshot)
             if due(CHANNELS_EVERY):
@@ -173,6 +176,16 @@ class StatusRefresher(DataUpdateCoordinator[Snapshot]):
                 target[port.port_id] = result
             elif self._missed(key):
                 target[port.port_id] = None
+
+    async def _read_intercom(self, snapshot: Snapshot) -> None:
+        caps = self._bridge.profile.intercom
+        if caps is None or not caps.has_call_status:
+            return
+        status = await intercom.read_call_status(self._bridge.link)
+        if status is not None:
+            if status == "ringing" and snapshot.call_status != "ringing":
+                self._bridge.router.fire_doorbell()
+            snapshot.call_status = status
 
     async def _read_detections(self, snapshot: Snapshot) -> None:
         jobs = []

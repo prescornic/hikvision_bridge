@@ -26,6 +26,7 @@ class Kind(StrEnum):
     AUDIO_EXCEPTION = "audio_exception"
     THERMOMETRY = "thermometry"
     DEFOCUS = "defocus"
+    DOORBELL = "doorbell"
     OTHER = "other"
 
 
@@ -48,6 +49,14 @@ _SPELLINGS: dict[Kind, tuple[str, ...]] = {
     Kind.AUDIO_EXCEPTION: ("audioexception", "audiodetection"),
     Kind.THERMOMETRY: ("thermometry", "temperaturedetection"),
     Kind.DEFOCUS: ("defocus", "defocusdetection"),
+    Kind.DOORBELL: (
+        "callstatus",
+        "videointercom",
+        "doorbell",
+        "ring",
+        "ringcall",
+        "intercom",
+    ),
 }
 
 _LOOKUP: dict[str, Kind] = {
@@ -80,7 +89,9 @@ SMART: frozenset[Kind] = frozenset(
 )
 
 # Kinds that concern the device as a whole rather than one channel.
-DEVICE_WIDE: frozenset[Kind] = frozenset({Kind.STORAGE, Kind.NETWORK, Kind.ILLEGAL_ACCESS})
+DEVICE_WIDE: frozenset[Kind] = frozenset(
+    {Kind.STORAGE, Kind.NETWORK, Kind.ILLEGAL_ACCESS, Kind.DOORBELL}
+)
 
 
 def canonical(raw: str | None) -> Kind:

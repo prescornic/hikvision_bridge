@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Recording"
+      },
+      "doorbell_ringing": {
+        "name": "Doorbell ringing"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Doorbell",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Ringing"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "License plate"
+      },
+      "call_status": {
+        "name": "Call status",
+        "state": {
+          "idle": "Idle",
+          "ringing": "Ringing",
+          "on_call": "On call"
+        }
       }
     },
     "button": {
@@ -431,6 +452,9 @@
       },
       "cloud_unlock": {
         "name": "Open door (cloud)"
+      },
+      "open_door": {
+        "name": "Open door"
       },
       "ptz_pan_left": {
         "name": "PTZ pan left"

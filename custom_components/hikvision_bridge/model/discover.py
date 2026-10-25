@@ -9,7 +9,7 @@ from ..wire.faults import NotIsapi
 from ..wire.link import IsapiLink
 from ..wire.scrub import scrubbed_logger
 from ..wire.xmlview import XmlNode
-from .features import detection, io, linkage, storage
+from .features import detection, intercom, io, linkage, storage
 from .inventory import (
     ChannelProfile,
     ChannelSource,
@@ -242,6 +242,8 @@ async def discover(link: IsapiLink, *, probe_switches: bool = True) -> DevicePro
     if user_check is not None:
         profile.default_password = bool(user_check.flag("isDefaultPassword", False))
         profile.risky_password = bool(user_check.flag("isRiskPassword", False))
+    if shape == DeviceShape.INTERCOM or (identity.device_type or "").lower() == "vis":
+        profile.intercom = await intercom.read_capabilities(link)
 
     if probe_switches:
         await probe_switchable(link, profile)

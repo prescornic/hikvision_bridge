@@ -213,6 +213,11 @@ class EventRouter:
         )
 
     @callback
+    def fire_doorbell(self) -> None:
+        frame = FeedFrame(raw_type="doorbell", state="active")
+        self._intake(Origin("intercom"), frame)
+
+    @callback
     def shutdown(self) -> None:
         for cancel in self._timers.values():
             cancel()

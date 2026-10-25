@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Registrazione"
+      },
+      "doorbell_ringing": {
+        "name": "Campanello che suona"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Campanello",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Squilla"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Targa"
+      },
+      "call_status": {
+        "name": "Stato chiamata",
+        "state": {
+          "idle": "Inattivo",
+          "ringing": "Squilla",
+          "on_call": "In chiamata"
+        }
       }
     },
     "button": {
@@ -449,6 +470,9 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ zoom indietro"
+      },
+      "open_door": {
+        "name": "Apri porta"
       }
     },
     "select": {

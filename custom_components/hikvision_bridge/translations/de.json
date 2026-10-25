@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Aufnahme"
+      },
+      "doorbell_ringing": {
+        "name": "Türklingel läutet"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Türklingel",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Läutet"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Kennzeichen"
+      },
+      "call_status": {
+        "name": "Anrufstatus",
+        "state": {
+          "idle": "Inaktiv",
+          "ringing": "Läutet",
+          "on_call": "Im Gespräch"
+        }
       }
     },
     "button": {
@@ -449,6 +470,9 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ herauszoomen"
+      },
+      "open_door": {
+        "name": "Tür öffnen"
       }
     },
     "select": {

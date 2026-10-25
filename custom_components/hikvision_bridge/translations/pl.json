@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Nagrywanie"
+      },
+      "doorbell_ringing": {
+        "name": "Dzwonek dzwoni"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Dzwonek do drzwi",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Dzwoni"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Tablica rejestracyjna"
+      },
+      "call_status": {
+        "name": "Status połączenia",
+        "state": {
+          "idle": "Bezczynny",
+          "ringing": "Dzwoni",
+          "on_call": "W trakcie rozmowy"
+        }
       }
     },
     "button": {
@@ -449,6 +470,9 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ oddal"
+      },
+      "open_door": {
+        "name": "Otwórz drzwi"
       }
     },
     "select": {

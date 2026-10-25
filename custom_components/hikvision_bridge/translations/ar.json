@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "التسجيل"
+      },
+      "doorbell_ringing": {
+        "name": "جرس الباب يرن"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "جرس الباب",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "يرن"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "لوحة الترخيص"
+      },
+      "call_status": {
+        "name": "حالة المكالمة",
+        "state": {
+          "idle": "خامل",
+          "ringing": "يرن",
+          "on_call": "في مكالمة"
+        }
       }
     },
     "button": {
@@ -449,6 +470,9 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ تصغير"
+      },
+      "open_door": {
+        "name": "فتح الباب"
       }
     },
     "select": {

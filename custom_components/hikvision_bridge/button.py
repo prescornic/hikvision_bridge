@@ -11,7 +11,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .const import CONF_ENTRY_KIND, DOMAIN, KIND_CLOUD
 from .entity import BridgeEntity, add_entities, drop_entities
-from .model.features import ptz
+from .model.features import intercom, ptz
 from .runtime.bridge import DeviceBridge
 from .wire.faults import BridgeFault
 
@@ -34,6 +34,10 @@ async def async_setup_entry(
         if channel.ptz is not None
         for direction in channel.ptz.directions
     )
+    if bridge.profile.intercom and bridge.profile.intercom.doors:
+        entities.extend(
+            DoorUnlockButton(bridge, door_no) for door_no in bridge.profile.intercom.doors
+        )
     add_entities(bridge, async_add_entities, entities)
     # Buttons of earlier versions on channels that turned out to have no such move.
     drop_entities(
@@ -97,5 +101,21 @@ class PtzButton(BridgeEntity, ButtonEntity):
         link, remote = self.bridge.route(self.channel_id)
         try:
             await ptz.step(link, remote, self.direction)
+        except BridgeFault as err:
+            raise _fail(err) from err
+
+
+class DoorUnlockButton(BridgeEntity, ButtonEntity):
+    _attr_translation_key = "open_door"
+
+    def __init__(self, bridge: DeviceBridge, door_no: int) -> None:
+        super().__init__(bridge, None, f"open_door_{door_no}")
+        self._door_no = door_no
+        if bridge.profile.intercom and len(bridge.profile.intercom.doors) > 1:
+            self._attr_translation_placeholders = {"door": str(door_no)}
+
+    async def async_press(self) -> None:
+        try:
+            await intercom.remote_open_door(self.bridge.link, self._door_no)
         except BridgeFault as err:
             raise _fail(err) from err

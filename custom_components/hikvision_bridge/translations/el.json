@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Εγγραφή"
+      },
+      "doorbell_ringing": {
+        "name": "Κουδούνι χτυπάει"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Κουδούνι",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Χτυπάει"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Πινακίδα κυκλοφορίας"
+      },
+      "call_status": {
+        "name": "Κατάσταση κλήσης",
+        "state": {
+          "idle": "Σε αδράνεια",
+          "ringing": "Χτυπάει",
+          "on_call": "Σε κλήση"
+        }
       }
     },
     "button": {
@@ -449,6 +470,9 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ σμίκρυνση"
+      },
+      "open_door": {
+        "name": "Άνοιγμα πόρτας"
       }
     },
     "select": {

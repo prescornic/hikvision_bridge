@@ -8,7 +8,8 @@ from homeassistant.components.binary_sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EntityCategory
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .const import CONF_ENTRY_KIND, KIND_CLOUD, OPT_TARGET_SENSORS
@@ -17,7 +18,7 @@ from .model.features.storage import HEALTHY
 from .model.inventory import IoPort
 from .model.vocabulary import Kind
 from .runtime.bridge import MAIN_FEED, DeviceBridge
-from .runtime.router import DEVICE_SCOPE
+from .runtime.router import DEVICE_SCOPE, signal_state
 
 PARALLEL_UPDATES = 0
 
@@ -68,6 +69,8 @@ async def async_setup_entry(
         entities.append(StorageProblemSensor(bridge))
     if profile.cloud is not None:
         entities.append(StreamEncryptionSensor(bridge))
+    if profile.intercom and profile.intercom.has_call_status:
+        entities.append(DoorbellRingingSensor(bridge))
     entities.append(EventLinkSensor(bridge))
     add_entities(bridge, async_add_entities, entities)
 
@@ -197,3 +200,32 @@ class RecordingSensor(PolledEntity, BinarySensorEntity):
     @property
     def is_on(self) -> bool | None:
         return self.coordinator.data.recording.get(self.channel_id)
+
+
+class DoorbellRingingSensor(PolledEntity, BinarySensorEntity):
+    """On while the doorbell is ringing (polled or pushed)."""
+
+    _attr_device_class = BinarySensorDeviceClass.OCCUPANCY
+    _attr_translation_key = "doorbell_ringing"
+
+    def __init__(self, bridge: DeviceBridge) -> None:
+        super().__init__(bridge, None, "doorbell_ringing")
+
+    async def async_added_to_hass(self) -> None:
+        await super().async_added_to_hass()
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass, signal_state(self.bridge.entry.entry_id), self._on_push
+            )
+        )
+
+    @callback
+    def _on_push(self, slot: object) -> None:
+        if slot == (DEVICE_SCOPE, Kind.DOORBELL.value):
+            self.async_write_ha_state()
+
+    @property
+    def is_on(self) -> bool:
+        if self.bridge.router.is_active(DEVICE_SCOPE, Kind.DOORBELL.value):
+            return True
+        return self.coordinator.data.call_status == "ringing"

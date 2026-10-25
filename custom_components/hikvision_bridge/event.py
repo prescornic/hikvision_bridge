@@ -26,15 +26,14 @@ async def async_setup_entry(
         await async_setup_cloud_events(hass, entry, async_add_entities)
         return
     bridge: DeviceBridge = entry.runtime_data
-    add_entities(
-        bridge,
-        async_add_entities,
-        (
-            DetectionEvents(bridge, channel.channel_id, sorted(channel.kinds & SMART))
-            for channel in bridge.profile.channels.values()
-            if channel.kinds & SMART
-        ),
-    )
+    entities: list[EventEntity] = [
+        DetectionEvents(bridge, channel.channel_id, sorted(channel.kinds & SMART))
+        for channel in bridge.profile.channels.values()
+        if channel.kinds & SMART
+    ]
+    if bridge.profile.intercom and bridge.profile.intercom.has_call_status:
+        entities.append(DoorbellEvent(bridge))
+    add_entities(bridge, async_add_entities, entities)
 
 
 class DetectionEvents(BridgeEntity, EventEntity):
@@ -67,6 +66,34 @@ class DetectionEvents(BridgeEntity, EventEntity):
             attributes |= hit.frame.plate.as_dict()
         self._trigger_event(hit.kind.value, attributes)
         self.async_write_ha_state()
+
+    @property
+    def available(self) -> bool:
+        return self.bridge.router.feeds_healthy()
+
+
+class DoorbellEvent(BridgeEntity, EventEntity):
+    _attr_translation_key = "doorbell"
+    _attr_device_class = EventDeviceClass.DOORBELL
+    _attr_event_types = ["ring"]
+    _attr_should_poll = False
+
+    def __init__(self, bridge: DeviceBridge) -> None:
+        super().__init__(bridge, None, "doorbell")
+
+    async def async_added_to_hass(self) -> None:
+        await super().async_added_to_hass()
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass, signal_trigger(self.bridge.entry.entry_id), self._on_hit
+            )
+        )
+
+    @callback
+    def _on_hit(self, hit: Hit) -> None:
+        if hit.kind == Kind.DOORBELL:
+            self._trigger_event("ring", {"raw_type": hit.frame.raw_type})
+            self.async_write_ha_state()
 
     @property
     def available(self) -> bool:
