@@ -609,7 +609,7 @@ class Player {
       if (!Hls.isSupported()) {
         video.src = url;
       } else {
-        this.hls = new Hls({
+        const hls = new Hls({
           lowLatencyMode: this.mode === "live",
           // Recordings: load the first segment while the video element is still being set up.
           startFragPrefetch: this.mode === "playback",
@@ -618,14 +618,16 @@ class Player {
           levelLoadingMaxRetry: 6,
           fragLoadingMaxRetry: 6,
         });
-        this.hls.on(Hls.Events.ERROR, (_e, data) => {
+        this.hls = hls;
+        hls.on(Hls.Events.ERROR, (_e, data) => {
+          if (token !== this.token) return;
           if (data.fatal) {
-            if (data.type === Hls.ErrorTypes.MEDIA_ERROR) this.hls.recoverMediaError();
+            if (data.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
             else this.host.showError("playback_failed");
           }
         });
-        this.hls.loadSource(url);
-        this.hls.attachMedia(video);
+        hls.loadSource(url);
+        hls.attachMedia(video);
       }
     }
     video.muted = true;
@@ -708,6 +710,7 @@ class Player {
 
   async _play(time, level) {
     const token = ++this.token;
+    this._detach();
     this.host.busy(true);
     const previous = this.session;
     try {

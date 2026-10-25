@@ -119,11 +119,19 @@ def hls_args(url: str, quality: str, codec: str | None, target: Path) -> list[st
     """ffmpeg arguments; ``url`` is an RTSP address or PIPE for a program stream on stdin."""
     args = ["-hide_banner", "-loglevel", "error"]
     if url == PIPE:
-        args += ["-f", "mpeg"]
+        args += ["-f", "mpeg", "-analyzeduration", "2000000"]
     else:
-        args += ["-rtsp_transport", "tcp"]
-    # The streams are known after the first key frame; the default waits five seconds.
-    args += ["-analyzeduration", "2000000", "-i", url, "-map", "0:v:0", "-map", "0:a:0?"]
+        args += [
+            "-rtsp_transport",
+            "tcp",
+            "-analyzeduration",
+            "10000000",
+            "-probesize",
+            "10000000",
+            "-fflags",
+            "+genpts+discardcorrupt",
+        ]
+    args += ["-i", url, "-map", "0:v:0", "-map", "0:a:0?"]
     if quality == QUALITY_LOW:
         args += [
             "-c:v",
@@ -387,6 +395,9 @@ class SessionManager:
         url = playback.rtsp_url(source, uri)
         reason = "playback_failed"
         for attempt in range(2):
+            if attempt:
+                await self.hass.async_add_executor_job(shutil.rmtree, folder, True)
+                await self.hass.async_add_executor_job(folder.mkdir, 0o700, True, True)
             session = Session(secrets.token_urlsafe(16), key, start, end, quality, folder)
             session.process = await self._spawn(
                 session, hls_args(url, quality, codec, folder), False
@@ -394,7 +405,7 @@ class SessionManager:
             reason = await self._first_segment(session)
             if reason is None:
                 return session
-            if reason != "playback_busy" or attempt:
+            if reason not in ("playback_busy", "playback_failed") or attempt:
                 break
             await asyncio.sleep(1.5)  # the device releases the previous playback late
         raise SessionError(reason)
