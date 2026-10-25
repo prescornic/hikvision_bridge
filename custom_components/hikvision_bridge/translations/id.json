@@ -1088,6 +1088,72 @@
           "description": "Memotong file sesuai periode; file asli tidak pernah dipotong."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Buat area cloud",
+      "description": "Buat area keamanan baru (grup kamera) pada perangkat Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Perangkat",
+          "description": "Perangkat Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Nomor seri perangkat",
+          "description": "Nomor seri NVR/perangkat."
+        },
+        "group_name": {
+          "name": "Nama area",
+          "description": "Nama yang mudah dibaca untuk area baru."
+        },
+        "resource_ids": {
+          "name": "ID kamera",
+          "description": "Daftar ID kamera yang akan dimasukkan ke dalam area."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Perbarui area cloud",
+      "description": "Perbarui kamera dan nama area keamanan yang ada di Hik-Connect (membuat ulang area).",
+      "fields": {
+        "device_id": {
+          "name": "Perangkat",
+          "description": "Perangkat Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Nomor seri perangkat",
+          "description": "Nomor seri NVR/perangkat."
+        },
+        "group_id": {
+          "name": "ID area",
+          "description": "ID numerik area."
+        },
+        "group_name": {
+          "name": "Nama area",
+          "description": "Nama yang mudah dibaca untuk area."
+        },
+        "resource_ids": {
+          "name": "ID kamera",
+          "description": "Daftar lengkap ID kamera yang akan dimasukkan ke dalam area."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Hapus area cloud",
+      "description": "Hapus area keamanan dari perangkat Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Perangkat",
+          "description": "Perangkat Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Nomor seri perangkat",
+          "description": "Nomor seri NVR/perangkat."
+        },
+        "group_id": {
+          "name": "ID area",
+          "description": "ID numerik area yang akan dihapus."
+        }
+      }
     }
   }
 }

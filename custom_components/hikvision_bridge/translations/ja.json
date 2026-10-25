@@ -1088,6 +1088,72 @@
           "description": "ファイルを期間に合わせてカットします。元のファイルはカットされません。"
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "クラウドエリアの作成",
+      "description": "Hik-Connect デバイス上に新しいセキュリティエリア（カメラグループ）を作成します。",
+      "fields": {
+        "device_id": {
+          "name": "デバイス",
+          "description": "Hik-Connect デバイス。"
+        },
+        "device_serial": {
+          "name": "デバイスのシリアル番号",
+          "description": "NVR/デバイスのシリアル番号。"
+        },
+        "group_name": {
+          "name": "エリア名",
+          "description": "新しいエリアのわかりやすい名前。"
+        },
+        "resource_ids": {
+          "name": "カメラID",
+          "description": "エリアに含めるカメラIDのリスト。"
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "クラウドエリアの更新",
+      "description": "Hik-Connect 上の既存のセキュリティエリアのカメラと名前を更新します（エリアを再作成します）。",
+      "fields": {
+        "device_id": {
+          "name": "デバイス",
+          "description": "Hik-Connect デバイス。"
+        },
+        "device_serial": {
+          "name": "デバイスのシリアル番号",
+          "description": "NVR/デバイスのシリアル番号。"
+        },
+        "group_id": {
+          "name": "エリアID",
+          "description": "エリアの数値ID。"
+        },
+        "group_name": {
+          "name": "エリア名",
+          "description": "エリアのわかりやすい名前。"
+        },
+        "resource_ids": {
+          "name": "カメラID",
+          "description": "エリアに含めるカメラIDの完全なリスト。"
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "クラウドエリアの削除",
+      "description": "Hik-Connect デバイスからセキュリティエリアを削除します。",
+      "fields": {
+        "device_id": {
+          "name": "デバイス",
+          "description": "Hik-Connect デバイス。"
+        },
+        "device_serial": {
+          "name": "デバイスのシリアル番号",
+          "description": "NVR/デバイスのシリアル番号。"
+        },
+        "group_id": {
+          "name": "エリアID",
+          "description": "削除するエリアの数値ID。"
+        }
+      }
     }
   }
 }

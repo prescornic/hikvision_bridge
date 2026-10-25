@@ -117,7 +117,14 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
 
     assert hass.states.get(call_status.entity_id).state == "ringing"
     assert hass.states.get(ringing.entity_id).state == STATE_ON
+    assert hass.states.get(ringing.entity_id).attributes.get("device_class") is None
     assert hass.states.get(bell_event.entity_id).attributes.get("event_type") == "ring"
+
+    # Test deduplication: calling fire_doorbell while already active does not duplicate Hit
+    initial_event_time = hass.states.get(bell_event.entity_id).state
+    bridge.router.fire_doorbell()
+    await hass.async_block_till_done()
+    assert hass.states.get(bell_event.entity_id).state == initial_event_time
 
     # Test fast poll back to idle
     device.documents["/ISAPI/VideoIntercom/callStatus?format=json"] = json.dumps(
@@ -132,6 +139,17 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
 
     await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
+
+
+def test_doorbell_vocabulary_aliases() -> None:
+    assert canonical("doorbell") is Kind.DOORBELL
+    assert canonical("ring") is Kind.DOORBELL
+    assert canonical("ringCall") is Kind.DOORBELL
+    assert canonical("bell") is Kind.DOORBELL
+    # Broad aliases must not map to DOORBELL
+    assert canonical("callstatus") is Kind.OTHER
+    assert canonical("intercom") is Kind.OTHER
+    assert canonical("videointercom") is Kind.OTHER
 
 
 def test_access_controller_event_feed() -> None:

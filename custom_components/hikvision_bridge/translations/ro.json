@@ -1088,6 +1088,72 @@
           "description": "Taie fișierele la perioadă; fișierul original nu este tăiat niciodată."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Creare zonă cloud",
+      "description": "Creează o nouă zonă de securitate (grup de camere) pe un dispozitiv Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Dispozitiv",
+          "description": "Dispozitiv Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Serie dispozitiv",
+          "description": "Numărul de serie al NVR-ului/dispozitivului."
+        },
+        "group_name": {
+          "name": "Nume zonă",
+          "description": "Nume ușor de citit pentru noua zonă."
+        },
+        "resource_ids": {
+          "name": "ID-uri camere",
+          "description": "Lista ID-urilor camerelor de inclus în zonă."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Actualizare zonă cloud",
+      "description": "Actualizează camerele și numele unei zone de securitate existente pe Hik-Connect (recreează zona).",
+      "fields": {
+        "device_id": {
+          "name": "Dispozitiv",
+          "description": "Dispozitiv Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Serie dispozitiv",
+          "description": "Numărul de serie al NVR-ului/dispozitivului."
+        },
+        "group_id": {
+          "name": "ID zonă",
+          "description": "ID-ul numeric al zonei."
+        },
+        "group_name": {
+          "name": "Nume zonă",
+          "description": "Nume ușor de citit pentru zonă."
+        },
+        "resource_ids": {
+          "name": "ID-uri camere",
+          "description": "Lista completă a ID-urilor camerelor de inclus în zonă."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Ștergere zonă cloud",
+      "description": "Șterge o zonă de securitate de pe un dispozitiv Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Dispozitiv",
+          "description": "Dispozitiv Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Serie dispozitiv",
+          "description": "Numărul de serie al NVR-ului/dispozitivului."
+        },
+        "group_id": {
+          "name": "ID zonă",
+          "description": "ID-ul numeric al zonei de șters."
+        }
+      }
     }
   }
 }

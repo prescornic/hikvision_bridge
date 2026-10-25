@@ -453,9 +453,6 @@
       "cloud_unlock": {
         "name": "Open door (cloud)"
       },
-      "open_door": {
-        "name": "Open door"
-      },
       "ptz_pan_left": {
         "name": "PTZ pan left"
       },
@@ -473,6 +470,9 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ zoom out"
+      },
+      "open_door": {
+        "name": "Open door"
       }
     },
     "select": {
@@ -1086,6 +1086,72 @@
         "trim": {
           "name": "Trim to period",
           "description": "Cut the files to the period; the original file is never cut."
+        }
+      }
+    },
+    "cloud_create_area": {
+      "name": "Create cloud area",
+      "description": "Create a new security area (camera group) on a Hik-Connect device.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Hik-Connect device."
+        },
+        "device_serial": {
+          "name": "Device serial",
+          "description": "Serial number of the NVR/device."
+        },
+        "group_name": {
+          "name": "Area name",
+          "description": "Human-readable name for the new area."
+        },
+        "resource_ids": {
+          "name": "Camera IDs",
+          "description": "List of camera IDs to include in the area."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Update cloud area",
+      "description": "Update an existing security area's cameras and name on Hik-Connect (recreates the area).",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Hik-Connect device."
+        },
+        "device_serial": {
+          "name": "Device serial",
+          "description": "Serial number of the NVR/device."
+        },
+        "group_id": {
+          "name": "Area ID",
+          "description": "Numeric ID of the area."
+        },
+        "group_name": {
+          "name": "Area name",
+          "description": "Human-readable name for the area."
+        },
+        "resource_ids": {
+          "name": "Camera IDs",
+          "description": "Complete list of camera IDs to include in the area."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Delete cloud area",
+      "description": "Delete a security area from a Hik-Connect device.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "Hik-Connect device."
+        },
+        "device_serial": {
+          "name": "Device serial",
+          "description": "Serial number of the NVR/device."
+        },
+        "group_id": {
+          "name": "Area ID",
+          "description": "Numeric ID of the area to delete."
         }
       }
     }

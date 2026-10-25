@@ -49,14 +49,7 @@ _SPELLINGS: dict[Kind, tuple[str, ...]] = {
     Kind.AUDIO_EXCEPTION: ("audioexception", "audiodetection"),
     Kind.THERMOMETRY: ("thermometry", "temperaturedetection"),
     Kind.DEFOCUS: ("defocus", "defocusdetection"),
-    Kind.DOORBELL: (
-        "callstatus",
-        "videointercom",
-        "doorbell",
-        "ring",
-        "ringcall",
-        "intercom",
-    ),
+    Kind.DOORBELL: ("doorbell", "ring", "ringcall", "bell"),
 }
 
 _LOOKUP: dict[str, Kind] = {

@@ -379,14 +379,12 @@ actions:
 | Type | Model | Firmware |
 | --- | --- | --- |
 | NVR | DS-7608NXI-I2/8P/S | V5.04.066 |
-| NVR | DS-7608NXI-K1 | V4.84.101 |
 | Camera | DS-2CD2387G3-LIS2UY/SL (ColorVu G3, strobe light and speaker) | V5.8.32 |
 | Camera | DS-2CD2T166G3-IS2UY/SL (G3, strobe light and speaker) | V5.8.3 |
 | Camera | DS-2CD2187G3-LIS2UY (ColorVu G3) | V5.8.40 |
 | Camera | DS-2CD20126G3-IUY (G3) | V5.8.3 |
 | Camera | DS-2CD2387G2P-LSU/SL (ColorVu G2) | V5.7.20 |
 | Camera | DS-2CD2T87G2-L (ColorVu G2) | V5.7.23 |
-| Camera | DS-2CD2087G2H-LIU (ColorVu G2, Smart Hybrid Light) | V5.7.23 |
 | Camera | DS-2DE5425IW-AE(T5)(B) | V5.8.13 build 260402 |
 | Camera | DS-2CD2023G2-IU | V5.7.0 build 241023 |
 | Camera | DS-I253M(C) | V5.7.3 build 260403 |

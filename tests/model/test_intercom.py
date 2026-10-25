@@ -98,11 +98,13 @@ def test_canonical_call_status(raw: str | None, expected: str):
 
 
 def test_vocabulary_doorbell():
-    assert canonical("callstatus") == Kind.DOORBELL
-    assert canonical("videointercom") == Kind.DOORBELL
     assert canonical("doorbell") == Kind.DOORBELL
     assert canonical("ring") == Kind.DOORBELL
     assert canonical("ringcall") == Kind.DOORBELL
+    assert canonical("bell") == Kind.DOORBELL
+    assert canonical("callstatus") == Kind.OTHER
+    assert canonical("videointercom") == Kind.OTHER
+    assert canonical("intercom") == Kind.OTHER
 
 
 async def test_read_capabilities(rig):

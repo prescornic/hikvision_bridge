@@ -1088,6 +1088,72 @@
           "description": "Klipper filerna till perioden; originalfilen klipps aldrig."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Skapa molnområde",
+      "description": "Skapa ett nytt säkerhetsområde (kameragrupp) på en Hik-Connect-enhet.",
+      "fields": {
+        "device_id": {
+          "name": "Enhet",
+          "description": "Hik-Connect-enhet."
+        },
+        "device_serial": {
+          "name": "Enhetens serienummer",
+          "description": "Serienummer för inspelaren/enheten."
+        },
+        "group_name": {
+          "name": "Områdesnamn",
+          "description": "Läsart namn för det nya området."
+        },
+        "resource_ids": {
+          "name": "Kamera-ID:n",
+          "description": "Lista med kamera-ID:n att inkludera i området."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Uppdatera molnområde",
+      "description": "Uppdatera kameror och namn för ett befintligt säkerhetsområde på Hik-Connect (skapar om området).",
+      "fields": {
+        "device_id": {
+          "name": "Enhet",
+          "description": "Hik-Connect-enhet."
+        },
+        "device_serial": {
+          "name": "Enhetens serienummer",
+          "description": "Serienummer för inspelaren/enheten."
+        },
+        "group_id": {
+          "name": "Områdes-ID",
+          "description": "Numeriskt ID för området."
+        },
+        "group_name": {
+          "name": "Områdesnamn",
+          "description": "Läsart namn för området."
+        },
+        "resource_ids": {
+          "name": "Kamera-ID:n",
+          "description": "Komplett lista över kamera-ID:n att inkludera i området."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Ta bort molnområde",
+      "description": "Ta bort ett säkerhetsområde från en Hik-Connect-enhet.",
+      "fields": {
+        "device_id": {
+          "name": "Enhet",
+          "description": "Hik-Connect-enhet."
+        },
+        "device_serial": {
+          "name": "Enhetens serienummer",
+          "description": "Serienummer för inspelaren/enheten."
+        },
+        "group_id": {
+          "name": "Områdes-ID",
+          "description": "Numeriskt ID för området som ska tas bort."
+        }
+      }
     }
   }
 }

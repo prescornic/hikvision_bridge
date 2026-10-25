@@ -1088,6 +1088,72 @@
           "description": "Przycina pliki do okresu; plik oryginalny nigdy nie jest przycinany."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Utwórz obszar w chmurze",
+      "description": "Tworzy nowy obszar bezpieczeństwa (grupę kamer) na urządzeniu Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Urządzenie",
+          "description": "Urządzenie Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Numer seryjny urządzenia",
+          "description": "Numer seryjny rejestratora/urządzenia."
+        },
+        "group_name": {
+          "name": "Nazwa obszaru",
+          "description": "Czytelna nazwa dla nowego obszaru."
+        },
+        "resource_ids": {
+          "name": "Identyfikatory kamer",
+          "description": "Lista identyfikatorów kamer do uwzględnienia w obszarze."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Zaktualizuj obszar w chmurze",
+      "description": "Aktualizuje kamery i nazwę istniejącego obszaru bezpieczeństwa w Hik-Connect (tworzy obszar na nowo).",
+      "fields": {
+        "device_id": {
+          "name": "Urządzenie",
+          "description": "Urządzenie Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Numer seryjny urządzenia",
+          "description": "Numer seryjny rejestratora/urządzenia."
+        },
+        "group_id": {
+          "name": "Identyfikator obszaru",
+          "description": "Numeryczny identyfikator obszaru."
+        },
+        "group_name": {
+          "name": "Nazwa obszaru",
+          "description": "Czytelna nazwa obszaru."
+        },
+        "resource_ids": {
+          "name": "Identyfikatory kamer",
+          "description": "Pełna lista identyfikatorów kamer do uwzględnienia w obszarze."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Usuń obszar w chmurze",
+      "description": "Usuwa obszar bezpieczeństwa z urządzenia Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Urządzenie",
+          "description": "Urządzenie Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Numer seryjny urządzenia",
+          "description": "Numer seryjny rejestratora/urządzenia."
+        },
+        "group_id": {
+          "name": "Identyfikator obszaru",
+          "description": "Numeryczny identyfikator usuwanego obszaru."
+        }
+      }
     }
   }
 }

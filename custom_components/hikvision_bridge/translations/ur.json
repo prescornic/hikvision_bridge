@@ -1088,6 +1088,72 @@
           "description": "فائلوں کو مدت تک کاٹتا ہے؛ اصل فائل کبھی نہیں کاٹی جاتی۔"
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "کلاؤڈ ایریا بنائیں",
+      "description": "Hik-Connect ڈیوائس پر نیا سیکیورٹی ایریا (کیمرہ گروپ) بنائیں۔",
+      "fields": {
+        "device_id": {
+          "name": "آلہ",
+          "description": "Hik-Connect آلہ۔"
+        },
+        "device_serial": {
+          "name": "ڈیوائس کا سیریل نمبر",
+          "description": "NVR/ڈیوائس کا سیریل نمبر۔"
+        },
+        "group_name": {
+          "name": "ایریا کا نام",
+          "description": "نئے ایریا کے لیے پڑھنے کے قابل نام۔"
+        },
+        "resource_ids": {
+          "name": "کیمرہ آئی ڈیز",
+          "description": "ایریا میں شامل کرنے کے لیے کیمرہ آئی ڈیز کی فہرست۔"
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "کلاؤڈ ایریا کو اپ ڈیٹ کریں",
+      "description": "Hik-Connect پر موجودہ سیکیورٹی ایریا کے کیمرے اور نام کو اپ ڈیٹ کریں (ایریا کو دوبارہ بناتا ہے)۔",
+      "fields": {
+        "device_id": {
+          "name": "آلہ",
+          "description": "Hik-Connect آلہ۔"
+        },
+        "device_serial": {
+          "name": "ڈیوائس کا سیریل نمبر",
+          "description": "NVR/ڈیوائس کا سیریل نمبر۔"
+        },
+        "group_id": {
+          "name": "ایریا آئی ڈی",
+          "description": "ایریا کی عددی آئی ڈی۔"
+        },
+        "group_name": {
+          "name": "ایریا کا نام",
+          "description": "ایریا کے لیے پڑھنے کے قابل نام۔"
+        },
+        "resource_ids": {
+          "name": "کیمرہ آئی ڈیز",
+          "description": "ایریا میں شامل کرنے کے لیے کیمرہ آئی ڈیز کی مکمل فہرست۔"
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "کلاؤڈ ایریا حذف کریں",
+      "description": "Hik-Connect ڈیوائس سے سیکیورٹی ایریا حذف کریں۔",
+      "fields": {
+        "device_id": {
+          "name": "آلہ",
+          "description": "Hik-Connect آلہ۔"
+        },
+        "device_serial": {
+          "name": "ڈیوائس کا سیریل نمبر",
+          "description": "NVR/ڈیوائس کا سیریل نمبر۔"
+        },
+        "group_id": {
+          "name": "ایریا آئی ڈی",
+          "description": "حذف کرنے کے لیے ایریا کی عددی آئی ڈی۔"
+        }
+      }
     }
   }
 }

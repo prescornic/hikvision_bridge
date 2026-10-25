@@ -1088,6 +1088,72 @@
           "description": "يقص الملفات حسب الفترة؛ لا يُقص الملف الأصلي أبدًا."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "إنشاء منطقة سحابية",
+      "description": "إنشاء منطقة أمان جديدة (مجموعة كاميرات) على جهاز Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "الجهاز",
+          "description": "جهاز Hik-Connect."
+        },
+        "device_serial": {
+          "name": "الرقم التسلسلي للجهاز",
+          "description": "الرقم التسلسلي لجهاز NVR/الجهاز."
+        },
+        "group_name": {
+          "name": "اسم المنطقة",
+          "description": "اسم مقروء للمنطقة الجديدة."
+        },
+        "resource_ids": {
+          "name": "معرّفات الكاميرات",
+          "description": "قائمة بمعرّفات الكاميرات لتضمينها في المنطقة."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "تحديث المنطقة السحابية",
+      "description": "تحديث كاميرات واسم منطقة أمان حالية على Hik-Connect (يعيد إنشاء المنطقة).",
+      "fields": {
+        "device_id": {
+          "name": "الجهاز",
+          "description": "جهاز Hik-Connect."
+        },
+        "device_serial": {
+          "name": "الرقم التسلسلي للجهاز",
+          "description": "الرقم التسلسلي لجهاز NVR/الجهاز."
+        },
+        "group_id": {
+          "name": "معرّف المنطقة",
+          "description": "المعرّف الرقمي للمنطقة."
+        },
+        "group_name": {
+          "name": "اسم المنطقة",
+          "description": "اسم مقروء للمنطقة."
+        },
+        "resource_ids": {
+          "name": "معرّفات الكاميرات",
+          "description": "قائمة كاملة بمعرّفات الكاميرات لتضمينها في المنطقة."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "حذف المنطقة السحابية",
+      "description": "حذف منطقة أمان من جهاز Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "الجهاز",
+          "description": "جهاز Hik-Connect."
+        },
+        "device_serial": {
+          "name": "الرقم التسلسلي للجهاز",
+          "description": "الرقم التسلسلي لجهاز NVR/الجهاز."
+        },
+        "group_id": {
+          "name": "معرّف المنطقة",
+          "description": "المعرّف الرقمي للمنطقة المراد حذفها."
+        }
+      }
     }
   }
 }

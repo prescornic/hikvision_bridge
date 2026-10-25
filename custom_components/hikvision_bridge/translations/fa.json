@@ -1088,6 +1088,72 @@
           "description": "فایل‌ها را به بازه برش می‌دهد؛ فایل اصلی هرگز برش داده نمی‌شود."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "ایجاد ناحیه ابری",
+      "description": "ایجاد یک ناحیه امنیتی جدید (گروه دوربین) در دستگاه Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "دستگاه",
+          "description": "دستگاه Hik-Connect."
+        },
+        "device_serial": {
+          "name": "شماره سریال دستگاه",
+          "description": "شماره سریال دستگاه/NVR."
+        },
+        "group_name": {
+          "name": "نام ناحیه",
+          "description": "نام خوانا برای ناحیه جدید."
+        },
+        "resource_ids": {
+          "name": "شناسه‌های دوربین",
+          "description": "فهرست شناسه‌های دوربین برای گنجاندن در ناحیه."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "به‌روزرسانی ناحیه ابری",
+      "description": "به‌روزرسانی دوربین‌ها و نام ناحیه امنیتی موجود در Hik-Connect (ایجاد مجدد ناحیه).",
+      "fields": {
+        "device_id": {
+          "name": "دستگاه",
+          "description": "دستگاه Hik-Connect."
+        },
+        "device_serial": {
+          "name": "شماره سریال دستگاه",
+          "description": "شماره سریال دستگاه/NVR."
+        },
+        "group_id": {
+          "name": "شناسه ناحیه",
+          "description": "شناسه عددی ناحیه."
+        },
+        "group_name": {
+          "name": "نام ناحیه",
+          "description": "نام خوانا برای ناحیه."
+        },
+        "resource_ids": {
+          "name": "شناسه‌های دوربین",
+          "description": "فهرست کامل شناسه‌های دوربین برای گنجاندن در ناحیه."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "حذف ناحیه ابری",
+      "description": "حذف یک ناحیه امنیتی از دستگاه Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "دستگاه",
+          "description": "دستگاه Hik-Connect."
+        },
+        "device_serial": {
+          "name": "شماره سریال دستگاه",
+          "description": "شماره سریال دستگاه/NVR."
+        },
+        "group_id": {
+          "name": "شناسه ناحیه",
+          "description": "شناسه عددی ناحیه برای حذف."
+        }
+      }
     }
   }
 }

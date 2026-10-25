@@ -1088,6 +1088,72 @@
           "description": "Klipper filerne til perioden; originalfilen klippes aldrig."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Opret cloud-område",
+      "description": "Opret et nyt sikkerhedsområde (kameragruppe) på en Hik-Connect-enhed.",
+      "fields": {
+        "device_id": {
+          "name": "Enhed",
+          "description": "Hik-Connect-enhed."
+        },
+        "device_serial": {
+          "name": "Enhedens serienummer",
+          "description": "Serienummer på optageren/enheden."
+        },
+        "group_name": {
+          "name": "Områdenavn",
+          "description": "Læsbart navn for det nye område."
+        },
+        "resource_ids": {
+          "name": "Kamera-id'er",
+          "description": "Liste over kamera-id'er, der skal inkluderes i området."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Opdater cloud-område",
+      "description": "Opdater kameraer og navn på et eksisterende sikkerhedsområde på Hik-Connect (genopretter området).",
+      "fields": {
+        "device_id": {
+          "name": "Enhed",
+          "description": "Hik-Connect-enhed."
+        },
+        "device_serial": {
+          "name": "Enhedens serienummer",
+          "description": "Serienummer på optageren/enheden."
+        },
+        "group_id": {
+          "name": "Område-id",
+          "description": "Numerisk id for området."
+        },
+        "group_name": {
+          "name": "Områdenavn",
+          "description": "Læsbart navn for området."
+        },
+        "resource_ids": {
+          "name": "Kamera-id'er",
+          "description": "Komplet liste over kamera-id'er, der skal inkluderes i området."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Slet cloud-område",
+      "description": "Slet et sikkerhedsområde fra en Hik-Connect-enhed.",
+      "fields": {
+        "device_id": {
+          "name": "Enhed",
+          "description": "Hik-Connect-enhed."
+        },
+        "device_serial": {
+          "name": "Enhedens serienummer",
+          "description": "Serienummer på optageren/enheden."
+        },
+        "group_id": {
+          "name": "Område-id",
+          "description": "Numerisk id for området, der skal slettes."
+        }
+      }
     }
   }
 }

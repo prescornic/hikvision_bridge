@@ -205,7 +205,6 @@ class RecordingSensor(PolledEntity, BinarySensorEntity):
 class DoorbellRingingSensor(PolledEntity, BinarySensorEntity):
     """On while the doorbell is ringing (polled or pushed)."""
 
-    _attr_device_class = BinarySensorDeviceClass.OCCUPANCY
     _attr_translation_key = "doorbell_ringing"
 
     def __init__(self, bridge: DeviceBridge) -> None:

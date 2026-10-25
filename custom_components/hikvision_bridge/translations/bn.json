@@ -1088,6 +1088,72 @@
           "description": "ফাইলগুলো সময় অনুযায়ী কাটে; মূল ফাইল কখনো কাটা হয় না।"
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "ক্লাউড এলাকা তৈরি করুন",
+      "description": "Hik-Connect ডিভাইসে একটি নতুন নিরাপত্তা এলাকা (ক্যামেরা গ্রুপ) তৈরি করুন।",
+      "fields": {
+        "device_id": {
+          "name": "ডিভাইস",
+          "description": "Hik-Connect ডিভাইস।"
+        },
+        "device_serial": {
+          "name": "ডিভাইসের সিরিয়াল নম্বর",
+          "description": "NVR/ডিভাইসের সিরিয়াল নম্বর।"
+        },
+        "group_name": {
+          "name": "এলাকার নাম",
+          "description": "নতুন এলাকার জন্য পাঠযোগ্য নাম।"
+        },
+        "resource_ids": {
+          "name": "ক্যামেরা আইডি",
+          "description": "এলাকায় অন্তর্ভুক্ত করার জন্য ক্যামেরা আইডিগুলির তালিকা।"
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "ক্লাউড এলাকা আপডেট করুন",
+      "description": "Hik-Connect-এ বিদ্যমান নিরাপত্তা এলাকার ক্যামেরা এবং নাম আপডেট করুন (এলাকাটি পুনরায় তৈরি করে)।",
+      "fields": {
+        "device_id": {
+          "name": "ডিভাইস",
+          "description": "Hik-Connect ডিভাইস।"
+        },
+        "device_serial": {
+          "name": "ডিভাইসের সিরিয়াল নম্বর",
+          "description": "NVR/ডিভাইসের সিরিয়াল নম্বর।"
+        },
+        "group_id": {
+          "name": "এলাকার আইডি",
+          "description": "এলাকার সংখ্যাসূচক আইডি।"
+        },
+        "group_name": {
+          "name": "এলাকার নাম",
+          "description": "এলাকার জন্য পাঠযোগ্য নাম।"
+        },
+        "resource_ids": {
+          "name": "ক্যামেরা আইডি",
+          "description": "এলাকায় অন্তর্ভুক্ত করার জন্য ক্যামেরা আইডিগুলির সম্পূর্ণ তালিকা।"
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "ক্লাউড এলাকা মুছুন",
+      "description": "Hik-Connect ডিভাইস থেকে একটি নিরাপত্তা এলাকা মুছুন।",
+      "fields": {
+        "device_id": {
+          "name": "ডিভাইস",
+          "description": "Hik-Connect ডিভাইস।"
+        },
+        "device_serial": {
+          "name": "ডিভাইসের সিরিয়াল নম্বর",
+          "description": "NVR/ডিভাইসের সিরিয়াল নম্বর।"
+        },
+        "group_id": {
+          "name": "এলাকার আইডি",
+          "description": "মুছে ফেলার জন্য এলাকার সংখ্যাসূচক আইডি।"
+        }
+      }
     }
   }
 }

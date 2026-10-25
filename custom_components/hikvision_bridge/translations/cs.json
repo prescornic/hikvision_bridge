@@ -1088,6 +1088,72 @@
           "description": "Ořízne soubory na období; původní soubor se nikdy neořezává."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Vytvořit cloudovou oblast",
+      "description": "Vytvoří novou bezpečnostní oblast (skupinu kamer) na zařízení Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Zařízení",
+          "description": "Zařízení Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Sériové číslo zařízení",
+          "description": "Sériové číslo rekordéru/zařízení."
+        },
+        "group_name": {
+          "name": "Název oblasti",
+          "description": "Srozumitelný název pro novou oblast."
+        },
+        "resource_ids": {
+          "name": "ID kamer",
+          "description": "Seznam ID kamer, které mají být zahrnuty do oblasti."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Aktualizovat cloudovou oblast",
+      "description": "Aktualizuje kamery a název existující bezpečnostní oblasti v Hik-Connect (znovu vytvoří oblast).",
+      "fields": {
+        "device_id": {
+          "name": "Zařízení",
+          "description": "Zařízení Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Sériové číslo zařízení",
+          "description": "Sériové číslo rekordéru/zařízení."
+        },
+        "group_id": {
+          "name": "ID oblasti",
+          "description": "Číselné ID oblasti."
+        },
+        "group_name": {
+          "name": "Název oblasti",
+          "description": "Srozumitelný název oblasti."
+        },
+        "resource_ids": {
+          "name": "ID kamer",
+          "description": "Úplný seznam ID kamer, které mají být zahrnuty do oblasti."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Smazat cloudovou oblast",
+      "description": "Smaže bezpečnostní oblast ze zařízení Hik-Connect.",
+      "fields": {
+        "device_id": {
+          "name": "Zařízení",
+          "description": "Zařízení Hik-Connect."
+        },
+        "device_serial": {
+          "name": "Sériové číslo zařízení",
+          "description": "Sériové číslo rekordéru/zařízení."
+        },
+        "group_id": {
+          "name": "ID oblasti",
+          "description": "Číselné ID oblasti ke smazání."
+        }
+      }
     }
   }
 }

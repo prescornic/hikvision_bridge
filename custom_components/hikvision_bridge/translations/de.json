@@ -1088,6 +1088,72 @@
           "description": "Schneidet die Dateien auf den Zeitraum zu; die Originaldatei wird nie geschnitten."
         }
       }
+    },
+    "cloud_create_area": {
+      "name": "Cloud-Bereich erstellen",
+      "description": "Erstellt einen neuen Sicherheitsbereich (Kameragruppe) auf einem Hik-Connect-Gerät.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Hik-Connect-Gerät."
+        },
+        "device_serial": {
+          "name": "Geräteseriennummer",
+          "description": "Seriennummer des Rekorders/Geräts."
+        },
+        "group_name": {
+          "name": "Bereichsname",
+          "description": "Lesbarer Name für den neuen Bereich."
+        },
+        "resource_ids": {
+          "name": "Kamera-IDs",
+          "description": "Liste der Kamera-IDs, die in den Bereich aufgenommen werden sollen."
+        }
+      }
+    },
+    "cloud_update_area": {
+      "name": "Cloud-Bereich aktualisieren",
+      "description": "Aktualisiert die Kameras und den Namen eines vorhandenen Sicherheitsbereichs auf Hik-Connect (erstellt den Bereich neu).",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Hik-Connect-Gerät."
+        },
+        "device_serial": {
+          "name": "Geräteseriennummer",
+          "description": "Seriennummer des Rekorders/Geräts."
+        },
+        "group_id": {
+          "name": "Bereichs-ID",
+          "description": "Numerische ID des Bereichs."
+        },
+        "group_name": {
+          "name": "Bereichsname",
+          "description": "Lesbarer Name für den Bereich."
+        },
+        "resource_ids": {
+          "name": "Kamera-IDs",
+          "description": "Vollständige Liste der Kamera-IDs, die im Bereich enthalten sein sollen."
+        }
+      }
+    },
+    "cloud_delete_area": {
+      "name": "Cloud-Bereich löschen",
+      "description": "Löscht einen Sicherheitsbereich von einem Hik-Connect-Gerät.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Hik-Connect-Gerät."
+        },
+        "device_serial": {
+          "name": "Geräteseriennummer",
+          "description": "Seriennummer des Rekorders/Geräts."
+        },
+        "group_id": {
+          "name": "Bereichs-ID",
+          "description": "Numerische ID des zu löschenden Bereichs."
+        }
+      }
     }
   }
 }
