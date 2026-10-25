@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="custom_components/hikvision_bridge/brand/icon.png" alt="Hikvision Bridge logo" width="128">
+  <img src="https://raw.githubusercontent.com/yannik2480/hikvision_bridge/main/custom_components/hikvision_bridge/brand/icon.png" alt="Hikvision Bridge logo" width="128">
 </p>
 
 <h1 align="center">Hikvision Bridge</h1>
@@ -7,7 +7,7 @@
 <p align="center">
   Local Home Assistant integration for Hikvision cameras, recorders (NVR/DVR) and video intercoms over ISAPI.<br>
   Push events, live streams, recordings with a timeline viewer, detection switches and image settings,<br>
-  with optional Hik-Connect cloud status.
+  with optional Hik-Connect cloud status and alarm areas.
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@
 * **Careful with logins.** Hikvision locks users after failed logins, so a rejected password is never retried in a loop.
 
 <p align="center">
-  <img src="images/architecture.svg" alt="Home Assistant talks ISAPI to the recorder; cameras can also be reached directly; Hik-Connect is optional" width="820">
+  <img src="https://raw.githubusercontent.com/yannik2480/hikvision_bridge/main/images/architecture.svg" alt="Home Assistant talks ISAPI to the recorder; cameras can also be reached directly; Hik-Connect is optional" width="820">
 </p>
 
 ## What you get
@@ -53,13 +53,13 @@
 | Recordings | Recorder and memory-card recordings in the media browser, by day and kind, with thumbnails; playback as MP4, as H.264 or streamed by the device; saving to the media folder (see below) |
 | Panel and card | Sidebar viewer and dashboard card: camera list, live view, timeline of recordings and detections to scrub through, automatic quality ([details](#recordings-panel-and-card)) |
 | Video Intercom & Doorbell | Remote door unlock button (Access Control relay pulse), call status sensor (`idle`, `ringing`, `on_call`), ringing binary sensor, and dedicated doorbell event entity with instant push triggering |
-| Hik-Connect (optional) | Cloud connection per device, stream-encryption status, connection change events, door opening for intercoms (unverified, see limits) |
-| Actions | `add_center_links`, `isapi_request` (read-only unless confirmed), `ptz_move`, `ptz_preset`, `set_notification_host`, `search_recordings`, `download_recording` |
+| Hik-Connect (optional) | Cloud connection per device, stream-encryption status, connection change events, alarm control panels for security areas/groups (arm away, arm home/silent, disarm), door opening for intercoms (unverified, see limits) |
+| Actions | `add_center_links`, `isapi_request` (read-only unless confirmed), `ptz_move`, `ptz_preset`, `set_notification_host`, `search_recordings`, `download_recording`, `cloud_create_area`, `cloud_update_area`, `cloud_delete_area` |
 
 <p align="center">
-  <img src="images/configuration.png" alt="Device page, Configuration: detection switches, alarm input, image settings, siren, strobe light and audio" width="300">
+  <img src="https://raw.githubusercontent.com/yannik2480/hikvision_bridge/main/images/configuration.png" alt="Device page, Configuration: detection switches, alarm input, image settings, siren, strobe light and audio" width="300">
   &nbsp;
-  <img src="images/controls-sensors.png" alt="Device page, Controls and Sensors: alarm outputs, detections, streams and recording status" width="300">
+  <img src="https://raw.githubusercontent.com/yannik2480/hikvision_bridge/main/images/controls-sensors.png" alt="Device page, Controls and Sensors: alarm outputs, detections, streams and recording status" width="300">
 </p>
 
 ### Image settings
@@ -109,7 +109,7 @@ while it downloads, using its ffmpeg:
 | --- | --- | --- |
 | MP4 as recorded (default) | Video copied into MP4, audio to AAC; almost no CPU | Plays at once; H.265 needs a browser with hardware support (Safari, Chrome/Edge on most current PCs) |
 | H.264 | Decoded and encoded again, at most 1080p | Plays in every browser and on casting devices; slow on small machines, especially with 4K recordings |
-| Stream from the device | The device plays the file over RTSP, Home Assistant serves it as HLS | Long continuous recordings; plays in real time, no seeking, restarts at the end |
+| Stream from the device | The device plays the file over RTSP, Home Assistant serves it as HLS; falls back to MP4 when Home Assistant cannot set up the stream | Long continuous recordings; plays in real time, no seeking, restarts at the end |
 | MPEG-TS as recorded | Video copied into MPEG-TS | Saving only |
 | Original file | The device's bytes, unchanged (`.ps`, plays in VLC) | Saving only |
 
@@ -157,7 +157,7 @@ Quality defaults to **Auto**:
   4K recordings.
 
 <p align="center">
-  <img src="images/panel-mockup.jpg" alt="Mockup of the Hikvision panel: camera list, live picture, controls and day timeline" width="820"><br>
+  <img src="https://raw.githubusercontent.com/yannik2480/hikvision_bridge/main/images/panel-mockup.jpg" alt="Mockup of the Hikvision panel: camera list, live picture, controls and day timeline" width="820"><br>
   <sub><b>Mockup</b> (AI-generated illustration of the layout, not a screenshot; labels and picture are not real)</sub>
 </p>
 
@@ -179,10 +179,13 @@ the first.
 
 ### HACS (recommended)
 
-1. Click **Open in HACS** above, or in HACS → three-dot menu → **Custom repositories** add
-   `https://github.com/yannik2480/hikvision_bridge` with category **Integration**.
+1. Click **Open in HACS** above, or open HACS and search for **Hikvision Bridge**.
 2. Download **Hikvision Bridge** and restart Home Assistant.
 3. Click **Add integration** above, or go to **Settings → Devices & services → Add integration → Hikvision Bridge**.
+
+If the integration doesn't show up in the HACS search yet, add it as a custom repository:
+HACS → three-dot menu → **Custom repositories** → `https://github.com/yannik2480/hikvision_bridge`
+with category **Integration**.
 
 ### Manual
 
@@ -247,12 +250,38 @@ it and asks:
 
 ### Hik-Connect
 
-Hik-Connect has no official third-party interface. The integration only logs in, reads the device
-list and status every 30 seconds, and stores the password in Home Assistant. Enter the account
+Hik-Connect has no official third-party interface. The integration logs in, reads the device list,
+status and the arming state of security areas every 30 seconds, and stores the password in Home
+Assistant. It only changes something in the cloud when you arm, disarm or use an area action. Enter the account
 (e-mail or phone number) and password. If Hik-Connect asks for a verification code, the flow shows the
 image and asks for the code. If the password stops working, Home Assistant asks you to re-authenticate
 and enter the new password (and a code, if needed). Cloud devices are shown as their own devices, placed below the
 matching local device when there is one.
+
+#### Security areas
+
+Camera groups (security areas) of recorders appear as alarm control panels on the cloud device. They
+support **Arm away** (defence mode 1), **Arm home / silent** (mode 2) and **Disarm** (mode 0). The
+area's cameras are in the `camera_ids` attribute; the list is refreshed every 10 minutes.
+
+The actions `hikvision_bridge.cloud_create_area`, `cloud_update_area` and `cloud_delete_area` manage
+areas. Select the cloud device (or give its serial) and pass camera ids as `resource_ids`:
+
+```yaml
+action: hikvision_bridge.cloud_create_area
+data:
+  device_id: <Hik-Connect device>
+  group_name: Ground floor
+  resource_ids: ["<camera id>", "<camera id>"]
+```
+
+Hik-Connect has no call to change an area, so `cloud_update_area` deletes it and creates it again: the
+area gets a new id (returned by the action) and a new panel entity. If creating fails, the old area is
+restored. Deleted areas remove their panel.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/yannik2480/hikvision_bridge/main/images/arming-area.png" alt="Cloud security area alarm control panel entity" width="400">
+</p>
 
 ### Options
 
@@ -422,6 +451,7 @@ Logged requests never contain passwords; still check the log before attaching it
 
 * Hik-Connect is undocumented and may change; errors show as *cloud request failed* rather than crashes.
 * Door opening for intercoms through Hik-Connect is implemented but not yet verified on real hardware.
+* Hik-Connect areas: changing an area recreates it with a new id (see [Security areas](#security-areas)).
 * Session login (cookie based) is not implemented; Digest and Basic authentication are.
 * Holiday schedules are not exposed.
 * Encrypted Hik-Connect live streams cannot be decoded (recordings can, see [Recordings](#recordings)).
@@ -449,4 +479,4 @@ from English and German the texts are machine-assisted; corrections are welcome 
 
 ## License
 
-[Apache License 2.0](LICENSE). The panel includes [hls.js](https://github.com/video-dev/hls.js) (Apache License 2.0, see `frontend/hls.js.LICENSE.txt`).
+[Apache License 2.0](https://github.com/yannik2480/hikvision_bridge/blob/main/LICENSE). The panel includes [hls.js](https://github.com/video-dev/hls.js) (Apache License 2.0, see [`hls.js.LICENSE.txt`](https://github.com/yannik2480/hikvision_bridge/blob/main/custom_components/hikvision_bridge/frontend/hls.js.LICENSE.txt)).

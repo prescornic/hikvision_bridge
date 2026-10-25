@@ -41,6 +41,7 @@ PLATFORMS: list[Platform] = [
     Platform.SWITCH,
 ]
 CLOUD_PLATFORMS: list[Platform] = [
+    Platform.ALARM_CONTROL_PANEL,
     Platform.BINARY_SENSOR,
     Platform.BUTTON,
     Platform.EVENT,

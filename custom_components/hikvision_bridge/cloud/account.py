@@ -117,6 +117,7 @@ class CloudAccount:
         path: str,
         *,
         form: dict[str, str] | None = None,
+        json_data: dict[str, Any] | None = None,
         params: dict[str, str] | None = None,
     ) -> dict[str, Any]:
         self.requests += 1
@@ -126,6 +127,7 @@ class CloudAccount:
                 method,
                 url,
                 data=form,
+                json=json_data,
                 params=params,
                 headers=self._headers(),
                 timeout=aiohttp.ClientTimeout(total=20),
@@ -189,6 +191,8 @@ class CloudAccount:
             raise CloudAuthFailed(_message(payload))
         if code in _LOCKED:
             raise CloudError("locked_out", _message(payload))
+        if code == 70002:
+            raise CloudError("device_offline", _message(payload))
         raise CloudError("cloud_rejected", f"code {code}: {_message(payload)}")
 
     async def renew(self) -> None:
@@ -211,17 +215,22 @@ class CloudAccount:
         await self.login()
 
     async def request(
-        self, method: str, path: str, *, params: dict[str, str] | None = None
+        self,
+        method: str,
+        path: str,
+        *,
+        params: dict[str, str] | None = None,
+        json_data: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Authenticated request with transparent session renewal (once)."""
         if self._session is None:
             await self.login()
         elif self._session.stale:
             await self.renew()
-        payload = await self._exchange(method, path, params=params)
+        payload = await self._exchange(method, path, params=params, json_data=json_data)
         if _code(payload) in {401, 1003, 1004, 1005}:
             await self.renew()
-            payload = await self._exchange(method, path, params=params)
+            payload = await self._exchange(method, path, params=params, json_data=json_data)
         code = _code(payload)
         if code not in _OK:
             self._raise_for(code, payload)

@@ -1013,6 +1013,10 @@ class Viewer {
     this.calendar.days = (year, month) => this._recordedDays(year, month);
     this.video.addEventListener("pause", () => this.update());
     this.video.addEventListener("play", () => this.update());
+    this.video.addEventListener("loadedmetadata", () => this._fit());
+    this.video.addEventListener("resize", () => this._fit());
+    this._stageSize = new ResizeObserver(() => this._fit());
+    this._stageSize.observe(root.querySelector(".stage"));
     this._tick = setInterval(() => this._frame(), 250);
     this._refresh = setInterval(() => {
       if (isoDay(this.day) === isoDay(new Date())) this.loadTimeline();
@@ -1028,8 +1032,31 @@ class Viewer {
   destroy() {
     clearInterval(this._tick);
     clearInterval(this._refresh);
+    this._stageSize.disconnect();
     this.timeline.destroy();
     this.player.stop();
+  }
+
+  /*
+   * Sub streams are often 640x480 on wide cameras, the picture squeezed into 4:3. Such a
+   * stream is shown in the main stream's shape, as the Hikvision apps do.
+   */
+  _fit() {
+    const video = this.video;
+    const main = /^(\d+)x(\d+)$/.exec(this.camera?.resolution || "");
+    const shape = main ? main[1] / main[2] : 0;
+    const own = video.videoHeight ? video.videoWidth / video.videoHeight : 0;
+    if (!shape || !own || Math.abs(shape / own - 1) < 0.05) {
+      video.style.removeProperty("width");
+      video.style.removeProperty("height");
+      video.style.removeProperty("object-fit");
+      return;
+    }
+    const stage = video.parentElement;
+    const width = Math.min(stage.clientWidth, stage.clientHeight * shape);
+    video.style.width = `${width}px`;
+    video.style.height = `${width / shape}px`;
+    video.style.objectFit = "fill";
   }
 
   _label() {

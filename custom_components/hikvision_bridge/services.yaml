@@ -184,3 +184,61 @@ download_recording:
       default: true
       selector:
         boolean:
+
+cloud_create_area:
+  fields:
+    device_id:
+      selector:
+        device:
+          integration: hikvision_bridge
+    device_serial:
+      selector:
+        text:
+    group_name:
+      required: true
+      example: Entrance
+      selector:
+        text:
+    resource_ids:
+      required: true
+      selector:
+        object:
+
+cloud_update_area:
+  fields:
+    device_id:
+      selector:
+        device:
+          integration: hikvision_bridge
+    device_serial:
+      selector:
+        text:
+    group_id:
+      required: true
+      selector:
+        number:
+          mode: box
+    group_name:
+      required: true
+      example: Entrance
+      selector:
+        text:
+    resource_ids:
+      required: true
+      selector:
+        object:
+
+cloud_delete_area:
+  fields:
+    device_id:
+      selector:
+        device:
+          integration: hikvision_bridge
+    device_serial:
+      selector:
+        text:
+    group_id:
+      required: true
+      selector:
+        number:
+          mode: box
