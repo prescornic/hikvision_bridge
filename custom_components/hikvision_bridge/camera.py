@@ -13,6 +13,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from .const import (
     OPT_RTSP_PORT,
     OPT_RTSP_TRANSPORT,
+    OPT_STREAM_KEY,
     RTSP_PORT_DEFAULT,
     RTSP_TCP,
     SUBENTRY_CHANNEL_LINK,
@@ -65,6 +66,8 @@ class ChannelCamera(BridgeEntity, Camera):
         A direct link that leaves the live stream on the recorder is an explicit choice to
         try the recorder's stream anyway.
         """
+        if self.bridge.entry.options.get(OPT_STREAM_KEY):
+            return False
         cloud = self.bridge.profile.cloud
         route = self.bridge.routes.get(self.channel_id)
         direct = route is not None and route.healthy
@@ -144,9 +147,21 @@ class ChannelCamera(BridgeEntity, Camera):
         self, width: int | None = None, height: int | None = None
     ) -> bytes | None:
         link, stream_id, _ = self._source()
-        paths = [f"/ISAPI/Streaming/channels/{stream_id}/picture"]
+        query = (
+            f"?videoResolutionWidth={self._stream.width}&videoResolutionHeight={self._stream.height}"
+            if self._stream.width and self._stream.height
+            else ""
+        )
+        paths = []
         if link is self.bridge.link and self.bridge.profile.shape.records:
-            paths.insert(0, f"/ISAPI/ContentMgmt/StreamingProxy/channels/{stream_id}/picture")
+            if query:
+                paths.append(
+                    f"/ISAPI/ContentMgmt/StreamingProxy/channels/{stream_id}/picture{query}"
+                )
+            paths.append(f"/ISAPI/ContentMgmt/StreamingProxy/channels/{stream_id}/picture")
+        if query:
+            paths.append(f"/ISAPI/Streaming/channels/{stream_id}/picture{query}")
+        paths.append(f"/ISAPI/Streaming/channels/{stream_id}/picture")
         for path in paths:
             if path in link.unsupported:
                 continue
