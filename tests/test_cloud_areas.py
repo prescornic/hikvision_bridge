@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from unittest.mock import AsyncMock, patch
 
 from homeassistant.components.alarm_control_panel import (
@@ -10,13 +11,19 @@ from homeassistant.components.alarm_control_panel import (
 from homeassistant.const import ATTR_DEVICE_ID, CONF_PASSWORD
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
+import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.hikvision_bridge.cloud.account import CloudAccount
+from custom_components.hikvision_bridge.cloud.account import (
+    CloudAccount,
+    CloudAuthFailed,
+    CloudError,
+)
 from custom_components.hikvision_bridge.cloud.actions import (
     create_area,
     delete_area,
     fetch_areas,
+    fetch_devices,
     set_area_defence_mode,
     update_area,
 )
@@ -114,6 +121,61 @@ async def test_fetch_areas_enriches_members() -> None:
     assert len(areas) == 1
     assert areas[0].group_id == 100
     assert areas[0].camera_ids == ("cam1", "cam2")
+
+
+async def test_fetch_areas_keeps_members_and_previous() -> None:
+    acct = CloudAccount(session=None, account="u", password="p")  # type: ignore[arg-type]
+    old = CloudArea(group_id=100, device_serial="DEV1", name="Area 1", mode=0, camera_ids=("c",))
+    list_reply = {
+        "meta": {"code": 200},
+        "list": [{"groupId": 100, "groupDevSerial": "DEV1", "groupName": "Area 1", "mode": 1}],
+    }
+    acct.request = AsyncMock(return_value=list_reply)  # type: ignore[method-assign]
+    areas = await fetch_areas(acct, "DEV1", (old,), members=False)
+    assert areas[0].mode == 1
+    assert areas[0].camera_ids == ("c",)
+    assert acct.request.call_count == 1  # no member request
+
+    acct.request = AsyncMock(side_effect=CloudError("cloud_rejected"))  # type: ignore[method-assign]
+    assert await fetch_areas(acct, "DEV1", (old,)) == [old]
+
+    acct.request = AsyncMock(side_effect=CloudAuthFailed())  # type: ignore[method-assign]
+    with pytest.raises(CloudAuthFailed):
+        await fetch_areas(acct, "DEV1", (old,))
+
+
+async def test_fetch_devices_reads_areas_of_recorders_only() -> None:
+    acct = CloudAccount(session=None, account="u", password="p")  # type: ignore[arg-type]
+    nvr = _sample_device("Q00000001")
+    camera = replace(_sample_device("Q00000002"), channels=1)
+    with (
+        patch(
+            "custom_components.hikvision_bridge.cloud.actions.parse_page",
+            return_value=([nvr, camera], False),
+        ),
+        patch(
+            "custom_components.hikvision_bridge.cloud.actions.fetch_areas",
+            AsyncMock(return_value=[]),
+        ) as areas,
+    ):
+        acct.request = AsyncMock(return_value={})  # type: ignore[method-assign]
+        await fetch_devices(acct)
+    areas.assert_called_once()
+    assert areas.call_args.args[1] == "Q00000001"
+
+
+async def test_update_area_restores_previous_on_failure() -> None:
+    acct = CloudAccount(session=None, account="u", password="p")  # type: ignore[arg-type]
+    old = CloudArea(group_id=100, device_serial="DEV1", name="Old", mode=0, camera_ids=("c1",))
+    acct.request = AsyncMock(  # type: ignore[method-assign]
+        side_effect=[{}, CloudError("cloud_rejected"), {"groupInfo": {"groupId": 101}}]
+    )
+    with pytest.raises(CloudError):
+        await update_area(acct, "DEV1", 100, "New", ["c2"], old)
+    assert acct.request.call_args_list[-1].kwargs["json_data"] == {
+        "groupName": "Old",
+        "resourceIds": ["c1"],
+    }
 
 
 async def test_area_actions() -> None:
@@ -225,6 +287,13 @@ async def test_alarm_control_panel_entity_and_modes(hass: HomeAssistant) -> None
                 blocking=True,
             )
             mock_set.assert_called_once_with(bridge.account, "Q00000001", 101, 2)
+
+    # An area deleted in the cloud drops its entity.
+    with patch(FETCH, AsyncMock(return_value={device.key: replace(device, areas=(area1,))})):
+        await bridge.refresher.async_refresh()
+        await hass.async_block_till_done()
+    assert registry.async_get(area2_entity_id) is None
+    assert registry.async_get(area1_entity_id) is not None
 
 
 async def test_cloud_area_services(hass: HomeAssistant) -> None:

@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import timedelta
+import math
+import time
 from typing import Any
 
 from homeassistant.components.alarm_control_panel import (
@@ -17,7 +20,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_PASSWORD, EntityCategory, Platform
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import ConfigEntryAuthFailed, HomeAssistantError
-from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
@@ -36,6 +39,8 @@ from .wire.scrub import scrubbed_logger
 
 _LOGGER = scrubbed_logger(__name__)
 
+AREA_MEMBERS_EVERY = timedelta(minutes=10)
+
 
 class CloudRefresher(DataUpdateCoordinator[dict[str, CloudDevice]]):
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry, account: CloudAccount) -> None:
@@ -47,10 +52,13 @@ class CloudRefresher(DataUpdateCoordinator[dict[str, CloudDevice]]):
             update_interval=CLOUD_INTERVAL,
         )
         self.account = account
+        self._members_read = -math.inf
 
     async def _async_update_data(self) -> dict[str, CloudDevice]:
+        # Area modes are read every time; their members (one request per area) rarely change.
+        members = time.monotonic() - self._members_read >= AREA_MEMBERS_EVERY.total_seconds()
         try:
-            return await fetch_devices(self.account)
+            devices = await fetch_devices(self.account, self.data, members=members)
         except (CloudAuthFailed, CaptchaRequired) as err:
             raise ConfigEntryAuthFailed(
                 translation_domain=DOMAIN, translation_key="cloud_auth"
@@ -61,6 +69,9 @@ class CloudRefresher(DataUpdateCoordinator[dict[str, CloudDevice]]):
                 translation_key="cloud_failed",
                 translation_placeholders={"reason": err.reason},
             ) from err
+        if members:
+            self._members_read = time.monotonic()
+        return devices
 
 
 @dataclass
@@ -236,8 +247,9 @@ async def async_setup_cloud_alarm_control_panels(
 
     @callback
     def _check() -> None:
+        devices = bridge.refresher.data or {}
         new_entities: list[CloudAreaAlarmPanel] = []
-        for device in (bridge.refresher.data or {}).values():
+        for device in devices.values():
             for area in device.areas:
                 key = (device.key, area.group_id)
                 if key not in seen:
@@ -245,6 +257,18 @@ async def async_setup_cloud_alarm_control_panels(
                     new_entities.append(CloudAreaAlarmPanel(bridge, device, area.group_id))
         if new_entities:
             async_add_entities(new_entities)
+        # Areas deleted (or recreated by an update) on a device that still reports.
+        registry = er.async_get(hass)
+        for device_key, group_id in list(seen):
+            device = devices.get(device_key)
+            if device is None or any(a.group_id == group_id for a in device.areas):
+                continue
+            seen.discard((device_key, group_id))
+            unique_id = f"{CLOUD_PREFIX}{device_key}_area_{group_id}"
+            if entity_id := registry.async_get_entity_id(
+                Platform.ALARM_CONTROL_PANEL, DOMAIN, unique_id
+            ):
+                registry.async_remove(entity_id)
 
     _check()
     bridge.entry.async_on_unload(bridge.refresher.async_add_listener(_check))

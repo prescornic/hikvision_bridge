@@ -321,100 +321,90 @@ async def _save_chunks(hass: HomeAssistant, chunks: Any, path: Path) -> None:
 
 def _cloud_target_of(
     hass: HomeAssistant, device_id: str | None = None, serial: str | None = None
-) -> tuple[Any, str]:
-    """Return (CloudBridge, serial) for a cloud service call."""
+) -> tuple[Any, Any]:
+    """(CloudBridge, CloudDevice) of a cloud service call, by device id or serial."""
     from .cloud_entry import CLOUD_PREFIX, CloudBridge  # noqa: PLC0415
 
-    if device_id:
-        device_entry = dr.async_get(hass).async_get(device_id)
-        if device_entry is not None:
-            entry = hass.config_entries.async_get_entry(device_entry.config_entry_id)
-            if entry and isinstance(getattr(entry, "runtime_data", None), CloudBridge):
-                bridge: CloudBridge = entry.runtime_data
-                for domain, ident in device_entry.identifiers:
-                    if domain == DOMAIN and ident.startswith(CLOUD_PREFIX):
-                        key = ident.removeprefix(CLOUD_PREFIX)
-                        if dev := (bridge.refresher.data or {}).get(key):
-                            return bridge, dev.serial
-                if serial:
-                    return bridge, serial
+    if device_id and (device_entry := dr.async_get(hass).async_get(device_id)) is not None:
+        entry = hass.config_entries.async_get_entry(device_entry.config_entry_id)
+        if entry is not None and isinstance(
+            bridge := getattr(entry, "runtime_data", None), CloudBridge
+        ):
+            for domain, ident in device_entry.identifiers:
+                if domain == DOMAIN and ident.startswith(CLOUD_PREFIX):
+                    key = ident.removeprefix(CLOUD_PREFIX)
+                    if device := (bridge.refresher.data or {}).get(key):
+                        return bridge, device
 
     if serial:
         for entry in hass.config_entries.async_entries(DOMAIN):
             bridge = getattr(entry, "runtime_data", None)
             if entry.state is ConfigEntryState.LOADED and isinstance(bridge, CloudBridge):
-                for dev in (bridge.refresher.data or {}).values():
-                    if dev.serial.lower() == serial.lower():
-                        return bridge, dev.serial
-
-    cloud_bridges = [
-        e.runtime_data
-        for e in hass.config_entries.async_entries(DOMAIN)
-        if e.state is ConfigEntryState.LOADED
-        and isinstance(getattr(e, "runtime_data", None), CloudBridge)
-    ]
-    if len(cloud_bridges) == 1 and serial:
-        return cloud_bridges[0], serial
+                for device in (bridge.refresher.data or {}).values():
+                    if device.serial.lower() == serial.lower():
+                        return bridge, device
 
     raise ServiceValidationError(translation_domain=DOMAIN, translation_key="unknown_device")
 
 
+def _cloud_failed(err: Exception) -> HomeAssistantError:
+    return HomeAssistantError(
+        translation_domain=DOMAIN,
+        translation_key="cloud_failed",
+        translation_placeholders={"reason": getattr(err, "reason", str(err))},
+    )
+
+
 async def _cloud_create_area(call: ServiceCall) -> ServiceResponse:
+    from .cloud.account import CloudError  # noqa: PLC0415
     from .cloud.actions import create_area  # noqa: PLC0415
 
-    bridge, serial = _cloud_target_of(
+    bridge, device = _cloud_target_of(
         call.hass, call.data.get(ATTR_DEVICE_ID), call.data.get(FIELD_SERIAL)
     )
     group_name = call.data[FIELD_GROUP_NAME]
     resource_ids = [str(r) for r in call.data[FIELD_RESOURCE_IDS]]
     try:
-        new_id = await create_area(bridge.account, serial, group_name, resource_ids)
-    except Exception as err:
-        raise HomeAssistantError(
-            translation_domain=DOMAIN,
-            translation_key="cloud_failed",
-            translation_placeholders={"reason": str(err)},
-        ) from err
+        new_id = await create_area(bridge.account, device.serial, group_name, resource_ids)
+    except CloudError as err:
+        raise _cloud_failed(err) from err
     await bridge.refresher.async_request_refresh()
     return {"group_id": new_id}
 
 
 async def _cloud_update_area(call: ServiceCall) -> ServiceResponse:
+    from .cloud.account import CloudError  # noqa: PLC0415
     from .cloud.actions import update_area  # noqa: PLC0415
 
-    bridge, serial = _cloud_target_of(
+    bridge, device = _cloud_target_of(
         call.hass, call.data.get(ATTR_DEVICE_ID), call.data.get(FIELD_SERIAL)
     )
     group_id = int(call.data[FIELD_GROUP_ID])
     group_name = call.data[FIELD_GROUP_NAME]
     resource_ids = [str(r) for r in call.data[FIELD_RESOURCE_IDS]]
+    previous = next((a for a in device.areas if a.group_id == group_id), None)
     try:
-        new_id = await update_area(bridge.account, serial, group_id, group_name, resource_ids)
-    except Exception as err:
-        raise HomeAssistantError(
-            translation_domain=DOMAIN,
-            translation_key="cloud_failed",
-            translation_placeholders={"reason": str(err)},
-        ) from err
+        new_id = await update_area(
+            bridge.account, device.serial, group_id, group_name, resource_ids, previous
+        )
+    except CloudError as err:
+        raise _cloud_failed(err) from err
     await bridge.refresher.async_request_refresh()
     return {"group_id": new_id}
 
 
 async def _cloud_delete_area(call: ServiceCall) -> None:
+    from .cloud.account import CloudError  # noqa: PLC0415
     from .cloud.actions import delete_area  # noqa: PLC0415
 
-    bridge, serial = _cloud_target_of(
+    bridge, device = _cloud_target_of(
         call.hass, call.data.get(ATTR_DEVICE_ID), call.data.get(FIELD_SERIAL)
     )
     group_id = int(call.data[FIELD_GROUP_ID])
     try:
-        await delete_area(bridge.account, serial, group_id)
-    except Exception as err:
-        raise HomeAssistantError(
-            translation_domain=DOMAIN,
-            translation_key="cloud_failed",
-            translation_placeholders={"reason": str(err)},
-        ) from err
+        await delete_area(bridge.account, device.serial, group_id)
+    except CloudError as err:
+        raise _cloud_failed(err) from err
     await bridge.refresher.async_request_refresh()
 
 
