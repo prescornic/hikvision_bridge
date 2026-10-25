@@ -137,6 +137,16 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
     assert hass.states.get(call_status.entity_id).state == "idle"
     assert hass.states.get(ringing.entity_id).state == STATE_OFF
 
+    # Test direct transition from idle to onCall (e.g. answered quickly or ringing missed)
+    device.documents["/ISAPI/VideoIntercom/callStatus?format=json"] = json.dumps(
+        {"CallStatus": {"status": "onCall"}}
+    )
+    await bridge.async_poll_intercom()
+    await hass.async_block_till_done()
+
+    assert hass.states.get(call_status.entity_id).state == "on_call"
+    assert hass.states.get(ringing.entity_id).state == STATE_ON
+
     await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
 

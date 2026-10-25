@@ -181,9 +181,12 @@ class StatusRefresher(DataUpdateCoordinator[Snapshot]):
         caps = self._bridge.profile.intercom
         if caps is None or not caps.has_call_status:
             return
-        status = await intercom.read_call_status(self._bridge.link)
-        if status is not None:
-            if status == "ringing" and snapshot.call_status != "ringing":
+        ok, status = await self._try_read(intercom.read_call_status(self._bridge.link))
+        if ok and status is not None:
+            if status in ("ringing", "on_call") and snapshot.call_status not in (
+                "ringing",
+                "on_call",
+            ):
                 self._bridge.router.fire_doorbell()
             snapshot.call_status = status
 

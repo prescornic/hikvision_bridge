@@ -47,6 +47,7 @@ class FakeDevice:
     expired: set[str] = field(default_factory=set)
     # Refuse this many correctly signed requests (a device that briefly rejects logins).
     refuse_next: int = 0
+    refuse_without_challenge: int = 0
     # Refuse a request whose nonce count is not above the last one seen for its nonce.
     strict_count: bool = True
     counts: dict[str, int] = field(default_factory=dict)
@@ -101,6 +102,9 @@ class FakeDevice:
         ):
             self.refuse_next = max(0, self.refuse_next - 1)
             self.failed_logins += 1
+            if self.refuse_without_challenge > 0:
+                self.refuse_without_challenge -= 1
+                return web.Response(status=401)
             return web.Response(status=401, headers={"WWW-Authenticate": self._challenge()})
         self.counts[nonce] = count
         if params.get("uri") != request.path_qs:
