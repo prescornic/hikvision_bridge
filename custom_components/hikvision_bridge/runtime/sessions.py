@@ -39,7 +39,8 @@ _LOGGER = scrubbed_logger(__name__)
 
 QUALITY_ORIGINAL = "original"
 QUALITY_COMPATIBLE = "compatible"
-QUALITIES = (QUALITY_ORIGINAL, QUALITY_COMPATIBLE)
+QUALITY_LOW = "low"
+QUALITIES = (QUALITY_ORIGINAL, QUALITY_COMPATIBLE, QUALITY_LOW)
 SEGMENT_SECONDS = 2
 FIRST_SEGMENT_TIMEOUT = 25
 IDLE_SECONDS = 45
@@ -123,7 +124,24 @@ def hls_args(url: str, quality: str, codec: str | None, target: Path) -> list[st
         args += ["-rtsp_transport", "tcp"]
     # The streams are known after the first key frame; the default waits five seconds.
     args += ["-analyzeduration", "2000000", "-i", url, "-map", "0:v:0", "-map", "0:a:0?"]
-    if quality == QUALITY_COMPATIBLE:
+    if quality == QUALITY_LOW:
+        args += [
+            "-c:v",
+            "libx264",
+            "-preset",
+            "ultrafast",
+            "-tune",
+            "zerolatency",
+            "-crf",
+            "28",
+            "-pix_fmt",
+            "yuv420p",
+            "-vf",
+            f"scale='min({playback.H264_LOW_WIDTH},iw)':-2",
+            "-g",
+            str(SEGMENT_SECONDS * 25),
+        ]
+    elif quality == QUALITY_COMPATIBLE:
         args += [
             "-c:v",
             "libx264",

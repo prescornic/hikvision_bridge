@@ -1096,7 +1096,7 @@ class Viewer {
   _qualityOptions() {
     const select = this.root.querySelector(".quality");
     const t = this.t.ui;
-    const options = this.mode === "live" ? ["auto", "low", "high"] : ["auto", "original", "compatible"];
+    const options = this.mode === "live" ? ["auto", "low", "high"] : ["auto", "low", "original", "compatible"];
     if (!options.includes(this.quality)) this.quality = "auto";
     select.innerHTML = options.map((o) => `<option value="${o}">${t("quality")}: ${t(o)}</option>`).join("");
     select.value = this.quality;

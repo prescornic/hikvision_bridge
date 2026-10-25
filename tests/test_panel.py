@@ -76,6 +76,10 @@ def test_hls_args(tmp_path: Path) -> None:
     compatible = sessions.hls_args("rtsp://x", sessions.QUALITY_COMPATIBLE, "H.265", tmp_path)
     assert compatible[compatible.index("-c:v") + 1] == "libx264"
     assert "hvc1" not in compatible
+    low = sessions.hls_args("rtsp://x", sessions.QUALITY_LOW, "H.265", tmp_path)
+    assert low[low.index("-c:v") + 1] == "libx264"
+    assert f"scale='min({playback.H264_LOW_WIDTH},iw)':-2" in low
+    assert "hvc1" not in low
     piped = sessions.hls_args(sessions.PIPE, sessions.QUALITY_ORIGINAL, "hevc", tmp_path)
     assert piped[piped.index("-i") - 3 : piped.index("-i") + 2] == [
         "mpeg",
