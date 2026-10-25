@@ -291,7 +291,7 @@ class BridgeMediaSource(MediaSource):
         if mode == PLAYBACK_STREAM:
             try:
                 return await self._stream(bridge, source, uri)
-            except HomeAssistantError as err:
+            except (HomeAssistantError, ImportError) as err:
                 _LOGGER.debug("Stream playback unavailable, converting instead: %s", err)
                 mode = FORMAT_MP4
         url = recording_url(entry_id, channel_id, source.key, mode, uri)
@@ -301,9 +301,18 @@ class BridgeMediaSource(MediaSource):
         """Let the device play the recording over RTSP; Home Assistant serves it as HLS."""
         from homeassistant.components.stream import (  # noqa: PLC0415 - optional
             HLS_PROVIDER,
-            DynamicStreamSettings,
             create_stream,
         )
+
+        try:
+            # Home Assistant 2026.10 moved it from stream to camera.
+            from homeassistant.components.camera import (  # noqa: PLC0415 - optional
+                DynamicStreamSettings,
+            )
+        except ImportError:
+            from homeassistant.components.stream import (  # noqa: PLC0415 - optional
+                DynamicStreamSettings,
+            )
 
         stream = create_stream(
             self.hass,
