@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime
 
 from homeassistant.config_entries import ConfigEntry
@@ -26,6 +26,7 @@ from ..const import (
     EVENT_PATH_STREAM,
     EVENT_PATH_WEBHOOK,
     EVENT_SOURCE_CAMERA,
+    INTERCOM_INTERVAL,
     OPT_EVENT_PATH,
     OPT_HOLD_SECONDS,
     RTSP_PORT_DEFAULT,
@@ -35,7 +36,7 @@ from ..const import (
 )
 from ..model import audit
 from ..model.discover import read_identity_only
-from ..model.features import adjust, detection, health, io, ptz, storage
+from ..model.features import adjust, detection, health, intercom, io, ptz, storage
 from ..model.inventory import CloudLinkState, DeviceProfile
 from ..model.vocabulary import Kind
 from ..wire.faults import BadCredentials, BridgeFault, LockedOut
@@ -104,6 +105,7 @@ class DeviceBridge:
     device_ids: dict[str | None, str] = field(default_factory=dict)
     _unsubs: list[CALLBACK_TYPE] = field(default_factory=list)
     _last_audit: datetime | None = None
+    _intercom_busy: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
         self.refresher = StatusRefresher(self.hass, self.entry, self)
@@ -318,6 +320,47 @@ class DeviceBridge:
             return
         self.report = report
         self._publish_audit(report)
+
+    def schedule_intercom_poll(self) -> None:
+        caps = self.profile.intercom
+        if caps is None or not caps.has_call_status:
+            return
+        self.entry.async_create_background_task(
+            self.hass, self.async_poll_intercom(), "intercom_poll"
+        )
+        self._unsubs.append(
+            async_track_time_interval(self.hass, self._intercom_tick, INTERCOM_INTERVAL)
+        )
+
+    @callback
+    def _intercom_tick(self, _now: datetime) -> None:
+        self.entry.async_create_background_task(
+            self.hass, self.async_poll_intercom(), "intercom_poll"
+        )
+
+    async def async_poll_intercom(self) -> None:
+        if self._intercom_busy:
+            return
+        self._intercom_busy = True
+        try:
+            status = await intercom.read_call_status(self.link)
+            if status is None:
+                return
+            current = self.refresher.data.call_status if self.refresher.data else None
+            if status == "ringing" and current != "ringing":
+                self.router.fire_doorbell()
+            if self.refresher.data is not None and self.refresher.data.call_status != status:
+                new_data = replace(self.refresher.data, call_status=status)
+                self.refresher.async_set_updated_data(new_data)
+        except (BadCredentials, LockedOut) as err:
+            if isinstance(err, LockedOut):
+                self.report_lockout(err)
+            elif isinstance(err, BadCredentials):
+                self.entry.async_start_reauth(self.hass)
+        except BridgeFault as err:
+            _LOGGER.debug("Intercom poll skipped: %s", type(err).__name__)
+        finally:
+            self._intercom_busy = False
 
     @callback
     def update_cloud_state(self, state: CloudLinkState) -> None:

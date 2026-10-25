@@ -122,6 +122,7 @@ async def _async_setup_device(hass: HomeAssistant, entry: BridgeConfigEntry) -> 
     bridge.start_feeds()
     async_register_webhook(hass, entry)
     bridge.schedule_audit()
+    bridge.schedule_intercom_poll()
     entry.async_on_unload(entry.add_update_listener(_async_reload_on_change))
     return True
 

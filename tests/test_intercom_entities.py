@@ -8,8 +8,11 @@ from homeassistant.const import STATE_OFF, STATE_ON
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
+from custom_components.hikvision_bridge.model.vocabulary import Kind, canonical
 from custom_components.hikvision_bridge.runtime.bridge import DeviceBridge
 from custom_components.hikvision_bridge.runtime.router import DEVICE_SCOPE
+from custom_components.hikvision_bridge.wire.feed import frame_from_json, frame_from_xml
+from custom_components.hikvision_bridge.wire.xmlview import parse
 from tests.conftest import device_entry
 from tests.fakedevice import FakeDevice
 
@@ -104,24 +107,24 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
     assert path == "/ISAPI/AccessControl/RemoteControl/door/1"
     assert "<cmd>open</cmd>" in body
 
-    # Test snapshot polling with ring status
+    # Test fast intercom polling with ring status
     device.documents["/ISAPI/VideoIntercom/callStatus?format=json"] = json.dumps(
         {"CallStatus": {"status": "ring"}}
     )
     bridge: DeviceBridge = entry.runtime_data
-    await bridge.refresher.async_refresh()
+    await bridge.async_poll_intercom()
     await hass.async_block_till_done()
 
     assert hass.states.get(call_status.entity_id).state == "ringing"
     assert hass.states.get(ringing.entity_id).state == STATE_ON
     assert hass.states.get(bell_event.entity_id).attributes.get("event_type") == "ring"
 
-    # Test back to idle
+    # Test fast poll back to idle
     device.documents["/ISAPI/VideoIntercom/callStatus?format=json"] = json.dumps(
         {"CallStatus": {"status": "idle"}}
     )
     bridge.router._deactivate((DEVICE_SCOPE, "doorbell"))
-    await bridge.refresher.async_refresh()
+    await bridge.async_poll_intercom()
     await hass.async_block_till_done()
 
     assert hass.states.get(call_status.entity_id).state == "idle"
@@ -129,6 +132,26 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
 
     await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
+
+
+def test_access_controller_event_feed() -> None:
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<AccessControllerEvent version="2.0">'
+        "<majorEventType>5</majorEventType>"
+        "<subEventType>37</subEventType>"
+        "</AccessControllerEvent>"
+    )
+    frame = frame_from_xml(parse(xml))
+    assert frame is not None
+    assert frame.raw_type == "doorbell"
+    assert canonical(frame.raw_type) is Kind.DOORBELL
+
+    data = {"AccessControllerEvent": {"majorEventType": 5, "subEventType": 37}}
+    frame_json = frame_from_json(data)
+    assert frame_json is not None
+    assert frame_json.raw_type == "doorbell"
+    assert canonical(frame_json.raw_type) is Kind.DOORBELL
 
 
 async def test_intercom_multi_door(hass: HomeAssistant, serve) -> None:

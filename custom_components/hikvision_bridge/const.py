@@ -65,6 +65,7 @@ RTSP_UDP: Final = "udp"
 
 # Refresh cadence
 FAST_INTERVAL: Final = timedelta(seconds=30)
+INTERCOM_INTERVAL: Final = timedelta(seconds=2)
 MEDIUM_INTERVAL: Final = timedelta(seconds=120)
 SLOW_INTERVAL: Final = timedelta(minutes=10)
 AUDIT_INTERVAL: Final = timedelta(hours=24)
