@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Avaa ovi"
+      },
+      "open_door_numbered": {
+        "name": "Avaa ovi {door}"
       }
     },
     "select": {

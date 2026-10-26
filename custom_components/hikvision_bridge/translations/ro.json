@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Deschide ușa"
+      },
+      "open_door_numbered": {
+        "name": "Deschide ușa {door}"
       }
     },
     "select": {

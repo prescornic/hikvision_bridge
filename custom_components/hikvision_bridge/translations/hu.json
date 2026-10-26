@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Ajtó nyitása"
+      },
+      "open_door_numbered": {
+        "name": "Ajtó {door} nyitása"
       }
     },
     "select": {

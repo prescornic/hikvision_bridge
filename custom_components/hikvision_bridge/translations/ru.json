@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Открыть дверь"
+      },
+      "open_door_numbered": {
+        "name": "Открыть дверь {door}"
       }
     },
     "select": {

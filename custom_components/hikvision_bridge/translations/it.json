@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Apri porta"
+      },
+      "open_door_numbered": {
+        "name": "Apri porta {door}"
       }
     },
     "select": {

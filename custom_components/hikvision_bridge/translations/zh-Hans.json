@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "开门"
+      },
+      "open_door_numbered": {
+        "name": "开门 {door}"
       }
     },
     "select": {

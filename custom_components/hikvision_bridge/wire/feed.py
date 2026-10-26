@@ -277,8 +277,6 @@ def frame_from_xml(node: XmlNode) -> FeedFrame | None:
         sub = node.numeric("subEventType")
         if major == 5 and sub in (37, 38):
             raw_type = "doorbell"
-        elif major is not None:
-            raw_type = node.text("eventDescription") or f"access_{major}_{sub}"
     if not raw_type:
         return None
     extra: dict[str, Any] = {"active_count": node.numeric("activePostCount")}
@@ -370,8 +368,6 @@ def frame_from_json(data: Any) -> FeedFrame | None:
         sub = _json_find(data, "subEventType")
         if major in (5, "5") and sub in (37, "37", 38, "38"):
             raw_type = "doorbell"
-        elif major is not None:
-            raw_type = _json_text(data, "eventDescription") or f"access_{major}_{sub}"
     if not raw_type:
         return None
     extra: dict[str, Any] = {}

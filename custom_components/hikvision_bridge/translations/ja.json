@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "ドアを開ける"
+      },
+      "open_door_numbered": {
+        "name": "ドア{door}を開ける"
       }
     },
     "select": {

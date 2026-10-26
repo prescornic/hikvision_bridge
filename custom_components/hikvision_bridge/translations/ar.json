@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "فتح الباب"
+      },
+      "open_door_numbered": {
+        "name": "فتح الباب {door}"
       }
     },
     "select": {

@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "दरवाजा खोलें"
+      },
+      "open_door_numbered": {
+        "name": "दरवाजा {door} खोलें"
       }
     },
     "select": {

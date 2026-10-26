@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Άνοιγμα πόρτας"
+      },
+      "open_door_numbered": {
+        "name": "Άνοιγμα πόρτας {door}"
       }
     },
     "select": {

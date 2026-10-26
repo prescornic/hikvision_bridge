@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "باز کردن در"
+      },
+      "open_door_numbered": {
+        "name": "باز کردن در {door}"
       }
     },
     "select": {

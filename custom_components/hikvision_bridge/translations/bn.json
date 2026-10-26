@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "দরজা খুলুন"
+      },
+      "open_door_numbered": {
+        "name": "দরজা {door} খুলুন"
       }
     },
     "select": {

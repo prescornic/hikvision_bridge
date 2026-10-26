@@ -55,6 +55,7 @@
       "rescan": { "default": "mdi:magnify-scan" },
       "cloud_unlock": { "default": "mdi:door-open" },
       "open_door": { "default": "mdi:door-open" },
+      "open_door_numbered": { "default": "mdi:door-open" },
       "ptz_pan_left": { "default": "mdi:pan-left" },
       "ptz_pan_right": { "default": "mdi:pan-right" },
       "ptz_tilt_up": { "default": "mdi:pan-up" },

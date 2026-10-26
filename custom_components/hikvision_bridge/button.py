@@ -112,6 +112,7 @@ class DoorUnlockButton(BridgeEntity, ButtonEntity):
         super().__init__(bridge, None, f"open_door_{door_no}")
         self._door_no = door_no
         if bridge.profile.intercom and len(bridge.profile.intercom.doors) > 1:
+            self._attr_translation_key = "open_door_numbered"
             self._attr_translation_placeholders = {"door": str(door_no)}
 
     async def async_press(self) -> None:

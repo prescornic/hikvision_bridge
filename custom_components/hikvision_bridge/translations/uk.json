@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Відкрити двері"
+      },
+      "open_door_numbered": {
+        "name": "Відкрити двері {door}"
       }
     },
     "select": {

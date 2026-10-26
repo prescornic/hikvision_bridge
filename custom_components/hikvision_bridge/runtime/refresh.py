@@ -20,7 +20,7 @@ from ..const import (
     GRACE_BEFORE_UNAVAILABLE,
 )
 from ..model.discover import CLOUD_PATH, read_cloud_state
-from ..model.features import adjust, detection, health, intercom, io, storage
+from ..model.features import adjust, detection, health, io, storage
 from ..model.features.detection import DetectionState
 from ..model.features.health import DeviceHealth
 from ..model.features.image import ImageValue
@@ -116,7 +116,6 @@ class StatusRefresher(DataUpdateCoordinator[Snapshot]):
         )
         try:
             await self._read_io(snapshot)
-            await self._read_intercom(snapshot)
             if due(DETECTION_EVERY):
                 await self._read_detections(snapshot)
             if due(CHANNELS_EVERY):
@@ -176,19 +175,6 @@ class StatusRefresher(DataUpdateCoordinator[Snapshot]):
                 target[port.port_id] = result
             elif self._missed(key):
                 target[port.port_id] = None
-
-    async def _read_intercom(self, snapshot: Snapshot) -> None:
-        caps = self._bridge.profile.intercom
-        if caps is None or not caps.has_call_status:
-            return
-        ok, status = await self._try_read(intercom.read_call_status(self._bridge.link))
-        if ok and status is not None:
-            if status in ("ringing", "on_call") and snapshot.call_status not in (
-                "ringing",
-                "on_call",
-            ):
-                self._bridge.router.fire_doorbell()
-            snapshot.call_status = status
 
     async def _read_detections(self, snapshot: Snapshot) -> None:
         jobs = []

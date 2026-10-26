@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "Mở cửa"
+      },
+      "open_door_numbered": {
+        "name": "Mở cửa {door}"
       }
     },
     "select": {

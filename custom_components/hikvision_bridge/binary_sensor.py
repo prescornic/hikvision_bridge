@@ -228,7 +228,4 @@ class DoorbellRingingSensor(PolledEntity, BinarySensorEntity):
     def is_on(self) -> bool:
         if self.bridge.router.is_active(DEVICE_SCOPE, Kind.DOORBELL.value):
             return True
-        return self.coordinator.data is not None and self.coordinator.data.call_status in (
-            "ringing",
-            "on_call",
-        )
+        return self.coordinator.data is not None and self.coordinator.data.call_status == "ringing"

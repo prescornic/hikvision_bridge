@@ -83,6 +83,7 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
     # Check button
     unlock_btn = _entity(hass, entry, "button", "_open_door_1")
     assert unlock_btn is not None
+    assert unlock_btn.translation_key == "open_door"
 
     # Check call status sensor
     call_status = _entity(hass, entry, "sensor", "_call_status")
@@ -137,7 +138,17 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
     assert hass.states.get(call_status.entity_id).state == "idle"
     assert hass.states.get(ringing.entity_id).state == STATE_OFF
 
-    # Test direct transition from idle to onCall (e.g. answered quickly or ringing missed)
+    # Test call answered: when status switches to onCall, ringing sensor turns off
+    device.documents["/ISAPI/VideoIntercom/callStatus?format=json"] = json.dumps(
+        {"CallStatus": {"status": "ring"}}
+    )
+    await bridge.async_poll_intercom()
+    await hass.async_block_till_done()
+    assert hass.states.get(call_status.entity_id).state == "ringing"
+    assert hass.states.get(ringing.entity_id).state == STATE_ON
+
+    # Once answered (onCall) and router hold ends, ringing turns off while call_status remains on_call
+    bridge.router._deactivate((DEVICE_SCOPE, "doorbell"))
     device.documents["/ISAPI/VideoIntercom/callStatus?format=json"] = json.dumps(
         {"CallStatus": {"status": "onCall"}}
     )
@@ -145,7 +156,7 @@ async def test_intercom_entities_setup_and_unlock(hass: HomeAssistant, serve) ->
     await hass.async_block_till_done()
 
     assert hass.states.get(call_status.entity_id).state == "on_call"
-    assert hass.states.get(ringing.entity_id).state == STATE_ON
+    assert hass.states.get(ringing.entity_id).state == STATE_OFF
 
     await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
@@ -181,6 +192,26 @@ def test_access_controller_event_feed() -> None:
     assert frame_json.raw_type == "doorbell"
     assert canonical(frame_json.raw_type) is Kind.DOORBELL
 
+    # Non-doorbell access control events (majorEventType without doorbell subEventType) are dropped
+    other_xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<AccessControllerEvent version="2.0">'
+        "<majorEventType>5</majorEventType>"
+        "<subEventType>1</subEventType>"
+        "<eventDescription>Card Swiped</eventDescription>"
+        "</AccessControllerEvent>"
+    )
+    assert frame_from_xml(parse(other_xml)) is None
+
+    other_json = {
+        "AccessControllerEvent": {
+            "majorEventType": 5,
+            "subEventType": 1,
+            "eventDescription": "Card Swiped",
+        }
+    }
+    assert frame_from_json(other_json) is None
+
 
 async def test_intercom_multi_door(hass: HomeAssistant, serve) -> None:
     device = FakeDevice("camera_g2")
@@ -204,6 +235,8 @@ async def test_intercom_multi_door(hass: HomeAssistant, serve) -> None:
     door2 = _entity(hass, entry, "button", "_open_door_2")
     assert door1 is not None
     assert door2 is not None
+    assert door1.translation_key == "open_door_numbered"
+    assert door2.translation_key == "open_door_numbered"
 
     device.writes.clear()
     await hass.services.async_call("button", "press", {"entity_id": door2.entity_id}, blocking=True)

@@ -327,9 +327,7 @@ class DeviceBridge:
         caps = self.profile.intercom
         if caps is None or not caps.has_call_status:
             return
-        self.entry.async_create_background_task(
-            self.hass, self.async_poll_intercom(), "intercom_poll"
-        )
+        self.entry.async_create_task(self.hass, self.async_poll_intercom(), "intercom_poll")
         self._unsubs.append(
             async_track_time_interval(self.hass, self._intercom_tick, INTERCOM_INTERVAL)
         )

@@ -473,6 +473,9 @@
       },
       "open_door": {
         "name": "문 열기"
+      },
+      "open_door_numbered": {
+        "name": "문 {door} 열기"
       }
     },
     "select": {
