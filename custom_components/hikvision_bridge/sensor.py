@@ -62,6 +62,8 @@ async def async_setup_entry(
         for channel in profile.channels.values()
         if Kind.ANPR in channel.kinds
     )
+    if profile.intercom and profile.intercom.has_call_status:
+        entities.append(IntercomCallStatus(bridge))
     add_entities(bridge, async_add_entities, entities)
 
 
@@ -272,3 +274,16 @@ class NetworkAddress(PolledEntity, SensorEntity):
     @property
     def native_value(self) -> str | None:
         return self.bridge.channel_address(self.channel_id)
+
+
+class IntercomCallStatus(PolledEntity, SensorEntity):
+    _attr_translation_key = "call_status"
+    _attr_device_class = SensorDeviceClass.ENUM
+    _attr_options = ["idle", "ringing", "on_call"]
+
+    def __init__(self, bridge: DeviceBridge) -> None:
+        super().__init__(bridge, None, "call_status")
+
+    @property
+    def native_value(self) -> str | None:
+        return self.coordinator.data.call_status

@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Tallennus"
+      },
+      "doorbell_ringing": {
+        "name": "Ovikello soi"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Ovikello",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Soi"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Rekisterikilpi"
+      },
+      "call_status": {
+        "name": "Puhelun tila",
+        "state": {
+          "idle": "Toimeton",
+          "ringing": "Soi",
+          "on_call": "Puhelussa"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ loitonna"
+      },
+      "open_door": {
+        "name": "Avaa ovi"
+      },
+      "open_door_numbered": {
+        "name": "Avaa ovi {door}"
       }
     },
     "select": {

@@ -273,6 +273,11 @@ def _plate_from_xml(node: XmlNode) -> PlateRead | None:
 def frame_from_xml(node: XmlNode) -> FeedFrame | None:
     raw_type = node.text("eventType")
     if not raw_type:
+        major = node.numeric("majorEventType")
+        sub = node.numeric("subEventType")
+        if major == 5 and sub in (37, 38):
+            raw_type = "doorbell"
+    if not raw_type:
         return None
     extra: dict[str, Any] = {"active_count": node.numeric("activePostCount")}
     if _is_duration(raw_type):
@@ -358,6 +363,11 @@ def frame_from_json(data: Any) -> FeedFrame | None:
     if not isinstance(data, dict):
         return None
     raw_type = _json_find(data, "eventType")
+    if not raw_type:
+        major = _json_find(data, "majorEventType")
+        sub = _json_find(data, "subEventType")
+        if major in (5, "5") and sub in (37, "37", 38, "38"):
+            raw_type = "doorbell"
     if not raw_type:
         return None
     extra: dict[str, Any] = {}

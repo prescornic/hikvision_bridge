@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Gravação"
+      },
+      "doorbell_ringing": {
+        "name": "Campainha tocando"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Campainha",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Tocando"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Placa do veículo"
+      },
+      "call_status": {
+        "name": "Status da chamada",
+        "state": {
+          "idle": "Inativo",
+          "ringing": "Tocando",
+          "on_call": "Em chamada"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ afastar"
+      },
+      "open_door": {
+        "name": "Abrir porta"
+      },
+      "open_door_numbered": {
+        "name": "Abrir porta {door}"
       }
     },
     "select": {

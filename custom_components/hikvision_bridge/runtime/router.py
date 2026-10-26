@@ -141,6 +141,8 @@ class EventRouter:
             self.last_plate[scope] = frame
 
         if frame.is_active:
+            if kind == Kind.DOORBELL and self.is_active(scope, key):
+                return
             self._activate((scope, key))
             for target in frame.targets:
                 self._activate((scope, f"target:{target}"))
@@ -211,6 +213,13 @@ class EventRouter:
                 "received": frame.received.isoformat(),
             },
         )
+
+    @callback
+    def fire_doorbell(self) -> None:
+        if self.is_active(DEVICE_SCOPE, Kind.DOORBELL.value):
+            return
+        frame = FeedFrame(raw_type="doorbell", state="active")
+        self._intake(Origin("intercom"), frame)
 
     @callback
     def shutdown(self) -> None:

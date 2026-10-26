@@ -55,6 +55,7 @@ class Snapshot:
     # (channel id or None for the entry's device, input port id) -> armed
     armed: dict[tuple[str | None, str], bool] = field(default_factory=dict)
     channel_storage: dict[str, list[StorageUnit]] = field(default_factory=dict)
+    call_status: str | None = None
 
 
 def _put[K, V](target: dict[K, V], key: K, value: V | None) -> None:
@@ -110,6 +111,7 @@ class StatusRefresher(DataUpdateCoordinator[Snapshot]):
                 recording=dict(previous.recording),
                 armed=dict(previous.armed),
                 channel_storage=dict(previous.channel_storage),
+                call_status=previous.call_status,
             )
         )
         try:

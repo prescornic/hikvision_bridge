@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "녹화"
+      },
+      "doorbell_ringing": {
+        "name": "초인종 울림"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "초인종",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "울리는 중"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "번호판"
+      },
+      "call_status": {
+        "name": "통화 상태",
+        "state": {
+          "idle": "대기 중",
+          "ringing": "울리는 중",
+          "on_call": "통화 중"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ 축소"
+      },
+      "open_door": {
+        "name": "문 열기"
+      },
+      "open_door_numbered": {
+        "name": "문 {door} 열기"
       }
     },
     "select": {

@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Запись"
+      },
+      "doorbell_ringing": {
+        "name": "Звонок звонит"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Дверной звонок",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Вызов"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Номерной знак"
+      },
+      "call_status": {
+        "name": "Статус вызова",
+        "state": {
+          "idle": "Ожидание",
+          "ringing": "Вызов",
+          "on_call": "Разговор"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ отдалить"
+      },
+      "open_door": {
+        "name": "Открыть дверь"
+      },
+      "open_door_numbered": {
+        "name": "Открыть дверь {door}"
       }
     },
     "select": {

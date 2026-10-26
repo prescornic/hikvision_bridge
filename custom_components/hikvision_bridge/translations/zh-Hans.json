@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "录像"
+      },
+      "doorbell_ringing": {
+        "name": "门铃正在响"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "门铃",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "正在呼叫"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "车牌"
+      },
+      "call_status": {
+        "name": "呼叫状态",
+        "state": {
+          "idle": "空闲",
+          "ringing": "正在呼叫",
+          "on_call": "通话中"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ 缩小"
+      },
+      "open_door": {
+        "name": "开门"
+      },
+      "open_door_numbered": {
+        "name": "开门 {door}"
       }
     },
     "select": {

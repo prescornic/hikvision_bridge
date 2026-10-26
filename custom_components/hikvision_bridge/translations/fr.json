@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Enregistrement"
+      },
+      "doorbell_ringing": {
+        "name": "Sonnette retentit"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Sonnette",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Sonnerie"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Plaque d'immatriculation"
+      },
+      "call_status": {
+        "name": "Statut d'appel",
+        "state": {
+          "idle": "Inactif",
+          "ringing": "Sonnerie",
+          "on_call": "En appel"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ zoom arrière"
+      },
+      "open_door": {
+        "name": "Ouvrir la porte"
+      },
+      "open_door_numbered": {
+        "name": "Ouvrir la porte {door}"
       }
     },
     "select": {

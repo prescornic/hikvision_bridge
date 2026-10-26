@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Inspelning"
+      },
+      "doorbell_ringing": {
+        "name": "Dörrklockan ringer"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Dörrklocka",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Ringer"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Registreringsskylt"
+      },
+      "call_status": {
+        "name": "Samtalsstatus",
+        "state": {
+          "idle": "Inaktiv",
+          "ringing": "Ringer",
+          "on_call": "I samtal"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ zooma ut"
+      },
+      "open_door": {
+        "name": "Öppna dörr"
+      },
+      "open_door_numbered": {
+        "name": "Öppna dörr {door}"
       }
     },
     "select": {

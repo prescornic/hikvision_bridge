@@ -228,3 +228,13 @@ async def test_write_round_trip(rig) -> None:
     )
     assert reply.status == 200
     assert device.writes[0][1] == "/ISAPI/Smart/LineDetection/1"
+
+
+async def test_refusal_without_challenge_reprobes_and_recovers(rig) -> None:
+    device = FakeDevice()
+    link = await rig(device)
+    await link.read_xml("/ISAPI/System/deviceInfo")
+    device.refuse_next = 1
+    device.refuse_without_challenge = 1
+    assert (await link.read_xml("/ISAPI/Event/triggers")) is not None
+    assert link.blocked is None

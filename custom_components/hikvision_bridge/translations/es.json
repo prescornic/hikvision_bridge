@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Grabación"
+      },
+      "doorbell_ringing": {
+        "name": "Timbre sonando"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Timbre",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Sonando"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Matrícula"
+      },
+      "call_status": {
+        "name": "Estado de llamada",
+        "state": {
+          "idle": "Inactivo",
+          "ringing": "Sonando",
+          "on_call": "En llamada"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ alejar"
+      },
+      "open_door": {
+        "name": "Abrir puerta"
+      },
+      "open_door_numbered": {
+        "name": "Abrir puerta {door}"
       }
     },
     "select": {

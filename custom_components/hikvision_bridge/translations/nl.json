@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Opname"
+      },
+      "doorbell_ringing": {
+        "name": "Deurbel gaat"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Deurbel",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Gaat over"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Kenteken"
+      },
+      "call_status": {
+        "name": "Oproepstatus",
+        "state": {
+          "idle": "Inactief",
+          "ringing": "Gaat over",
+          "on_call": "In gesprek"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ uitzoomen"
+      },
+      "open_door": {
+        "name": "Deur openen"
+      },
+      "open_door_numbered": {
+        "name": "Deur {door} openen"
       }
     },
     "select": {

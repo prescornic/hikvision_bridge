@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Opptak"
+      },
+      "doorbell_ringing": {
+        "name": "Dørklokken ringer"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Dørklokke",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Ringer"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Registreringsskilt"
+      },
+      "call_status": {
+        "name": "Samtalestatus",
+        "state": {
+          "idle": "Inaktiv",
+          "ringing": "Ringer",
+          "on_call": "I samtale"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ zoom ut"
+      },
+      "open_door": {
+        "name": "Åpne dør"
+      },
+      "open_door_numbered": {
+        "name": "Åpne dør {door}"
       }
     },
     "select": {

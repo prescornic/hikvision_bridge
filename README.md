@@ -5,7 +5,7 @@
 <h1 align="center">Hikvision Bridge</h1>
 
 <p align="center">
-  Local Home Assistant integration for Hikvision cameras and recorders (NVR/DVR) over ISAPI.<br>
+  Local Home Assistant integration for Hikvision cameras, recorders (NVR/DVR) and video intercoms over ISAPI.<br>
   Push events, live streams, recordings with a timeline viewer, detection switches and image settings,<br>
   with optional Hik-Connect cloud status and alarm areas.
 </p>
@@ -52,6 +52,7 @@
 | Health | Event connection, event delay, stream encryption, IP address, repairs for misconfigured devices (see below); uptime/last boot, CPU, memory and reboot count (diagnostic, disabled by default; firmware that reports a timestamp instead of a count shows it as the `reported_timestamp` attribute); memory card of directly connected cameras |
 | Recordings | Recorder and memory-card recordings in the media browser, by day and kind, with thumbnails; playback as MP4, as H.264 or streamed by the device; saving to the media folder (see below) |
 | Panel and card | Sidebar viewer and dashboard card: camera list, live view, timeline of recordings and detections to scrub through, automatic quality ([details](#recordings-panel-and-card)) |
+| Video Intercom & Doorbell | Remote door unlock button (Access Control relay pulse), call status sensor (`idle`, `ringing`, `on_call`), ringing binary sensor, and dedicated doorbell event entity with fast poll detection |
 | Hik-Connect (optional) | Cloud connection per device, stream-encryption status, connection change events, alarm control panels for security areas/groups (arm away, arm home/silent, disarm), door opening for intercoms (unverified, see limits) |
 | Actions | `add_center_links`, `isapi_request` (read-only unless confirmed), `ptz_move`, `ptz_preset`, `set_notification_host`, `search_recordings`, `download_recording`, `cloud_create_area`, `cloud_update_area`, `cloud_delete_area` |
 
@@ -416,6 +417,7 @@ actions:
 | Camera | DS-2DE5425IW-AE(T5)(B) | V5.8.13 build 260402 |
 | Camera | DS-2CD2023G2-IU | V5.7.0 build 241023 |
 | Camera | DS-I253M(C) | V5.7.3 build 260403 |
+| Doorbell | DS-KV6113-PE1(C) (Villa Door Station) | V3.7.0 |
 
 Other ISAPI devices should work; please report models that do or do not.
 

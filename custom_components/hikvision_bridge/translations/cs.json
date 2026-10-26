@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Nahrávání"
+      },
+      "doorbell_ringing": {
+        "name": "Zvonek zvoní"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Zvonek",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Zvoní"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "SPZ"
+      },
+      "call_status": {
+        "name": "Stav hovoru",
+        "state": {
+          "idle": "Neaktivní",
+          "ringing": "Zvoní",
+          "on_call": "Probíhá hovor"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ oddálit"
+      },
+      "open_door": {
+        "name": "Otevřít dveře"
+      },
+      "open_door_numbered": {
+        "name": "Otevřít dveře {door}"
       }
     },
     "select": {

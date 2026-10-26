@@ -12,7 +12,8 @@
       "stream_encryption": { "default": "mdi:lock-alert-outline", "state": { "off": "mdi:lock-open-variant-outline" } },
       "cloud_online": { "default": "mdi:cloud-check-outline" },
       "cloud_stream_encryption": { "default": "mdi:lock-alert-outline" },
-      "recording": { "default": "mdi:record-rec" }
+      "recording": { "default": "mdi:record-rec" },
+      "doorbell_ringing": { "default": "mdi:bell-ring" }
     },
     "switch": {
       "park_action": { "default": "mdi:parking" },
@@ -43,7 +44,8 @@
       "memory_use": { "default": "mdi:memory" },
       "reboots": { "default": "mdi:restart-alert" },
       "network_address": { "default": "mdi:ip-network-outline" },
-      "license_plate": { "default": "mdi:card-text-outline" }
+      "license_plate": { "default": "mdi:card-text-outline" },
+      "call_status": { "default": "mdi:phone-in-talk" }
     },
     "image": {
       "anpr_scene_picture": { "default": "mdi:car-side" },
@@ -52,6 +54,8 @@
     "button": {
       "rescan": { "default": "mdi:magnify-scan" },
       "cloud_unlock": { "default": "mdi:door-open" },
+      "open_door": { "default": "mdi:door-open" },
+      "open_door_numbered": { "default": "mdi:door-open" },
       "ptz_pan_left": { "default": "mdi:pan-left" },
       "ptz_pan_right": { "default": "mdi:pan-right" },
       "ptz_tilt_up": { "default": "mdi:pan-up" },
@@ -61,7 +65,8 @@
     },
     "event": {
       "detection": { "default": "mdi:cctv" },
-      "cloud_connection": { "default": "mdi:cloud-sync-outline" }
+      "cloud_connection": { "default": "mdi:cloud-sync-outline" },
+      "doorbell": { "default": "mdi:doorbell-video" }
     },
     "select": {
       "ptz_preset": { "default": "mdi:map-marker-radius-outline" },

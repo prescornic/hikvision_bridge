@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Запис"
+      },
+      "doorbell_ringing": {
+        "name": "Дзвінок лунає"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Дверний дзвінок",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Дзвенить"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Номерний знак"
+      },
+      "call_status": {
+        "name": "Статус виклику",
+        "state": {
+          "idle": "Очікування",
+          "ringing": "Дзвенить",
+          "on_call": "Розмова"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ віддалити"
+      },
+      "open_door": {
+        "name": "Відкрити двері"
+      },
+      "open_door_numbered": {
+        "name": "Відкрити двері {door}"
       }
     },
     "select": {

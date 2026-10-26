@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Perekaman"
+      },
+      "doorbell_ringing": {
+        "name": "Bel pintu berbunyi"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Bel pintu",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Berdering"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Pelat nomor"
+      },
+      "call_status": {
+        "name": "Status panggilan",
+        "state": {
+          "idle": "Siaga",
+          "ringing": "Berdering",
+          "on_call": "Sedang menelepon"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ perkecil"
+      },
+      "open_door": {
+        "name": "Buka pintu"
+      },
+      "open_door_numbered": {
+        "name": "Buka pintu {door}"
       }
     },
     "select": {

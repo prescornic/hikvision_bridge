@@ -282,6 +282,9 @@
       },
       "recording": {
         "name": "Gravação"
+      },
+      "doorbell_ringing": {
+        "name": "Campainha a tocar"
       }
     },
     "switch": {
@@ -375,6 +378,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Campainha",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "A tocar"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -422,6 +435,14 @@
       },
       "license_plate": {
         "name": "Matrícula"
+      },
+      "call_status": {
+        "name": "Estado da chamada",
+        "state": {
+          "idle": "Inativo",
+          "ringing": "A tocar",
+          "on_call": "Em chamada"
+        }
       }
     },
     "button": {
@@ -451,6 +472,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ afastar"
+      },
+      "open_door": {
+        "name": "Abrir porta"
+      },
+      "open_door_numbered": {
+        "name": "Abrir porta {door}"
       }
     },
     "select": {
