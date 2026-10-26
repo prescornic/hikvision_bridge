@@ -13,7 +13,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from .const import (
     OPT_RTSP_PORT,
     OPT_RTSP_TRANSPORT,
-    OPT_STREAM_KEY,
+    OPT_TRY_ENCRYPTED_STREAM,
     RTSP_PORT_DEFAULT,
     RTSP_TCP,
     SUBENTRY_CHANNEL_LINK,
@@ -21,7 +21,7 @@ from .const import (
 from .entity import BridgeEntity, add_entities
 from .model.inventory import StreamSpec
 from .runtime.bridge import DeviceBridge
-from .wire.faults import BridgeFault, Unsupported
+from .wire.faults import BridgeFault, DeviceRejected, Unsupported
 from .wire.link import IsapiLink
 from .wire.scrub import scrubbed_logger
 
@@ -66,7 +66,7 @@ class ChannelCamera(BridgeEntity, Camera):
         A direct link that leaves the live stream on the recorder is an explicit choice to
         try the recorder's stream anyway.
         """
-        if self.bridge.entry.options.get(OPT_STREAM_KEY):
+        if self.bridge.entry.options.get(OPT_TRY_ENCRYPTED_STREAM, False):
             return False
         cloud = self.bridge.profile.cloud
         route = self.bridge.routes.get(self.channel_id)
@@ -84,10 +84,11 @@ class ChannelCamera(BridgeEntity, Camera):
     @property
     def extra_state_attributes(self) -> dict:
         stream = self._stream
+        cloud = self.bridge.profile.cloud
         return {
             "codec": stream.codec,
             "resolution": f"{stream.width}x{stream.height}" if stream.width else None,
-            "stream_encrypted": self._blocked_by_encryption,
+            "stream_encrypted": bool(cloud and cloud.stream_encrypted),
         }
 
     async def async_added_to_hass(self) -> None:
@@ -167,7 +168,7 @@ class ChannelCamera(BridgeEntity, Camera):
                 continue
             try:
                 reply = await link.read_bytes(path)
-            except Unsupported:
+            except (Unsupported, DeviceRejected):
                 continue
             except BridgeFault as err:
                 _LOGGER.debug("Snapshot failed: %s", type(err).__name__)
