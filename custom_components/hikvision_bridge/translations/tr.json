@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Kayıt"
+      },
+      "doorbell_ringing": {
+        "name": "Kapı zili çalıyor"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Kapı zili",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Çalıyor"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Plaka"
+      },
+      "call_status": {
+        "name": "Arama durumu",
+        "state": {
+          "idle": "Boşta",
+          "ringing": "Çalıyor",
+          "on_call": "Aramada"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ uzaklaştır"
+      },
+      "open_door": {
+        "name": "Kapıyı aç"
+      },
+      "open_door_numbered": {
+        "name": "Kapıyı aç {door}"
       }
     },
     "select": {

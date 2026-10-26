@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "録画"
+      },
+      "doorbell_ringing": {
+        "name": "ドアホン鳴動中"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "ドアホン",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "呼び出し中"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "ナンバープレート"
+      },
+      "call_status": {
+        "name": "通話ステータス",
+        "state": {
+          "idle": "待機中",
+          "ringing": "呼び出し中",
+          "on_call": "通話中"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ ズームアウト"
+      },
+      "open_door": {
+        "name": "ドアを開ける"
+      },
+      "open_door_numbered": {
+        "name": "ドア{door}を開ける"
       }
     },
     "select": {

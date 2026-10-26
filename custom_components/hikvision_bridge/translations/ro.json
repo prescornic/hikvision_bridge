@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Înregistrare"
+      },
+      "doorbell_ringing": {
+        "name": "Sonerie sunând"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Sonerie",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Sună"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Număr de înmatriculare"
+      },
+      "call_status": {
+        "name": "Stare apel",
+        "state": {
+          "idle": "Inactiv",
+          "ringing": "Sună",
+          "on_call": "În apel"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ micșorare"
+      },
+      "open_door": {
+        "name": "Deschide ușa"
+      },
+      "open_door_numbered": {
+        "name": "Deschide ușa {door}"
       }
     },
     "select": {

@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "ضبط"
+      },
+      "doorbell_ringing": {
+        "name": "زنگ در به صدا درآمده"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "زنگ در",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "در حال زنگ زدن"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "پلاک خودرو"
+      },
+      "call_status": {
+        "name": "وضعیت تماس",
+        "state": {
+          "idle": "آماده به کار",
+          "ringing": "در حال زنگ زدن",
+          "on_call": "در حال مکالمه"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ کوچک‌نمایی"
+      },
+      "open_door": {
+        "name": "باز کردن در"
+      },
+      "open_door_numbered": {
+        "name": "باز کردن در {door}"
       }
     },
     "select": {

@@ -346,6 +346,11 @@ class IsapiLink:
                 # Exactly one retry with the fresh challenge.
                 signer.accept(fresh)
                 return None
+            if fresh is None and trusted:
+                # Device refused without a challenge (e.g. intercom nonce expired);
+                # re-probe on attempt 1 to obtain a fresh challenge.
+                self._auth_checked = False
+                return None
         if self._worked and self._hiccups + 1 < HICCUPS_BEFORE_BLOCK:
             # These credentials worked before: pause, then start over with a fresh challenge
             # instead of giving up on a single refusal.

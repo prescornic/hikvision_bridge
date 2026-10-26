@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "রেকর্ডিং"
+      },
+      "doorbell_ringing": {
+        "name": "ডোরবেল বাজছে"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "ডোরবেল",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "বাজছে"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "লাইসেন্স প্লেট"
+      },
+      "call_status": {
+        "name": "কলের অবস্থা",
+        "state": {
+          "idle": "নিষ্ক্রিয়",
+          "ringing": "বাজছে",
+          "on_call": "কলে আছে"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ জুম আউট"
+      },
+      "open_door": {
+        "name": "দরজা খুলুন"
+      },
+      "open_door_numbered": {
+        "name": "দরজা {door} খুলুন"
       }
     },
     "select": {

@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "Đang ghi"
+      },
+      "doorbell_ringing": {
+        "name": "Chuông cửa đang reo"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "Chuông cửa",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "Đang đổ chuông"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "Biển số xe"
+      },
+      "call_status": {
+        "name": "Trạng thái cuộc gọi",
+        "state": {
+          "idle": "Rảnh",
+          "ringing": "Đang đổ chuông",
+          "on_call": "Đang đàm thoại"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ thu nhỏ"
+      },
+      "open_door": {
+        "name": "Mở cửa"
+      },
+      "open_door_numbered": {
+        "name": "Mở cửa {door}"
       }
     },
     "select": {

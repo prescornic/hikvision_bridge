@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "रिकॉर्डिंग"
+      },
+      "doorbell_ringing": {
+        "name": "डोरबेल बज रही है"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "डोरबेल",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "बज रहा है"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "लाइसेंस प्लेट"
+      },
+      "call_status": {
+        "name": "कॉल स्थिति",
+        "state": {
+          "idle": "निष्क्रिय",
+          "ringing": "बज रहा है",
+          "on_call": "कॉल पर"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ ज़ूम आउट"
+      },
+      "open_door": {
+        "name": "दरवाजा खोलें"
+      },
+      "open_door_numbered": {
+        "name": "दरवाजा {door} खोलें"
       }
     },
     "select": {

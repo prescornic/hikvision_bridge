@@ -280,6 +280,9 @@
       },
       "recording": {
         "name": "ریکارڈنگ"
+      },
+      "doorbell_ringing": {
+        "name": "دروازے کی گھنٹی بج رہی ہے"
       }
     },
     "switch": {
@@ -373,6 +376,16 @@
             }
           }
         }
+      },
+      "doorbell": {
+        "name": "دروازے کی گھنٹی",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "ring": "بج رہا ہے"
+            }
+          }
+        }
       }
     },
     "sensor": {
@@ -420,6 +433,14 @@
       },
       "license_plate": {
         "name": "لائسنس پلیٹ"
+      },
+      "call_status": {
+        "name": "کال کی حالت",
+        "state": {
+          "idle": "بیکار",
+          "ringing": "بج رہا ہے",
+          "on_call": "کال پر"
+        }
       }
     },
     "button": {
@@ -449,6 +470,12 @@
       },
       "ptz_zoom_out": {
         "name": "PTZ زوم آؤٹ"
+      },
+      "open_door": {
+        "name": "دروازہ کھولیں"
+      },
+      "open_door_numbered": {
+        "name": "دروازہ {door} کھولیں"
       }
     },
     "select": {

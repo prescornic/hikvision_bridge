@@ -10,6 +10,7 @@ from .vocabulary import Kind
 
 if TYPE_CHECKING:
     from .features.image import ImageCapability
+    from .features.intercom import IntercomCapabilities
     from .features.ptz import PtzCapability
 
 
@@ -149,6 +150,7 @@ class DeviceProfile:
     health: bool = False
     recording: bool = False
     armable_inputs: tuple[str, ...] = ()
+    intercom: IntercomCapabilities | None = None
 
     def trigger_for(self, kind: Kind, channel_id: str | None) -> TriggerLink | None:
         for trigger in self.triggers:
